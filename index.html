@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="O Instituto NaqīKarbon conecta ciência, inovação e organizações para contribuir com uma transição socioambiental ética, inclusiva e fundamentada em conhecimento.">
+    <meta name="theme-color" content="#173B32">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://naqikarbon.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Instituto NaqīKarbon">
+    <meta property="og:title" content="Instituto NaqīKarbon — Ciência, inovação e compromisso socioambiental">
+    <meta property="og:description" content="Conectamos ciência, inovação e ação para apoiar uma transição socioambiental ética, inclusiva e fundamentada em conhecimento.">
+    <meta property="og:url" content="https://naqikarbon.com/">
+    <meta name="twitter:card" content="summary">
+    <title>Instituto NaqīKarbon — Ciência, inovação e compromisso socioambiental</title>
+    <link rel="icon" href="/assets/favicon.ico" sizes="any">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deep: '#173B32',
+                        secondary: '#244D40',
+                        offwhite: '#F6F3EC',
+                        warm: '#FFFEFA',
+                        terracota: '#B66F50',
+                        darktext: '#27342E'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #27342E;
+            background-color: #FFFEFA;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, .font-editorial {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F6F3EC;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #244D40;
+            border-radius: 4px;
+        }
+
+        html {
+            scroll-padding-top: 7rem;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto !important;
+            }
+        }
+
+        #inicio {
+            isolation: isolate;
+        }
+
+        #inicio::before {
+            content: "N";
+            position: absolute;
+            z-index: -1;
+            top: -10.625rem;
+            right: 35%;
+            color: rgba(23, 59, 50, 0.035);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(20rem, 40vw, 36.25rem);
+            font-weight: 500;
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        @media (max-width: 767px) {
+            #inicio::before {
+                top: -2rem;
+                right: -1rem;
+                font-size: clamp(18rem, 76vw, 22rem);
+            }
+        }
+
+        .contact-section {
+            background-color: #173B32;
+        }
+
+        .founder-portrait-fallback {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 50% 38%, rgba(182, 111, 80, 0.34), transparent 36%), linear-gradient(145deg, #244D40, #173B32);
+        }
+
+        .founder-portrait-fallback::before {
+            content: "VA";
+            color: #F6F3EC;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(6rem, 18vw, 12rem);
+            font-weight: 500;
+            letter-spacing: -0.08em;
+            line-height: 1;
+        }
+
+        .founder-portrait-fallback::after {
+            content: "Ciência · Pesquisa · Inovação";
+            position: absolute;
+            right: 1rem;
+            bottom: 1.25rem;
+            left: 1rem;
+            color: rgba(246, 243, 236, 0.72);
+            font-size: 0.62rem;
+            letter-spacing: 0.16em;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .contact-section::before,
+        .contact-section::after {
+            content: "";
+            position: absolute;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .contact-section::before {
+            width: 36rem;
+            height: 36rem;
+            top: -19rem;
+            right: -11rem;
+            border: 1px solid rgba(182, 111, 80, 0.28);
+            border-radius: 50%;
+            box-shadow: 0 0 0 2.5rem rgba(182, 111, 80, 0.035), 0 0 0 5rem rgba(182, 111, 80, 0.025);
+        }
+
+        .contact-section::after {
+            inset: 0;
+            background: radial-gradient(circle at 78% 82%, rgba(182, 111, 80, 0.14), transparent 34%);
+        }
+
+        .contact-section-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .contact-eyebrow::after {
+            content: "";
+            width: 2.5rem;
+            height: 1px;
+            background: #B66F50;
+        }
+
+        .contact-email-card {
+            border-left: 1px solid rgba(182, 111, 80, 0.8);
+            padding: 0.25rem 0 0.25rem 1rem;
+        }
+
+        .contact-email-icon {
+            border: 1px solid rgba(182, 111, 80, 0.45);
+            box-shadow: 0 0 0 6px rgba(182, 111, 80, 0.08);
+        }
+
+        .contact-form-panel {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(182, 111, 80, 0.55);
+            border-radius: 1.75rem;
+            color: #27342E;
+            background: linear-gradient(145deg, #FFFEFA 0%, #F6F3EC 100%);
+            box-shadow: 0 30px 80px rgba(6, 20, 16, 0.3);
+        }
+
+        .contact-form-panel::before {
+            content: "";
+            position: absolute;
+            top: -8.5rem;
+            right: -7rem;
+            width: 17rem;
+            height: 17rem;
+            border: 1px solid rgba(182, 111, 80, 0.28);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .contact-form-panel::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 2.5rem;
+            width: 4.5rem;
+            height: 3px;
+            border-radius: 0 0 4px 4px;
+            background: #B66F50;
+            pointer-events: none;
+        }
+
+        .contact-form-panel form,
+        .contact-form-panel #form-feedback {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(36, 77, 64, 0.9);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            line-height: 1.4;
+            text-transform: uppercase;
+        }
+
+        .contact-field {
+            width: 100%;
+            border: 1px solid rgba(23, 59, 50, 0.18);
+            border-radius: 0.9rem;
+            padding: 0.9rem 1rem;
+            color: #27342E;
+            background: rgba(255, 254, 250, 0.9);
+            transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+        }
+
+        .contact-field::placeholder {
+            color: rgba(39, 52, 46, 0.5);
+        }
+
+        .contact-field:focus {
+            border-color: #B66F50;
+            outline: none;
+            background: #FFFEFA;
+            box-shadow: 0 0 0 4px rgba(182, 111, 80, 0.16);
+        }
+
+        .contact-submit {
+            width: 100%;
+            border: 1px solid #173B32;
+            border-radius: 0.9rem;
+            padding: 1rem;
+            color: #FFFEFA;
+            background: #173B32;
+            box-shadow: 0 10px 24px rgba(23, 59, 50, 0.18);
+            transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+        }
+
+        .contact-submit:hover {
+            border-color: #B66F50;
+            background: #B66F50;
+            transform: translateY(-1px);
+        }
+
+        .contact-submit:focus-visible {
+            outline: 3px solid rgba(182, 111, 80, 0.55);
+            outline-offset: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .contact-field,
+            .contact-submit {
+                transition: none;
+            }
+
+            .contact-submit:hover {
+                transform: none;
+            }
+        }
+
+        .network-section {
+            overflow: hidden;
+            padding: clamp(4.5rem, 7vw, 6.5rem) 0;
+            background: #F6F3EC;
+            border-block: 1px solid rgba(23, 59, 50, 0.08);
+        }
+
+        .network-inner {
+            width: min(1200px, calc(100% - 3rem));
+            margin: 0 auto;
+        }
+
+        .network-heading {
+            max-width: 780px;
+            margin: 0 auto clamp(2rem, 4vw, 3rem);
+            text-align: center;
+        }
+
+        .network-kicker {
+            display: inline-block;
+            color: #B66F50;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .network-heading h2 {
+            margin: 0.8rem 0 1rem;
+            color: #173B32;
+            font-size: clamp(2rem, 4vw, 3.15rem);
+            font-weight: 600;
+            line-height: 1.08;
+        }
+
+        .network-heading p {
+            max-width: 720px;
+            margin: 0 auto;
+            color: rgba(39, 52, 46, 0.76);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .network-marquee {
+            position: relative;
+            overflow: hidden;
+            padding: 0.5rem 0 1rem;
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+        }
+
+        .network-track {
+            display: flex;
+            width: max-content;
+            animation: network-logo-scroll 38s linear infinite;
+            will-change: transform;
+        }
+
+        .network-marquee:hover .network-track,
+        .network-marquee:focus-within .network-track,
+        .network-marquee.is-paused .network-track {
+            animation-play-state: paused;
+        }
+
+        .network-logo-group {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: stretch;
+            gap: clamp(1rem, 2vw, 1.5rem);
+            padding-right: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .network-logo-card {
+            display: flex;
+            flex: 0 0 clamp(170px, 18vw, 220px);
+            align-items: center;
+            justify-content: center;
+            height: 132px;
+            padding: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(23, 59, 50, 0.12);
+            border-radius: 1.2rem;
+            background: #FFFEFA;
+            box-shadow: 0 10px 28px rgba(23, 59, 50, 0.06);
+        }
+
+        .network-logo-card img {
+            display: block;
+            width: 100%;
+            max-height: 100px;
+            object-fit: contain;
+        }
+
+        .network-motion-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1.2rem auto 0;
+            border: 1px solid rgba(23, 59, 50, 0.2);
+            border-radius: 999px;
+            padding: 0.65rem 1rem;
+            color: #173B32;
+            background: transparent;
+            font: inherit;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease;
+        }
+
+        .network-motion-toggle:hover {
+            border-color: #B66F50;
+            color: #173B32;
+            background: rgba(182, 111, 80, 0.08);
+        }
+
+        .network-motion-toggle:focus-visible {
+            outline: 3px solid rgba(182, 111, 80, 0.55);
+            outline-offset: 3px;
+        }
+
+        @keyframes network-logo-scroll {
+            to { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 640px) {
+            .network-inner {
+                width: calc(100% - 2rem);
+            }
+
+            .network-logo-card {
+                flex-basis: 172px;
+                height: 112px;
+                padding: 0.8rem;
+            }
+
+            .network-logo-card img {
+                max-height: 84px;
+            }
+
+            .network-marquee {
+                -webkit-mask-image: linear-gradient(to right, transparent, #000 2%, #000 98%, transparent);
+                mask-image: linear-gradient(to right, transparent, #000 2%, #000 98%, transparent);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .network-track {
+                animation: none;
+                transform: none;
+                will-change: auto;
+            }
+
+            .network-motion-toggle {
+                display: none;
+            }
+        }
+
+        .market-strip {
+            position: relative;
+            z-index: 1;
+            padding: 0.65rem 0 0.55rem;
+            border-bottom: 1px solid rgba(23, 59, 50, 0.1);
+            background: #F6F3EC;
+        }
+
+        .market-strip-inner {
+            width: min(1280px, calc(100% - 3rem));
+            margin: 0 auto;
+        }
+
+        .market-strip-widget {
+            min-width: 0;
+            margin: 0;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .tradingview-widget-container,
+        .tradingview-widget-container__widget {
+            width: 100%;
+            min-height: 38px;
+        }
+
+        .tradingview-widget-copyright {
+            padding: 0 0.25rem;
+            color: rgba(39, 52, 46, 0.56);
+            font-size: 0.55rem;
+            line-height: 1.2;
+            text-align: right;
+        }
+
+        .tradingview-widget-copyright a {
+            color: #173B32;
+            text-decoration: none;
+        }
+
+        .market-strip-placeholder {
+            display: flex;
+            min-height: 38px;
+            align-items: center;
+            padding: 0 0.25rem;
+            color: rgba(39, 52, 46, 0.66);
+            font-size: 0.68rem;
+        }
+
+        .market-strip-note {
+            width: min(1280px, calc(100% - 3rem));
+            margin: 0.2rem auto 0;
+            color: rgba(39, 52, 46, 0.52);
+            font-size: 0.56rem;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 767px) {
+            .market-strip {
+                padding: 0.55rem 0 0.45rem;
+            }
+
+            .market-strip-inner {
+                width: calc(100% - 2rem);
+            }
+
+            .market-strip-note {
+                width: calc(100% - 2rem);
+            }
+        }
+    </style>
+</head>
+<body class="bg-warm text-darktext antialiased selection:bg-terracota selection:text-white">
+    <a href="#inicio" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-warm focus:px-5 focus:py-3 focus:text-deep">Pular para o conteúdo</a>
+
+    <!-- CABEÇALHO -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-warm/90 backdrop-blur-md border-b border-deep/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-24 flex items-center justify-between">
+            <!-- Logotipo com a imagem do LinkedIn -->
+            <a href="#inicio" aria-label="Voltar ao início — Instituto NaqīKarbon" class="flex items-center gap-3.5 group">
+                <div class="w-12 h-12 rounded-full overflow-hidden border border-terracota/50 shadow-sm bg-deep flex items-center justify-center">
+                    <img src="https://media.licdn.com/dms/image/v2/D4D0BAQHofOBrFPC-VQ/company-logo_200_200/B4DZb0I5vlGkAI-/0/1747852697866/naqikarbon_logo?e=1796256000&v=beta&t=e_oYh92fA9fQeiKIt37ExJPtts0TJOU8WV6yVBt_KyI"
+                         alt="Logo Instituto NaqīKarbon"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <span style="display:none;" class="text-offwhite font-serif text-lg font-bold tracking-widest">NK</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-2xl font-bold tracking-wide text-deep">Instituto NaqīKarbon</span>
+                    <span class="text-[10px] tracking-widest uppercase text-terracota font-semibold">Ciência · Inovação · Compromisso Socioambiental</span>
+                </div>
+            </a>
+
+            <!-- Navegação Desktop -->
+            <nav aria-label="Navegação principal" class="hidden xl:flex items-center gap-5">
+                <a href="#atuacao" class="text-sm font-medium hover:text-terracota transition-colors">Atuação</a>
+                <a href="#articulacao" class="text-sm font-medium hover:text-terracota transition-colors">Articulação</a>
+                <a href="#servicos" class="text-sm font-medium hover:text-terracota transition-colors">Serviços</a>
+                <a href="#conhecimento" class="text-sm font-medium hover:text-terracota transition-colors">Conhecimento</a>
+                <a href="#sobre" class="text-sm font-medium hover:text-terracota transition-colors">Sobre</a>
+                <a href="https://naqikarbon.com/insights/" target="_blank" rel="noopener noreferrer" class="text-sm font-medium hover:text-terracota transition-colors">Blog</a>
+            </nav>
+
+            <!-- CTA Desktop -->
+            <div class="hidden xl:block">
+                <a href="#contato" class="px-6 py-3 bg-deep text-offwhite text-sm font-medium rounded-full hover:bg-terracota transition-all duration-300 shadow-sm">
+                    Fale Conosco
+                </a>
+            </div>
+
+            <!-- Botão Menu Mobile -->
+            <button id="mobile-menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu" class="xl:hidden text-deep p-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracota focus-visible:ring-offset-2">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- DRAWER MENU MOBILE -->
+    <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu principal" aria-hidden="true" inert class="fixed inset-0 z-50 bg-deep/95 backdrop-blur-lg transform translate-x-full transition-transform duration-300 flex flex-col justify-between p-8 xl:hidden">
+        <div class="flex items-center justify-between">
+            <span class="font-serif text-2xl text-offwhite font-bold">Instituto NaqīKarbon</span>
+            <button id="mobile-menu-close" aria-label="Fechar menu" class="text-offwhite p-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracota focus-visible:ring-offset-2 focus-visible:ring-offset-deep">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+        </div>
+        <nav aria-label="Navegação móvel" class="flex flex-col gap-6 text-center my-auto">
+            <a href="#atuacao" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Nossa atuação</a>
+            <a href="#articulacao" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Articulação e projetos</a>
+            <a href="#servicos" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Serviços técnicos</a>
+            <a href="#metodologia" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Como trabalhamos</a>
+            <a href="#conhecimento" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Conhecimento</a>
+            <a href="https://naqikarbon.com/insights/" target="_blank" rel="noopener noreferrer" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Blog</a>
+            <a href="#diferenciais" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Diferenciais</a>
+            <a href="#sobre" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Sobre</a>
+            <a href="#contato" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Contato</a>
+        </nav>
+        <div class="text-center">
+            <a href="#contato" class="mobile-link inline-block w-full py-4 bg-terracota text-white font-medium rounded-full shadow-lg">
+                Converse com o Instituto
+            </a>
+            <p class="text-xs text-offwhite/60 mt-4">contato@naqikarbon.com</p>
+        </div>
+    </div>
+
+    <main id="conteudo-principal">
+    <!-- SEÇÃO INICIAL (HERO) - IMAGEM NA LATERAL DIREITA -->
+    <section id="inicio" class="relative pt-36 pb-20 lg:pt-44 lg:pb-32 bg-offwhite border-b border-deep/10 overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-deep/5 to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-8 items-center">
+
+            <!-- Conteúdo Hero (Esquerda) -->
+            <div class="md:col-span-7 flex flex-col items-start z-10">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold tracking-wider uppercase mb-6 border border-secondary/20">
+                    <span class="w-2 h-2 rounded-full bg-terracota"></span> Ciência · Inovação · Compromisso Socioambiental
+                </div>
+                <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-deep leading-[1.08] mb-6">
+                    Ciência para compreender. <span class="italic text-terracota">Conhecimento para transformar.</span>
+                </h1>
+                <p class="text-lg text-darktext/80 font-normal leading-relaxed mb-8 max-w-2xl">
+                    O Instituto NaqīKarbon conecta ciência, inovação e ação para promover uma transição socioambiental ética, inclusiva e fundamentada em conhecimento. Apoiamos pequenas e médias empresas na construção de estratégias de sustentabilidade, na estruturação de projetos de descarbonização e na identificação de oportunidades de financiamento, aproximando pesquisa, organizações e soluções aplicáveis aos desafios ambientais e produtivos.
+                </p>
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
+                    <a href="#contato" class="px-8 py-4 bg-deep text-offwhite font-medium rounded-full hover:bg-terracota transition-all duration-300 text-center shadow-md">
+                        Converse sobre uma iniciativa
+                    </a>
+                    <a href="#servicos" class="px-8 py-4 bg-transparent border border-deep text-deep font-medium rounded-full hover:bg-deep hover:text-offwhite transition-all duration-300 text-center">
+                        Conheça nossa atuação
+                    </a>
+                </div>
+
+                <!-- Indicadores de Credibilidade -->
+                <div class="grid grid-cols-3 gap-6 mt-14 pt-8 border-t border-deep/10 w-full">
+                    <div>
+                        <span class="block font-serif text-2xl sm:text-3xl font-bold text-deep">Carbono &</span>
+                        <span class="text-xs text-darktext/70 uppercase tracking-wider">Ciência</span>
+                    </div>
+                    <div>
+                        <span class="block font-serif text-2xl sm:text-3xl font-bold text-deep">Projetos &</span>
+                        <span class="text-xs text-darktext/70 uppercase tracking-wider">Colaboração</span>
+                    </div>
+                    <div>
+                        <span class="block font-serif text-2xl sm:text-3xl font-bold text-deep">ESG &</span>
+                        <span class="text-xs text-darktext/70 uppercase tracking-wider">Prático e viável</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Composição Visual Editorial (Lateral Direita) -->
+            <div class="md:col-span-5 relative">
+                <div class="relative mx-auto max-w-md md:max-w-none">
+                    <!-- Frame decorativo geométrico -->
+                    <div class="absolute -inset-3 sm:-inset-4 border border-terracota/35 rounded-2xl transform rotate-2 pointer-events-none"></div>
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-deep aspect-[4/5] founder-portrait-frame">
+                        <img src="https://plus.unsplash.com/premium_photo-1713401917613-158b9316061d?q=80&w=761&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
+                             alt="Arquitetura urbana sustentável e moderna"
+                             class="w-full h-full object-cover mix-blend-overlay opacity-85 hover:scale-105 transition-transform duration-700"
+                             onerror="this.src='https://placehold.co/800x1000/173B32/FFFEFA?text=Instituto+Naq%C4%ABKarbon'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-deep via-deep/30 to-transparent"></div>
+                        <div class="absolute bottom-8 left-8 right-8 text-warm">
+                            <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-2 block">Infraestrutura & Transição</span>
+                            <h3 class="font-serif text-2xl font-medium leading-snug">Alinhando desempenho econômico, ciência e responsabilidade socioambiental.</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- VISÃO E EIXOS INSTITUCIONAIS -->
+    <section id="atuacao" class="py-24 lg:py-32 bg-offwhite border-b border-deep/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start mb-14">
+                <div class="lg:col-span-5">
+                    <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-3 block">Nossa visão</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-deep leading-tight">Uma transição socioambiental exige olhar sistêmico.</h2>
+                </div>
+                <div class="lg:col-span-7 text-darktext/80 text-base leading-relaxed space-y-4">
+                    <p>Clima, biodiversidade, economia, sociedade, tecnologia e território estão conectados. O Instituto NaqīKarbon aproxima conhecimento e prática para contribuir com soluções que integrem integridade ambiental, responsabilidade social e desenvolvimento sustentável.</p>
+                    <p>Nossa atuação combina ciência, inovação responsável, ética climática e cooperação. Considera os contextos das organizações e os efeitos das atividades produtivas sobre ecossistemas, comunidades e territórios.</p>
+                </div>
+            </div>
+
+            <div class="flex items-end justify-between gap-6 mb-8">
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-2 block">Frentes integradas</span>
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-deep">Cinco eixos que se complementam</h3>
+                </div>
+                <p class="hidden md:block text-sm text-darktext/60 max-w-sm">Dimensões conectadas da atuação institucional, não departamentos independentes.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <article class="p-6 rounded-2xl bg-warm border border-deep/10">
+                    <span class="font-mono text-xs text-terracota">01</span>
+                    <h3 class="font-serif text-xl font-bold text-deep mt-3 mb-2">Ciência e produção de conhecimento</h3>
+                    <p class="text-sm text-darktext/70 leading-relaxed">Pesquisa, análises, divulgação científica e materiais que apoiam decisões e ampliam o debate público.</p>
+                </article>
+                <article class="p-6 rounded-2xl bg-warm border border-deep/10">
+                    <span class="font-mono text-xs text-terracota">02</span>
+                    <h3 class="font-serif text-xl font-bold text-deep mt-3 mb-2">Desenvolvimento socioambiental e territorial</h3>
+                    <p class="text-sm text-darktext/70 leading-relaxed">Justiça climática, biodiversidade, educação ambiental, inclusão social e iniciativas conectadas às realidades locais.</p>
+                </article>
+                <article class="p-6 rounded-2xl bg-warm border border-deep/10">
+                    <span class="font-mono text-xs text-terracota">03</span>
+                    <h3 class="font-serif text-xl font-bold text-deep mt-3 mb-2">Inovação e transição produtiva</h3>
+                    <p class="text-sm text-darktext/70 leading-relaxed">Descarbonização, sustentabilidade organizacional, tecnologias limpas e transformação de sistemas produtivos.</p>
+                </article>
+                <article class="p-6 rounded-2xl bg-warm border border-deep/10">
+                    <span class="font-mono text-xs text-terracota">04</span>
+                    <h3 class="font-serif text-xl font-bold text-deep mt-3 mb-2">Articulação e desenvolvimento de projetos</h3>
+                    <p class="text-sm text-darktext/70 leading-relaxed">Conexão entre organizações, pesquisadores, instituições públicas, financiadores e empreendedores.</p>
+                </article>
+                <article class="p-6 rounded-2xl bg-warm border border-deep/10 sm:col-span-2 lg:col-span-2">
+                    <span class="font-mono text-xs text-terracota">05</span>
+                    <h3 class="font-serif text-xl font-bold text-deep mt-3 mb-2">Educação e inteligência socioambiental</h3>
+                    <p class="text-sm text-darktext/70 leading-relaxed">Cursos, capacitações, leitura de indicadores e análises de políticas públicas e das transformações econômicas, ambientais e climáticas.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARTICULAÇÃO INSTITUCIONAL E PROJETOS COLABORATIVOS -->
+    <section id="articulacao" class="py-24 lg:py-32 bg-deep text-offwhite relative overflow-hidden">
+        <div class="absolute -right-24 -top-24 w-96 h-96 rounded-full border border-terracota/20 pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end mb-12">
+                <div class="lg:col-span-7">
+                    <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-3 block">Articulação institucional</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-offwhite leading-tight">Conectamos iniciativas, oportunidades e conhecimentos.</h2>
+                </div>
+                <p class="lg:col-span-5 text-offwhite/75 leading-relaxed">Desafios socioambientais complexos pedem cooperação entre setores e campos do conhecimento. Aproximamos empresas, organizações sociais, governos, universidades, pesquisadores, empreendedores e instituições de fomento para estruturar iniciativas colaborativas.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <article class="p-6 rounded-2xl bg-offwhite/5 border border-offwhite/15">
+                    <h3 class="font-serif text-xl font-bold text-offwhite mb-3">Tenho um desafio ou iniciativa</h3>
+                    <p class="text-sm text-offwhite/70 leading-relaxed">Vamos conversar sobre objetivos, parceiros e caminhos para estruturar um projeto.</p>
+                </article>
+                <article class="p-6 rounded-2xl bg-offwhite/5 border border-offwhite/15">
+                    <h3 class="font-serif text-xl font-bold text-offwhite mb-3">Busco oportunidades de fomento</h3>
+                    <p class="text-sm text-offwhite/70 leading-relaxed">Mapeamos editais, chamadas, mecanismos de financiamento e oportunidades de investimento climático relacionados a iniciativas socioambientais.</p>
+                </article>
+                <article class="p-6 rounded-2xl bg-offwhite/5 border border-offwhite/15">
+                    <h3 class="font-serif text-xl font-bold text-offwhite mb-3">Quero desenvolver uma parceria</h3>
+                    <p class="text-sm text-offwhite/70 leading-relaxed">Aproximamos organizações e competências complementares para explorar possibilidades de cooperação.</p>
+                </article>
+                <article class="p-6 rounded-2xl bg-offwhite/5 border border-offwhite/15">
+                    <h3 class="font-serif text-xl font-bold text-offwhite mb-3">Quero compartilhar conhecimento</h3>
+                    <p class="text-sm text-offwhite/70 leading-relaxed">Pesquisadores, especialistas, educadores e empreendedores podem propor contribuições e iniciativas conjuntas.</p>
+                </article>
+            </div>
+            <div class="mt-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                <a href="#contato" class="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-terracota text-white font-semibold hover:bg-offwhite hover:text-deep transition-colors">Converse sobre um projeto <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                <span class="text-xs text-offwhite/55">As conversas são recebidas pelos canais institucionais; não há uma plataforma automatizada de conexão.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVIÇOS E FRENTES INSTITUCIONAIS -->
+    <section id="servicos" class="py-24 lg:py-32 bg-warm">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-3 block">Áreas de Atuação</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-deep">
+                        Serviços técnicos e desenvolvimento de iniciativas
+                    </h2>
+                </div>
+                <p class="text-darktext/70 max-w-md mt-4 md:mt-0">
+                    Empresas são interlocutoras importantes do Instituto. Também trabalhamos com ONGs e OSCs, órgãos públicos, universidades, pesquisadores, empreendedores e financiadores.
+                </p>
+            </div>
+
+            <!-- Grid de Serviços -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Card 1 -->
+                <div class="group p-8 rounded-2xl bg-offwhite border border-deep/10 hover:border-terracota transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-deep text-offwhite flex items-center justify-center font-serif text-xl mb-6 group-hover:bg-terracota transition-colors">
+                            01
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-deep mb-4">Diagnóstico e planejamento de sustentabilidade</h3>
+                        <p class="text-darktext/70 text-sm leading-relaxed mb-6">
+                            Levantamento de aspectos ambientais, riscos e oportunidades, com prioridades e próximos passos adequados à realidade da organização.
+                        </p>
+                    </div>
+                    <a href="#contato" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-deep group-hover:text-terracota transition-colors">
+                        Saiba mais <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group p-8 rounded-2xl bg-offwhite border border-deep/10 hover:border-terracota transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-deep text-offwhite flex items-center justify-center font-serif text-xl mb-6 group-hover:bg-terracota transition-colors">
+                            02
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-deep mb-4">Estruturação de projetos de descarbonização</h3>
+                        <p class="text-darktext/70 text-sm leading-relaxed mb-6">
+                            Mapeamento de pegada de carbono, metas de redução e planos de ação práticos para descarbonizar operações e cadeia de suprimentos.
+                        </p>
+                    </div>
+                    <a href="#contato" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-deep group-hover:text-terracota transition-colors">
+                        Saiba mais <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group p-8 rounded-2xl bg-offwhite border border-deep/10 hover:border-terracota transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-deep text-offwhite flex items-center justify-center font-serif text-xl mb-6 group-hover:bg-terracota transition-colors">
+                            03
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-deep mb-4">Pesquisa, palestras e treinamentos</h3>
+                        <p class="text-darktext/70 text-sm leading-relaxed mb-6">
+                            Desenvolvimento de materiais de consulta, formações executivas, palestras e participação em comitês estratégicos de decisão.
+                        </p>
+                    </div>
+                    <a href="#contato" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-deep group-hover:text-terracota transition-colors">
+                        Saiba mais <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="group p-8 rounded-2xl bg-offwhite border border-deep/10 hover:border-terracota transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-deep text-offwhite flex items-center justify-center font-serif text-xl mb-6 group-hover:bg-terracota transition-colors">
+                            04
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-deep mb-4">Projetos de inovação ambiental</h3>
+                        <p class="text-darktext/70 text-sm leading-relaxed mb-6">
+                            Desenvolvimento e facilitação de iniciativas inovadoras em economia circular, eficiência energética e tecnologias limpas.
+                        </p>
+                    </div>
+                    <a href="#contato" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-deep group-hover:text-terracota transition-colors">
+                        Saiba mais <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="group p-8 rounded-2xl bg-offwhite border border-deep/10 hover:border-terracota transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-deep text-offwhite flex items-center justify-center font-serif text-xl mb-6 group-hover:bg-terracota transition-colors">05</div>
+                        <h3 class="font-serif text-2xl font-bold text-deep mb-4">Financiamento e investimentos climáticos</h3>
+                        <p class="text-darktext/70 text-sm leading-relaxed mb-6">Mapeamento de editais, mecanismos de fomento e oportunidades de investimento, com apoio à estruturação de propostas e parcerias para iniciativas socioambientais.</p>
+                    </div>
+                    <a href="#contato" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-deep group-hover:text-terracota transition-colors">Explorar oportunidades <i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="group p-8 rounded-2xl bg-offwhite border border-deep/10 hover:border-terracota transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-deep text-offwhite flex items-center justify-center font-serif text-xl mb-6 group-hover:bg-terracota transition-colors">06</div>
+                        <h3 class="font-serif text-2xl font-bold text-deep mb-4">Articulação e projetos colaborativos</h3>
+                        <p class="text-darktext/70 text-sm leading-relaxed mb-6">Aproximação de organizações, especialistas e instituições para estruturar objetivos compartilhados, responsabilidades, metodologia e próximos passos.</p>
+                    </div>
+                    <a href="#contato" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-deep group-hover:text-terracota transition-colors">Converse sobre uma iniciativa <i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- COMO TRABALHAMOS (METODOLOGIA) -->
+    <section id="metodologia" class="py-24 lg:py-32 bg-deep text-offwhite relative overflow-hidden">
+        <div class="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+
+            <div class="max-w-2xl mb-16">
+                <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-3 block">Metodologia</span>
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-offwhite">
+                    Como trabalhamos
+                </h2>
+                <p class="text-offwhite/70 mt-4">
+                    Um processo em três etapas para compreender contextos, organizar prioridades e orientar decisões e iniciativas socioambientais viáveis.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Etapa 1 -->
+                <div class="p-8 rounded-2xl bg-secondary/40 border border-offwhite/10 relative">
+                    <span class="font-serif text-6xl font-bold text-terracota/40 absolute top-6 right-6">01</span>
+                    <h3 class="font-serif text-2xl font-bold text-offwhite mb-4 relative z-10">Compreender</h3>
+                    <p class="text-offwhite/80 text-sm leading-relaxed relative z-10">
+                        Compreender a organização, seus objetivos, atividades e desafios, junto às relações com ecossistemas, comunidades e territórios.
+                    </p>
+                </div>
+
+                <!-- Etapa 2 -->
+                <div class="p-8 rounded-2xl bg-secondary/40 border border-offwhite/10 relative">
+                    <span class="font-serif text-6xl font-bold text-terracota/40 absolute top-6 right-6">02</span>
+                    <h3 class="font-serif text-2xl font-bold text-offwhite mb-4 relative z-10">Estruturar</h3>
+                    <p class="text-offwhite/80 text-sm leading-relaxed relative z-10">
+                        Organizar evidências e prioridades e estruturar estratégias, propostas ou projetos com objetivos, responsabilidades e caminhos claros.
+                    </p>
+                </div>
+
+                <!-- Etapa 3 -->
+                <div class="p-8 rounded-2xl bg-secondary/40 border border-offwhite/10 relative">
+                    <span class="font-serif text-6xl font-bold text-terracota/40 absolute top-6 right-6">03</span>
+                    <h3 class="font-serif text-2xl font-bold text-offwhite mb-4 relative z-10">Orientar</h3>
+                    <p class="text-offwhite/80 text-sm leading-relaxed relative z-10">
+                        Compartilhar recomendações e conhecimento para apoiar decisões, capacitar equipes e orientar próximos passos de execução e acompanhamento.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- REDES E CONEXÕES INSTITUCIONAIS -->
+    <section id="redes" class="network-section" aria-labelledby="network-heading">
+        <div class="network-inner">
+            <div class="network-heading">
+                <span class="network-kicker">Redes e conexões</span>
+                <h2 id="network-heading" class="font-serif">Presença em espaços de articulação e conhecimento.</h2>
+                <p>
+                    A fundadora e o Instituto se relacionam com redes, instituições e espaços de articulação ligados à ciência, sustentabilidade e inovação. Os vínculos variam conforme o contexto e podem envolver participação individual, atuação em espaços técnicos, associação ou colaboração; a presença de uma marca aqui não significa, por si só, parceria formal.
+                </p>
+            </div>
+
+            <div class="network-marquee" aria-label="Logotipos de redes e instituições">
+                <div class="network-track">
+                    <div class="network-logo-group" role="list">
+                        <div class="network-logo-card" role="listitem"><img src="https://sbenergy.org.br/wp-content/uploads/2024/04/logo-sbe.webp" alt="Logotipo de organização parceira 1"></div>
+                        <div class="network-logo-card" role="listitem"><img src="https://climaesociedade.org/wp-content/uploads/2023/10/logo-onda-verde.png" alt="Logotipo A Onda Verde"></div>
+                        <div class="network-logo-card" role="listitem"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Sebrae.svg" alt="Logotipo da SBE, The Bioenergy Society"></div>
+                        <div class="network-logo-card" role="listitem"><img src="https://media.licdn.com/dms/image/v2/D4E0BAQFDjcRK1pwQzA/company-logo_200_200/company-logo_200_200/0/1686855358776?e=1796256000&amp;v=beta&amp;t=7YxqqtRKh3pscF0CbrbQ2irlkofTn3xIc-Ou6tOf99U" alt="Logotipo do Sebrae"></div>
+                    </div>
+                    <div class="network-logo-group" aria-hidden="true">
+                        <div class="network-logo-card"><img src="https://sbenergy.org.br/wp-content/uploads/2024/04/logo-sbe.webp" alt=""></div>
+                        <div class="network-logo-card"><img src="https://climaesociedade.org/wp-content/uploads/2023/10/logo-onda-verde.png" alt=""></div>
+                        <div class="network-logo-card"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Sebrae.svg" alt=""></div>
+                        <div class="network-logo-card"><img src="https://media.licdn.com/dms/image/v2/D4E0BAQFDjcRK1pwQzA/company-logo_200_200/company-logo_200_200/0/1686855358776?e=1796256000&amp;v=beta&amp;t=7YxqqtRKh3pscF0CbrbQ2irlkofTn3xIc-Ou6tOf99U" alt=""></div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="network-motion-toggle" class="network-motion-toggle" type="button" aria-pressed="false">
+                Pausar movimento das logos
+            </button>
+        </div>
+    </section>
+
+    <!-- CONHECIMENTO EM CIRCULAÇÃO (NAQĪKARBON REPORTS & NAQĪLETTER) -->
+    <section id="conhecimento" class="py-24 lg:py-32 bg-warm border-b border-deep/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+
+            <!-- Texto Explicativo -->
+            <div class="lg:col-span-5">
+                <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-3 block">Conhecimento em Circulação</span>
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-deep mb-6 leading-tight">
+                    Ideias, análises e pesquisa para ampliar o debate.
+                </h2>
+                <p class="text-darktext/75 text-base leading-relaxed mb-8">
+                    A produção intelectual é parte central da atuação do Instituto. Por meio de publicações e materiais próprios, conectamos ciência, políticas, economia, território e os desafios concretos da transição socioambiental.
+                </p>
+                <a href="https://www.linkedin.com/company/naqikarbon/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-bold text-deep hover:text-terracota transition-colors">
+                    Acompanhe nossas publicações <i class="fa-solid fa-arrow-up-right-from-square text-xs text-terracota"></i>
+                </a>
+            </div>
+
+            <!-- Cards Reports e NaqīLetter -->
+            <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+                <!-- Card Reports -->
+                <div class="p-8 rounded-2xl bg-offwhite border border-deep/15 hover:border-terracota transition-all duration-300 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <span class="text-[11px] font-mono uppercase tracking-widest text-terracota font-bold block mb-4">Publicações e Análises</span>
+                        <h3 class="font-serif text-3xl font-bold text-deep mb-4">NaqīKarbon Reports</h3>
+                        <p class="text-darktext/75 text-sm leading-relaxed mb-8">
+                            Relatórios e análises que conectam pesquisa, governança, sistemas produtivos e questões socioambientais.
+                        </p>
+                    </div>
+                    <a href="https://naqikarbon.com/naqikarbon-reports/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-deep hover:text-terracota transition-colors pt-4 border-t border-deep/10">
+                        Explorar publicações <i class="fa-solid fa-arrow-up-right-from-square text-[11px] text-terracota"></i>
+                    </a>
+                </div>
+
+                <!-- Card NaqīLetter -->
+                <div class="p-8 rounded-2xl bg-offwhite border border-deep/15 hover:border-terracota transition-all duration-300 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <span class="text-[11px] font-mono uppercase tracking-widest text-terracota font-bold block mb-4">Newsletter</span>
+                        <h3 class="font-serif text-3xl font-bold text-deep mb-4">NaqīLetter</h3>
+                        <p class="text-darktext/75 text-sm leading-relaxed mb-8">
+                            Leituras e reflexões sobre descarbonização, sustentabilidade, inovação e transformações em curso.
+                        </p>
+                    </div>
+                    <a href="https://www.linkedin.com/company/naqikarbon/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-deep hover:text-terracota transition-colors pt-4 border-t border-deep/10">
+                        Acompanhar a NaqīLetter <i class="fa-solid fa-arrow-up-right-from-square text-[11px] text-terracota"></i>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- DIFERENCIAIS -->
+    <section id="diferenciais" class="py-24 lg:py-32 bg-offwhite">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-3 block">Nossos Pilares</span>
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-deep">
+                    Fundamentos que sustentam nossa atuação
+                </h2>
+                <p class="text-darktext/70 mt-4">
+                    Combinamos rigor científico, viabilidade, integridade e responsabilidade socioambiental para apoiar decisões consistentes em diferentes contextos.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <div class="p-8 rounded-2xl bg-warm border border-deep/10 shadow-sm">
+                    <div class="w-12 h-12 rounded-full bg-deep/10 text-deep flex items-center justify-center text-lg mb-6">
+                        <i class="fa-solid fa-flask"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-deep mb-3">Base científica</h3>
+                    <p class="text-darktext/70 text-sm leading-relaxed">
+                        Decisões e metodologias apoiadas em evidências científicas, análise crítica e diálogo entre campos do conhecimento.
+                    </p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-warm border border-deep/10 shadow-sm">
+                    <div class="w-12 h-12 rounded-full bg-deep/10 text-deep flex items-center justify-center text-lg mb-6">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-deep mb-3">Viabilidade e realidade institucional</h3>
+                    <p class="text-darktext/70 text-sm leading-relaxed">
+                        Compreensão de capacidades, desafios e contextos das organizações e dos territórios onde atuam.
+                    </p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-warm border border-deep/10 shadow-sm">
+                    <div class="w-12 h-12 rounded-full bg-deep/10 text-deep flex items-center justify-center text-lg mb-6">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-deep mb-3">Integridade e rastreabilidade</h3>
+                    <p class="text-darktext/70 text-sm leading-relaxed">
+                        Rastreabilidade e uso responsável de dados, com comunicação clara sobre premissas, limites e resultados.
+                    </p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-warm border border-deep/10 shadow-sm">
+                    <div class="w-12 h-12 rounded-full bg-deep/10 text-deep flex items-center justify-center text-lg mb-6">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-deep mb-3">Inovação e contexto territorial</h3>
+                    <p class="text-darktext/70 text-sm leading-relaxed">
+                        Abordagens que consideram ecossistemas, comunidades, culturas e dinâmicas territoriais.
+                    </p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-warm border border-deep/10 shadow-sm">
+                    <div class="w-12 h-12 rounded-full bg-deep/10 text-deep flex items-center justify-center text-lg mb-6">
+                        <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-deep mb-3">Ética climática e justiça social</h3>
+                    <p class="text-darktext/70 text-sm leading-relaxed">A transição socioambiental considera distribuição de impactos, direitos, inclusão e responsabilidade entre atores.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-warm border border-deep/10 shadow-sm">
+                    <div class="w-12 h-12 rounded-full bg-deep/10 text-deep flex items-center justify-center text-lg mb-6">
+                        <i class="fa-solid fa-people-arrows-left-right" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-deep mb-3">Cooperação e saberes diversos</h3>
+                    <p class="text-darktext/70 text-sm leading-relaxed">Conhecimentos científicos, técnicos e territoriais podem se complementar na construção de iniciativas.</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+<!-- SOBRE A FUNDADORA -->
+<section id="sobre" class="py-24 lg:py-32 bg-warm border-t border-deep/10">
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+        <!-- GRID: IMAGEM À ESQUERDA / TEXTO À DIREITA -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 lg:gap-16 items-center">
+
+            <!-- COLUNA ESQUERDA: FOTOGRAFIA -->
+            <div class="md:col-span-5 relative w-full">
+
+                <div class="relative mx-auto max-w-xs md:mx-0 md:max-w-none">
+
+                    <!-- Moldura decorativa -->
+                    <div class="absolute -inset-3 sm:-inset-4 border border-terracota/35 rounded-2xl rotate-2 pointer-events-none"></div>
+
+                    <!-- Quadro da fotografia -->
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-deep aspect-[4/5]">
+
+                        <img
+                            src="https://media.licdn.com/dms/image/v2/D4D03AQH_Gho_PYqkvg/profile-displayphoto-shrink_400_400/B4DZZthvkbHIAg-/0/1745594284898?e=1796860800&v=beta&t=icjSTtvzwS1VI46y-3kw58dcT8izBQiEsXvUXiYTdBI"
+                            alt="Victoria Alves, fundadora do Instituto NaqīKarbon"
+                            class="w-full h-full object-cover grayscale contrast-125 opacity-90"
+                            onerror="this.hidden=true; this.parentElement.classList.add('founder-portrait-fallback'); this.parentElement.setAttribute('role','img'); this.parentElement.setAttribute('aria-label','Retrato de Victoria Alves');">
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUNA DIREITA: TEXTO -->
+            <div class="md:col-span-7 flex flex-col justify-center">
+
+                <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-3 block">
+                    Sobre a fundadora
+                </span>
+
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-deep mb-6 leading-tight">
+                    Uma trajetória construída entre ciência, pesquisa e inovação.
+                </h2>
+
+                <p class="text-darktext/80 text-base leading-relaxed mb-6">
+                    O Instituto NaqīKarbon foi idealizado por Victoria Alves, bióloga e doutora em Biotecnociência pela Universidade Federal do ABC (UFABC).
+                </p>
+
+                <p class="text-darktext/80 text-base leading-relaxed mb-6">
+                    Sua trajetória reúne experiência em pesquisa científica, desenvolvimento tecnológico, análise de projetos de inovação e participação em iniciativas voltadas à sustentabilidade e à governança socioambiental.
+                </p>
+
+                <p class="text-darktext/80 text-base leading-relaxed mb-8">
+                    Essa experiência orienta uma atuação que busca aproximar diferentes campos do conhecimento, desenvolver abordagens tecnicamente consistentes e tornar informações complexas mais compreensíveis e úteis para a sociedade.
+                </p>
+
+                <!-- Assinatura -->
+                <div class="pt-6 border-t border-deep/10">
+                    <strong class="block font-serif text-2xl font-bold text-deep">
+                        Victoria Alves
+                    </strong>
+
+                    <span class="text-xs text-darktext/70 mt-1 block">
+                        Fundadora · Doutora em Biotecnociência · UFABC
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- CONTATO COM FORMULÁRIO -->
+    <section id="contato" class="contact-section py-24 lg:py-32 text-offwhite relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center contact-section-inner">
+
+            <div class="lg:col-span-5 flex flex-col justify-between">
+                <div>
+                    <span class="contact-eyebrow text-xs font-mono uppercase tracking-widest text-terracota mb-5">Vamos Conversar</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl lg:text-5xl font-bold text-offwhite mb-6 leading-[1.05]">
+                        Quer estruturar uma iniciativa socioambiental? <span class="italic text-terracota">Vamos conversar.</span>
+                    </h2>
+                    <p class="text-offwhite/80 text-base leading-relaxed mb-8 max-w-xl">
+                        Empresas, ONGs, órgãos públicos, universidades, pesquisadores, empreendedores e instituições de fomento: conte seu desafio, oportunidade ou ideia de parceria. Podemos conversar sobre sustentabilidade, descarbonização, formação, pesquisa, captação de recursos e projetos colaborativos.
+                    </p>
+                </div>
+
+                <div class="contact-email-card flex items-center gap-4">
+                    <div class="contact-email-icon w-12 h-12 rounded-2xl bg-secondary flex items-center justify-center text-terracota">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-offwhite/60 uppercase block">Contato institucional</span>
+                        <a href="mailto:contato@naqikarbon.com" class="font-medium text-offwhite hover:text-terracota transition-colors">contato@naqikarbon.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-panel lg:col-span-7 p-6 sm:p-10 lg:translate-y-3">
+                <form id="contact-form" action="https://formsubmit.co/naqikarbon@gmail.com" method="POST" class="space-y-5">
+                    <input type="hidden" name="_subject" value="[Contato Site] Nova mensagem do Instituto NaqīKarbon">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://naqikarbon.com/#contato">
+                    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+                    <div>
+                        <label for="name" class="contact-label">Seu Nome / Empresa *</label>
+                        <input type="text" id="name" name="name" autocomplete="name" required class="contact-field" placeholder="Nome completo ou da organização">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label for="email" class="contact-label">E-mail *</label>
+                            <input type="email" id="email" name="email" autocomplete="email" required class="contact-field" placeholder="seu@email.com">
+                        </div>
+                        <div>
+                            <label for="phone" class="contact-label">Telefone / WhatsApp (opcional)</label>
+                            <input type="tel" id="phone" name="phone" autocomplete="tel" class="contact-field" placeholder="(11) 99999-9999">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label for="profile" class="contact-label">Como você se identifica? *</label>
+                            <select id="profile" name="profile" required class="contact-field">
+                                <option value="" selected disabled>Selecione seu perfil</option>
+                                <option>Empresa</option>
+                                <option>ONG ou organização da sociedade civil</option>
+                                <option>Órgão público</option>
+                                <option>Universidade ou instituição de pesquisa</option>
+                                <option>Pesquisador ou especialista</option>
+                                <option>Empreendedor ou startup</option>
+                                <option>Instituição de fomento ou financiador</option>
+                                <option>Outro</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="interest" class="contact-label">Assunto do contato *</label>
+                            <select id="interest" name="interest" required class="contact-field">
+                                <option value="" selected disabled>Selecione um assunto</option>
+                                <option>Consultoria ESG</option>
+                                <option>Serviços técnicos e sustentabilidade organizacional</option>
+                                <option>Descarbonização e inovação</option>
+                                <option>Editais e oportunidades de financiamento</option>
+                                <option>Estruturação de projetos colaborativos</option>
+                                <option>Parcerias socioambientais</option>
+                                <option>Pesquisa e produção de conhecimento</option>
+                                <option>Educação, cursos e capacitações</option>
+                                <option>Outra iniciativa</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="message" class="contact-label">Mensagem, desafio ou oportunidade *</label>
+                        <textarea id="message" name="message" rows="4" required class="contact-field resize-y" placeholder="Conte um pouco sobre sua ideia, necessidade ou proposta de colaboração."></textarea>
+                    </div>
+                    <button type="submit" class="contact-submit font-medium">
+                        Enviar mensagem
+                    </button>
+                    <p class="text-xs text-darktext/65 leading-relaxed">Ao enviar, seus dados serão encaminhados diretamente para a caixa de entrada institucional.</p>
+                </form>
+
+                <!-- Feedback Message Box -->
+                <div id="form-feedback" class="hidden mt-6 p-5 rounded-xl bg-deep border border-terracota text-center text-offwhite" role="status" aria-live="polite">
+                    <i class="fa-solid fa-circle-check text-terracota text-2xl mb-2 block"></i>
+                    <p class="font-medium">Mensagem enviada.</p>
+                    <p class="text-xs text-offwhite/70 mt-1">Seu contato foi encaminhado ao Instituto.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    </main>
+
+    <!-- RODAPÉ COMPLETO EM 4 COLUNAS -->
+    <footer class="bg-deep text-offwhite/70 border-t border-offwhite/10 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-9 h-9 rounded-full overflow-hidden border border-terracota/50 bg-terracota flex items-center justify-center">
+                            <img src="https://media.licdn.com/dms/image/v2/D4D0BAQHofOBrFPC-VQ/company-logo_200_200/B4DZb0I5vlGkAI-/0/1747852697866/naqikarbon_logo?e=1796256000&v=beta&t=e_oYh92fA9fQeiKIt37ExJPtts0TJOU8WV6yVBt_KyI"
+                                 alt="Logo Instituto NaqīKarbon"
+                                 class="w-full h-full object-cover"
+                                 onerror="this.style.display='none';">
+                        </div>
+                        <span class="font-serif text-xl font-bold text-offwhite">Instituto NaqīKarbon</span>
+                    </div>
+                    <p class="text-sm text-offwhite/60 leading-relaxed mb-6">
+                        Ciência, inovação e compromisso socioambiental para conectar conhecimento, organizações e iniciativas.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-serif text-lg font-bold text-offwhite mb-4">Navegação</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#atuacao" class="hover:text-terracota transition-colors">Nossa atuação</a></li>
+                        <li><a href="#articulacao" class="hover:text-terracota transition-colors">Articulação e projetos</a></li>
+                        <li><a href="#servicos" class="hover:text-terracota transition-colors">Serviços técnicos</a></li>
+                        <li><a href="#metodologia" class="hover:text-terracota transition-colors">Como trabalhamos</a></li>
+                        <li><a href="#conhecimento" class="hover:text-terracota transition-colors">Reports & NaqīLetter</a></li>
+                        <li><a href="https://naqikarbon.com/insights/" target="_blank" rel="noopener noreferrer" class="hover:text-terracota transition-colors">Blog</a></li>
+                        <li><a href="#redes" class="hover:text-terracota transition-colors">Redes e conexões</a></li>
+                        <li><a href="#diferenciais" class="hover:text-terracota transition-colors">Diferenciais</a></li>
+                        <li><a href="#sobre" class="hover:text-terracota transition-colors">Sobre</a></li>
+                        <li><a href="#contato" class="hover:text-terracota transition-colors">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-serif text-lg font-bold text-offwhite mb-4">Serviços & Frentes</h4>
+                    <ul class="space-y-3 text-sm text-offwhite/60">
+                        <li>Diagnóstico e Planejamento</li>
+                        <li>Projetos de Descarbonização</li>
+                        <li>Pesquisa, Palestras e Treinamentos</li>
+                        <li>Inovação Ambiental</li>
+                        <li>Financiamento Climático e Recursos</li>
+                        <li>Articulação de Projetos</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-serif text-lg font-bold text-offwhite mb-4">Contato Direto</h4>
+                    <p class="text-sm text-offwhite/60 mb-2">E-mail oficial:</p>
+                    <a href="mailto:contato@naqikarbon.com" class="text-sm font-medium text-offwhite hover:text-terracota transition-colors block mb-4">contato@naqikarbon.com</a>
+                    <a href="https://www.linkedin.com/company/naqikarbon/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-terracota font-bold hover:text-offwhite transition-colors">
+                        <i class="fa-brands fa-linkedin"></i> LinkedIn Institucional
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-offwhite/10 flex flex-col sm:flex-row items-center justify-between text-xs text-offwhite/50 gap-4">
+                <p>&copy; 2026 Instituto NaqīKarbon. Todos os direitos reservados.</p>
+                <p>Ciência · Inovação · Compromisso Socioambiental</p>
+                <a href="politica-de-privacidade.html" class="hover:text-offwhite transition-colors">Política de privacidade</a>
+            </div>
+        </div>
+    </footer>
+
+    <section class="market-strip" aria-label="Indicadores de mercado">
+        <div class="market-strip-inner">
+            <div class="market-strip-widget" role="region" aria-label="Cotações de referência, incluindo o Índice Carbono Eficiente da B3">
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                    <div class="tradingview-widget-container__widget" style="height:calc(100% - 18px);width:100%">
+                        <span class="market-strip-placeholder">Carregando cotações…</span>
+                    </div>
+                    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" target="_blank" rel="noopener nofollow">TradingView</a></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                    {
+                        "symbols": [
+                            { "proName": "BMFBOVESPA:ICO2", "title": "ICO2 B3" },
+                            { "proName": "FX_IDC:XAUUSD", "title": "Ouro (USD/oz)" },
+                            { "proName": "BMFBOVESPA:SJC1!", "title": "Soja (B3)" },
+                            { "proName": "BMFBOVESPA:CCM1!", "title": "Milho (B3)" },
+                            { "proName": "BMFBOVESPA:BGI1!", "title": "Boi gordo (B3)" },
+                            { "proName": "BMFBOVESPA:ICF1!", "title": "Café arábica (B3)" },
+                            { "proName": "FX_IDC:USDBRL", "title": "Dólar / real" },
+                            { "proName": "FX_IDC:EURBRL", "title": "Euro / real" },
+                            { "proName": "FX_IDC:GBPBRL", "title": "Libra / real" },
+                            { "proName": "FX_IDC:USDCNH", "title": "Dólar / yuan offshore" },
+                            { "proName": "BMFBOVESPA:PETR4", "title": "Petrobras" },
+                            { "proName": "BMFBOVESPA:WEGE3", "title": "WEG3" },
+                            { "proName": "BMFBOVESPA:EGIE3", "title": "ENGIE" }
+                        ],
+                        "showSymbolLogo": false,
+                        "isTransparent": true,
+                        "displayMode": "adaptive",
+                        "colorTheme": "light",
+                        "locale": "br"
+                    }
+                    </script>
+                </div>
+            </div>
+        </div>
+        <p class="market-strip-note">Dados do TradingView; cotações da B3 podem ter atraso. Conteúdo informativo, sem recomendação de investimento.</p>
+    </section>
+
+    <!-- Scripts de Interação -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function setMobileMenuOpen(isOpen, returnFocus = false) {
+            mobileMenu.classList.toggle('translate-x-full', !isOpen);
+            mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+            mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+            mobileMenu.inert = !isOpen;
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+
+            if (isOpen) {
+                mobileMenuClose.focus({ preventScroll: true });
+            } else if (returnFocus) {
+                mobileMenuBtn.focus({ preventScroll: true });
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = mobileMenuBtn.getAttribute('aria-expanded') !== 'true';
+            setMobileMenuOpen(isOpen);
+        });
+
+        mobileMenuClose.addEventListener('click', () => setMobileMenuOpen(false, true));
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                window.setTimeout(() => setMobileMenuOpen(false, true), 0);
+            });
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && mobileMenuBtn.getAttribute('aria-expanded') === 'true') {
+                setMobileMenuOpen(false, true);
+            }
+        });
+
+        const networkMarquee = document.querySelector('.network-marquee');
+        const networkMotionToggle = document.getElementById('network-motion-toggle');
+
+        if (networkMarquee && networkMotionToggle) {
+            networkMotionToggle.addEventListener('click', () => {
+                const isPaused = networkMarquee.classList.toggle('is-paused');
+                networkMotionToggle.setAttribute('aria-pressed', String(isPaused));
+                networkMotionToggle.textContent = isPaused
+                    ? 'Retomar movimento das logos'
+                    : 'Pausar movimento das logos';
+            });
+        }
+
+        const header = document.getElementById('header');
+        const updateHeaderAppearance = () => {
+            const isScrolled = window.scrollY > 50;
+            header.classList.toggle('shadow-md', isScrolled);
+            header.classList.toggle('bg-warm/95', isScrolled);
+            header.classList.toggle('bg-warm/90', !isScrolled);
+        };
+
+        window.addEventListener('scroll', updateHeaderAppearance, { passive: true });
+        updateHeaderAppearance();
+    </script>
+</body>
+</html>

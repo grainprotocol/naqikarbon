@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://naqikarbon.com/sitemap.xml
