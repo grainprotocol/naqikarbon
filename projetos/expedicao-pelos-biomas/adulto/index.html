@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expedição pelos Biomas do Brasil — NaqīKarbon GameQuiz</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            naqi: {
+              forest: '#173B32',
+              forestDark: '#0F2922',
+              paper: '#F6F3EC',
+              paperDark: '#EAE4D7',
+              terracotta: '#C86D51',
+              terracottaDark: '#A8553C',
+              ink: '#1E2926',
+              muted: '#52605C',
+              amazonia: '#1E5631',
+              caatinga: '#D98A3C',
+              cerrado: '#B5651D',
+              mataAtlantica: '#2E7D32',
+              pantanal: '#2B7A78',
+              pampa: '#6B8E23'
+            }
+          },
+          fontFamily: {
+            serif: ['Fraunces', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background-color: #F6F3EC;
+      color: #1E2926;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-image: radial-gradient(rgba(23, 59, 50, 0.06) 1px, transparent 1px);
+      background-size: 20px 20px;
+      overflow-x: hidden;
+    }
+    .font-atlas { font-family: 'Fraunces', Georgia, serif; }
+    .biome-poly {
+      transition: fill-opacity 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease, transform 0.25s ease;
+      cursor: pointer;
+    }
+    .biome-poly:hover {
+      filter: brightness(1.08);
+      stroke-width: 2.5px;
+    }
+    .biome-active {
+      stroke: #173B32 !important;
+      stroke-width: 3px !important;
+      filter: drop-shadow(0 4px 10px rgba(23, 59, 50, 0.28));
+    }
+    .species-pin {
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .species-pin:hover {
+      transform: scale(1.18);
+    }
+    .card-shadow {
+      box-shadow: 0 10px 30px -10px rgba(23, 59, 50, 0.12), 0 2px 6px -1px rgba(23, 59, 50, 0.06);
+    }
+    .fade-in {
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: #EAE4D7; border-radius: 99px; }
+    ::-webkit-scrollbar-thumb { background: #9AA8A3; border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: #173B32; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-naqi-terracotta selection:text-white">
+
+  <!-- ===================================================================== -->
+  <!-- TOP INSTITUTIONAL BAR & EXPEDITION TELEMETRY                          -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-30 bg-naqi-forest text-naqi-paper border-b border-white/10 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <button onclick="app.goToScreen('intro')" class="flex items-center gap-2.5 text-left group focus:outline-none" title="Voltar ao início da expedição">
+          <div class="w-9 h-9 rounded-xl bg-naqi-terracotta flex items-center justify-center text-white shadow-inner group-hover:scale-105 transition-transform">
+            <!-- Custom Compass/Leaf Emblem -->
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-[11px] uppercase tracking-widest text-naqi-paper/75 font-semibold">
+              NaqīKarbon • Educação Científica &amp; Socioambiental | Jogo 04
+            </div>
+            <div class="font-atlas text-base sm:text-lg font-semibold leading-tight text-white">
+              Expedição pelos Biomas do Brasil
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <!-- Navigation Pills & Telemetry -->
+      <div id="header-telemetry" class="hidden items-center gap-2 sm:gap-4 flex-wrap">
+        <div class="flex items-center gap-3 bg-white/10 px-3 py-1.5 rounded-xl text-xs sm:text-sm">
+          <span class="flex items-center gap-1.5" title="Biomas explorados no atlas">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            Biomas: <strong id="stat-biomes">0/6</strong>
+          </span>
+          <span class="text-white/30">|</span>
+          <span class="flex items-center gap-1.5" title="Fichas de espécies investigadas">
+            <span class="w-2 h-2 rounded-full bg-amber-300"></span>
+            Espécies: <strong id="stat-species">0/12</strong>
+          </span>
+          <span class="text-white/30">|</span>
+          <span class="flex items-center gap-1.5" title="Pontos acumulados nos desafios">
+            <span class="w-2 h-2 rounded-full bg-naqi-terracotta"></span>
+            Pontos: <strong id="stat-points">0</strong>
+          </span>
+        </div>
+
+        <nav class="flex items-center gap-1 bg-naqi-forestDark/70 p-1 rounded-xl border border-white/10 text-xs font-medium">
+          <button onclick="app.goToScreen('map')" id="nav-map" class="px-2.5 py-1.5 rounded-lg transition-colors">1. Atlas</button>
+          <button onclick="app.goToScreen('minigames')" id="nav-minigames" class="px-2.5 py-1.5 rounded-lg transition-colors">2. Minijogos</button>
+          <button onclick="app.goToScreen('discovery')" id="nav-discovery" class="px-2.5 py-1.5 rounded-lg transition-colors">3. Descobertas</button>
+          <button onclick="app.goToScreen('results')" id="nav-results" class="px-2.5 py-1.5 rounded-lg transition-colors">4. Relatório</button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- MAIN APPLICATION CONTAINER                                            -->
+  <!-- ===================================================================== -->
+  <main id="app-root" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    <!-- Screens rendered dynamically by modular JS controller -->
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- SPECIES MODAL (ETAPA 2 — CARTÃO ILUSTRADO DE ESPÉCIE)                 -->
+  <!-- ===================================================================== -->
+  <div id="species-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-naqi-forestDark/75 backdrop-blur-sm p-3 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true">
+    <div id="species-modal-content" class="bg-naqi-paper border border-naqi-forest/15 rounded-3xl max-w-3xl w-full max-h-[92vh] overflow-y-auto shadow-2xl relative fade-in">
+      <!-- Populated via JS -->
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- SCIENTIFIC SOURCES MODAL                                              -->
+  <!-- ===================================================================== -->
+  <div id="sources-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-naqi-forestDark/75 backdrop-blur-sm p-3 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true">
+    <div id="sources-modal-content" class="bg-naqi-paper border border-naqi-forest/15 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 sm:p-8 relative fade-in">
+      <!-- Populated via JS -->
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- NON-INTRUSIVE TOAST NOTIFICATION (REPLACES ALERT)                     -->
+  <!-- ===================================================================== -->
+  <div id="toast-box" class="fixed bottom-5 right-5 z-50 pointer-events-none opacity-0 transition-all duration-300 translate-y-3">
+    <div id="toast-message" class="bg-naqi-forest text-white px-4 py-3 rounded-2xl shadow-xl border border-white/15 text-sm font-medium flex items-center gap-2.5"></div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- FOOTER                                                                -->
+  <!-- ===================================================================== -->
+  <footer class="border-t border-naqi-forest/10 bg-naqi-paperDark/60 py-4 px-4 sm:px-6 text-xs text-naqi-muted">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div>
+        <strong class="text-naqi-forest">Instituto NaqīKarbon</strong> — Coleção GameQuiz (Jogo 04: Expedição pelos Biomas do Brasil). Base cartográfica e conceitual fundamentada no IBGE, ICMBio, MMA e Embrapa.
+      </div>
+      <div class="flex items-center gap-4">
+        <button onclick="app.openSourcesModal()" class="underline hover:text-naqi-forest font-semibold">Fontes Científicas</button>
+        <span>Sem coleta de dados pessoais</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- MODULAR DATA & APPLICATION ENGINE                                     -->
+  <!-- ===================================================================== -->
+  <script>
+    /**
+     * =========================================================================
+     * 1. ESTRUTURA DE DADOS INDEPENDENTE DA UI (CURADORIA CIENTÍFICA)
+     * Permite expandir facilmente novas espécies, perguntas e fontes no futuro.
+     * =========================================================================
+     */
+
+    const BIOMES_DATA = [
+      {
+        id: 'amazonia',
+        name: 'Amazônia',
+        color: '#1E5631',
+        lightBg: '#E7F3EB',
+        areaPct: '~49% do território nacional',
+        shortTag: 'Florestas tropicais e bacia hidrográfica',
+        vegetation: 'Florestas tropicais densas e abertas (terra firme, várzea e igapó), campinaranas, rios extensos, áreas alagáveis e altíssima diversidade vegetal estratificada.',
+        climate: 'Predominantemente equatorial quente e úmido, com elevados índices pluviométricos e variações sazonais e regionais entre períodos mais chuvosos e menos chuvosos.',
+        climateMetric: '25°C a 28°C • Chuvas: 1.800–3.000 mm/ano',
+        hydrologySoil: 'Maior bacia hidrográfica do planeta; solos predominantemente profundos e ácidos (latossolos e argissolos), sustentados pela ciclagem rápida da serrapilheira.',
+        internalVariations: 'Inclui desde florestas de terra firme até ecossistemas sazonalmente inundados (várzeas de águas brancas e igapós de águas pretas), além de enclaves de savanas amazônicas.',
+        // Coordenadas cartográficas estilizadas fiéis à macro-delimitação IBGE (viewBox 0 0 600 600)
+        svgPath: 'M 72,155 L 115,112 L 155,74 L 195,58 L 238,54 L 266,85 L 298,74 L 325,52 L 352,85 L 368,125 L 388,150 L 372,190 L 348,225 L 322,258 L 285,268 L 250,255 L 210,262 L 165,248 L 118,246 L 85,228 L 58,204 Z',
+        labelPos: { x: 215, y: 162 },
+        climateIcon: 'rain'
+      },
+      {
+        id: 'caatinga',
+        name: 'Caatinga',
+        color: '#D98A3C',
+        lightBg: '#FDF3E7',
+        areaPct: '~10% do território nacional',
+        shortTag: 'Vegetação xerófita e semiárido',
+        vegetation: 'Vegetação adaptada à escassez hídrica, plantas xerófitas (cactáceas, bromeliáceas, arbustos espinhosos e árvores caducifólias que perdem folhas na seca) e paisagens sazonais.',
+        climate: 'Predominantemente semiárido, com temperaturas elevadas e chuvas irregulares concentradas em poucos meses do ano.',
+        climateMetric: '26°C a 30°C • Chuvas: 300–800 mm/ano',
+        hydrologySoil: 'Rios majoritariamente intermitentes (temporários), exceto grandes cursos perenes como o São Francisco; solos rasos, pedregosos e ricos em minerais.',
+        internalVariations: 'Apresenta mosaicos que vão desde depressões sertanejas secas até brejos de altitude úmidos e áreas de carrasco e raso arenoso (como o Raso da Catarina).',
+        svgPath: 'M 432,148 L 485,152 L 535,172 L 552,195 L 532,222 L 512,258 L 485,288 L 452,292 L 430,262 L 424,218 L 418,180 Z',
+        labelPos: { x: 482, y: 215 },
+        climateIcon: 'sun'
+      },
+      {
+        id: 'cerrado',
+        name: 'Cerrado',
+        color: '#B5651D',
+        lightBg: '#F9EFE6',
+        areaPct: '~23% do território nacional',
+        shortTag: 'Savanas, campos e matas de galeria',
+        vegetation: 'Mosaico de savanas, campos limpos e sujos, árvores tortuosas com casca espessa (suberosa) e raízes profundas, além de matas de galeria acompanhando os cursos d’água.',
+        climate: 'Tropical sazonal, geralmente marcado por duas estações bem definidas: uma estação chuvosa (verão) e uma estação seca rigorosa (inverno).',
+        climateMetric: '22°C a 27°C • Chuvas: 1.200–1.800 mm/ano',
+        hydrologySoil: 'Conhecido como "berço das águas", abastece nascentes de grandes bacias (Amazônica, Tocantins-Araguaia, São Francisco e Platina); solos antigos e ácidos.',
+        internalVariations: 'Varia de formações campestres abertas (campo rupestre, campo limpo) a formações savânicas (cerrado stricto sensu) e florestais (cerradão e matas ciliares).',
+        svgPath: 'M 322,258 L 348,225 L 372,190 L 388,150 L 432,148 L 418,180 L 424,218 L 430,262 L 452,292 L 442,338 L 405,368 L 368,395 L 332,390 L 308,358 L 288,325 L 285,268 Z',
+        labelPos: { x: 368, y: 285 },
+        climateIcon: 'seasonal'
+      },
+      {
+        id: 'mata_atlantica',
+        name: 'Mata Atlântica',
+        color: '#2E7D32',
+        lightBg: '#E8F5E9',
+        areaPct: '~13% do território nacional',
+        shortTag: 'Florestas úmidas, restingas e manguezais',
+        vegetation: 'Florestas tropicais e subtropicais ombrófilas e estacionais, florestas com araucárias, campos de altitude, restingas e manguezais associados à faixa litorânea e serras.',
+        climate: 'Predominantemente úmido, influenciado pela umidade oceânica, com variações importantes de latitude (do Nordeste ao Sul) e altitude (serras litorâneas).',
+        climateMetric: '18°C a 25°C • Chuvas: 1.400–2.500 mm/ano',
+        hydrologySoil: 'Relevo acidentado (Serras do Mar e da Mantiqueira) com densa rede de rios costeiros e interiores; alta vulnerabilidade à erosão quando desmatada.',
+        internalVariations: 'Abrange desde matas de tabuleiros no Nordeste até florestas montanas no Sudeste e florestas ombrófilas mistas (araucárias) no Sul.',
+        svgPath: 'M 535,172 L 560,192 L 556,232 L 534,272 L 508,318 L 485,365 L 448,402 L 408,432 L 382,468 L 352,482 L 340,455 L 368,425 L 368,395 L 405,368 L 442,338 L 452,292 L 485,288 L 512,258 L 532,222 L 552,195 Z',
+        labelPos: { x: 468, y: 358 },
+        climateIcon: 'humid'
+      },
+      {
+        id: 'pantanal',
+        name: 'Pantanal',
+        color: '#2B7A78',
+        lightBg: '#E6F4F3',
+        areaPct: '~1,8% do território nacional',
+        shortTag: 'Planícies inundáveis e pulso de cheia',
+        vegetation: 'Planícies inundáveis com mosaico de campos naturais, cordilheiras arbóreas, matas ciliares, lagoas (baías e salinas) e plantas aquáticas diversificadas.',
+        climate: 'Tropical continental, regido por períodos marcados de cheia e seca que transformam radicalmente a paisagem ao longo do ano.',
+        climateMetric: '24°C a 28°C • Pulso sazonal de inundação',
+        hydrologySoil: 'Maior planície alagável contínua do mundo (bacia do Alto Paraguai); o relevo plano e a baixa declividade retardam o escoamento das águas.',
+        internalVariations: 'Sub-regiões com diferentes intensidades de inundação (como Nhecolândia, Abobral, Miranda e Poconé), conectando influências da Amazônia, Cerrado e Chaco.',
+        svgPath: 'M 250,255 L 285,268 L 288,325 L 308,358 L 285,378 L 258,362 L 245,320 L 246,282 Z',
+        labelPos: { x: 272, y: 322 },
+        climateIcon: 'water'
+      },
+      {
+        id: 'pampa',
+        name: 'Pampa',
+        color: '#6B8E23',
+        lightBg: '#F1F6E6',
+        areaPct: '~2,1% do território nacional',
+        shortTag: 'Campos sulinos, coxilhas e banhados',
+        vegetation: 'Campos naturais dominados por gramíneas e herbáceas sobre relevo ondulado (coxilhas), intercalados por banhados e matas ciliares.',
+        climate: 'Subtropical úmido, com sazonalidade térmica bem marcada (verões quentes e invernos frios, com ocorrência de geadas) e chuvas distribuídas ao longo do ano.',
+        climateMetric: '14°C a 22°C • Quatro estações bem definidas',
+        hydrologySoil: 'Solos férteis em áreas planas a onduladas; presença de áreas úmidas (banhados) fundamentais para aves migratórias e mamíferos campestres.',
+        internalVariations: 'Inclui campos de solos profundos, campos arenosos, áreas úmidas litorâneas e formações arbustivas associadas a cursos d’água.',
+        svgPath: 'M 332,472 L 352,482 L 382,468 L 368,512 L 336,548 L 304,528 L 288,498 L 312,476 Z',
+        labelPos: { x: 334, y: 508 },
+        climateIcon: 'wind'
+      }
+    ];
+
+    const SPECIES_DATA = [
+      {
+        id: 'boto_cor_de_rosa',
+        commonName: 'Boto-cor-de-rosa',
+        scientificName: 'Inia geoffrensis',
+        category: 'Mamífero aquático • Piscívoro',
+        biomes: ['amazonia'],
+        primaryBiome: 'amazonia',
+        pinPos: { x: 185, y: 145 },
+        dietTag: 'Peixes de água doce',
+        habitat: 'Rios de águas brancas, pretas e claras, canais, lagos e florestas inundadas (várzea e igapó) na bacia Amazônica.',
+        diet: 'Alimenta-se de grande variedade de peixes (mais de 40 espécies registradas, incluindo bagres e caracídeos), além de eventuais crustáceos e pequenas tartarugas.',
+        behaviorAdaptation: 'Possui vértebras cervicais não fusionadas, permitindo flexionar o pescoço para manobrar entre troncos submersos durante a cheia; utiliza ecolocalização refinada em águas turvas.',
+        ecologicalRole: 'Predador de topo nos ecossistemas aquáticos amazônicos, regulando populações de peixes e atuando como indicador da saúde dos rios.',
+        conservation: 'Em Perigo (EN) — ameaçado pela captura acidental em redes de pesca, pesca dirigida para isca, barragens hidrelétricas e contaminação por mercúrio.',
+        didYouKnow: 'A coloração rosada intensifica-se nos machos adultos devido à vascularização superficial e à abrasão da pele durante interações sociais.',
+        source: 'ICMBio — Plano de Ação Nacional para Conservação dos Mamíferos Aquáticos Amazônicos / IUCN Red List.'
+      },
+      {
+        id: 'ariranha',
+        commonName: 'Ariranha',
+        scientificName: 'Pteronura brasiliensis',
+        category: 'Mamífero semiaquático • Carnívoro',
+        biomes: ['amazonia', 'pantanal', 'cerrado'],
+        primaryBiome: 'amazonia',
+        pinPos: { x: 245, y: 195 },
+        dietTag: 'Peixes e crustáceos',
+        habitat: 'Rios de curso lento, igarapés, corixos, lagoas marginais e áreas alagáveis com barrancos preservados para escavação de tocas.',
+        diet: 'Predominantemente piscívora (consome grandes quantidades de peixes como traíras, pacus e bagres), complementando a dieta com crustáceos e pequenos vertebrados aquáticos.',
+        behaviorAdaptation: 'Vive em grupos familiares coesos e vocalizadores; possui membranas interdigitais completas, cauda achatada como leme e pelagem densa impermeável.',
+        ecologicalRole: 'Predadora de topo de ambientes dulcícolas; sua presença indica rios com boa oferta pesqueira e margens florestais conservadas.',
+        conservation: 'Em Perigo (EN) / Vulnerável (VU) conforme avaliação regional — historicamente caçada por sua pele, hoje sofre com perda de habitat, poluição e conflitos com pesca.',
+        didYouKnow: 'Cada ariranha possui uma mancha branca ou creme única na garganta, funcionando como uma "impressão digital" usada por pesquisadores para identificá-las.',
+        source: 'ICMBio — Avaliação do Risco de Extinção da Ariranha (Pteronura brasiliensis) no Brasil.'
+      },
+      {
+        id: 'arara_azul_de_lear',
+        commonName: 'Arara-azul-de-lear',
+        scientificName: 'Anodorhynchus leari',
+        category: 'Ave • Frugívora especialista',
+        biomes: ['caatinga'],
+        primaryBiome: 'caatinga',
+        pinPos: { x: 492, y: 245 },
+        dietTag: 'Frutos da palmeira licuri',
+        habitat: 'Endêmica da Caatinga baiana (especialmente na região do Raso da Catarina), utilizando paredões rochosos de arenito como dormitórios e locais de nidificação.',
+        diet: 'Tem o fruto da palmeira licuri (Syagrus coronata) como sua principal fonte alimentar, complementando ocasionalmente com flores, sementes e brotos nativos.',
+        behaviorAdaptation: 'Bico extremamente robusto adaptado para romper o endocarpo duro dos coquinhos de licuri; realiza deslocamentos diários entre os paredões rochosos e as áreas de alimentação.',
+        ecologicalRole: 'Dispersora e predadora de sementes do licuri, influenciando diretamente a regeneração e estrutura das populações dessa palmeira na Caatinga.',
+        conservation: 'Em Perigo (EN) — recuperou-se de menos de 100 indivíduos na década de 1980 para mais de 2.000 graças ao manejo e proteção, mas ainda depende da conservação dos licurizais.',
+        didYouKnow: 'A disponibilidade da palmeira licuri está diretamente ligada à sobrevivência reprodutiva da arara-azul-de-lear no semiárido.',
+        source: 'ICMBio — Plano de Ação Nacional para a Conservação da Arara-azul-de-lear (PAN Arara-azul-de-lear).'
+      },
+      {
+        id: 'moco',
+        commonName: 'Mocó',
+        scientificName: 'Kerodon rupestris',
+        category: 'Mamífero roedor • Herbívoro',
+        biomes: ['caatinga'],
+        primaryBiome: 'caatinga',
+        pinPos: { x: 465, y: 185 },
+        dietTag: 'Folhas, brotos e cascas xerófitas',
+        habitat: 'Afloramentos rochosos, serrotes e lajedos pedregosos no interior da Caatinga, onde as fendas entre rochas oferecem abrigo contra predadores e calor extremo.',
+        diet: 'Herbívoro adaptado à vegetação da Caatinga: consome folhas, brotos, flores, frutos e cascas de arbustos e árvores nativas, obtendo grande parte da água dos próprios alimentos.',
+        behaviorAdaptation: 'Não possui cauda aparente e apresenta almofadas plantares acolchoadas com unhas rombudas (semelhantes a pequenos cascos) que garantem aderência excepcional nas rochas.',
+        ecologicalRole: 'Presa importante para aves de rapina, serpentes e carnívoros silvestres da Caatinga, além de atuar na herbivoria seletiva de plantas rupestres.',
+        conservation: 'Vulnerável (VU) no Brasil — afetado pela caça de subsistência ilegal e pela fragmentação de ambientes rochosos.',
+        didYouKnow: 'O mocó é um excelente escalador de rochas verticais e consegue saltar com precisão entre blocos de granito no semiárido.',
+        source: 'ICMBio — Livro Vermelho da Fauna Brasileira Ameaçada de Extinção (Kerodon rupestris).'
+      },
+      {
+        id: 'lobo_guara',
+        commonName: 'Lobo-guará',
+        scientificName: 'Chrysocyon brachyurus',
+        category: 'Mamífero canídeo • Onívoro',
+        biomes: ['cerrado', 'mata_atlantica', 'pampa', 'pantanal'],
+        primaryBiome: 'cerrado',
+        pinPos: { x: 365, y: 318 },
+        dietTag: 'Frutos (lobeira) e pequenos vertebrados',
+        habitat: 'Campos abertos, savanas, veredas e áreas de transição campestre-florestal; ocorre no Cerrado, Mata Atlântica, Pampa e Pantanal (não é exclusivo do Cerrado!).',
+        diet: 'Onívoro generalista: cerca de metade de sua dieta é composta por frutos — destacando-se a lobeira (Solanum lycocarpum) — além de pequenos roedores, aves, répteis e insetos.',
+        behaviorAdaptation: 'Pernas longas e esguias adaptadas para deslocamento eficiente e visibilidade acima das gramíneas altas; hábitos predominantemente crepusculares e noturnos.',
+        ecologicalRole: 'Essencial dispersor de sementes da lobeira e outras plantas campestres: a passagem pelo trato digestivo aumenta a germinação das sementes depositadas em formigueiros.',
+        conservation: 'Vulnerável (VU) — ameaçado pela conversão de campos nativos em monoculturas, atropelamentos em rodovias e doenças transmitidas por cães domésticos.',
+        didYouKnow: 'Embora seja símbolo do Cerrado, o lobo-guará possui ocorrência confirmada pelo ICMBio também na Mata Atlântica, no Pampa e no Pantanal.',
+        source: 'ICMBio — Plano de Ação Nacional para a Conservação dos Canídeos Silvestres / MMA.'
+      },
+      {
+        id: 'tamandua_bandeira',
+        commonName: 'Tamanduá-bandeira',
+        scientificName: 'Myrmecophaga tridactyla',
+        category: 'Mamífero xenartro • Insetívoro',
+        biomes: ['amazonia', 'caatinga', 'cerrado', 'mata_atlantica', 'pantanal', 'pampa'],
+        primaryBiome: 'cerrado',
+        pinPos: { x: 325, y: 268 },
+        dietTag: 'Formigas e cupins',
+        habitat: 'Ocorre em diferentes ambientes e nos seis biomas continentais brasileiros (Amazônia, Caatinga, Cerrado, Mata Atlântica, Pantanal e Pampa), usando áreas abertas para forragear e matas para abrigo.',
+        diet: 'Especialista mirmecófago: alimenta-se principalmente de formigas e cupins, capturando milhares de insetos por dia com sua língua longa e pegajosa (até 60 cm).',
+        behaviorAdaptation: 'Possui baixa taxa metabólica e temperatura corporal reduzida (~32,7°C), tornando-se dependente de ambientes florestais como refúgio térmico; garras dianteiras curvas protegem-se ao caminhar sobre os nós dos dedos.',
+        ecologicalRole: 'Controlador natural de populações de formigas e cupins em diferentes ecossistemas brasileiros.',
+        conservation: 'Vulnerável (VU) — fortemente impactado por atropelamentos, incêndios florestais, perda de habitat e ataques por cães.',
+        didYouKnow: 'O tamanduá-bandeira não deve ser representado como exclusivo do Cerrado: ele ocorre nos seis biomas brasileiros e depende de refúgios florestais para regular sua temperatura.',
+        source: 'ICMBio — Programa de Manejo Populacional do Tamanduá-bandeira (Myrmecophaga tridactyla).'
+      },
+      {
+        id: 'mico_leao_dourado',
+        commonName: 'Mico-leão-dourado',
+        scientificName: 'Leontopithecus rosalia',
+        category: 'Primata • Onívoro / Frugívoro',
+        biomes: ['mata_atlantica'],
+        primaryBiome: 'mata_atlantica',
+        pinPos: { x: 472, y: 382 },
+        dietTag: 'Frutos, néctar, insetos e pequenos vertebrados',
+        habitat: 'Florestas ombrófilas densas de baixada e encosta na Mata Atlântica do estado do Rio de Janeiro (bacia do rio São João), utilizando ocos de árvores como abrigo noturno.',
+        diet: 'Alimenta-se de frutos maduros, néctar de flores, goma de árvores, insetos, aranhas e pequenos vertebrados (pererecas e lagartos) escondidos em bromélias.',
+        behaviorAdaptation: 'Dedos alongados e garras modificadas (tégulas) permitem explorar fendas de cascas e bromélias epífitas; vive em grupos familiares cooperativos no cuidado com os filhotes.',
+        ecologicalRole: 'Dispersor de sementes de árvores nativas da Mata Atlântica e espécie bandeira para a restauração de corredores florestais.',
+        conservation: 'Em Perigo (EN) — símbolo histórico da conservação brasileira; o plantio de corredores ecológicos tem reconectado fragmentos florestais.',
+        didYouKnow: 'Dormir dentro de ocos de árvores protegidos reduz o risco de predação noturna e ajuda a conservar energia.',
+        source: 'ICMBio — Plano de Ação Nacional para Conservação dos Primatas da Mata Atlântica (PAN PPMA).'
+      },
+      {
+        id: 'muriqui',
+        commonName: 'Muriqui (Mono-carvoeiro)',
+        scientificName: 'Brachyteles hypoxanthus / Brachyteles arachnoides',
+        category: 'Maior primata das Américas • Folívoro-frugívoro',
+        biomes: ['mata_atlantica'],
+        primaryBiome: 'mata_atlantica',
+        pinPos: { x: 432, y: 398 },
+        dietTag: 'Folhas, frutos e flores do dossel',
+        habitat: 'Florestas maduras e contínuas do dossel da Mata Atlântica (Sudeste e Sul do Brasil), especialmente em regiões serranas.',
+        diet: 'Dieta baseada em folhas jovens e maduras, frutos sazonais, flores e brotos coletados nas copas das árvores.',
+        behaviorAdaptation: 'Cauda preênsil com almofada tátil na ponta funciona como um "quinto membro" para braquiação no dossel; apresenta sociedade igualitária e pacífica.',
+        ecologicalRole: 'Importante dispersor de sementes de grande porte na Mata Atlântica, essencial para a regeneração de árvores do dossel.',
+        conservation: 'Criticamente em Perigo (CR — muriqui-do-norte) e Em Perigo (EN — muriqui-do-sul), devido à fragmentação histórica da Mata Atlântica.',
+        didYouKnow: 'Os muriquis são os maiores primatas não humanos das Américas e dependem de florestas contínuas para se deslocar pelo alto das árvores.',
+        source: 'ICMBio — Plano de Ação Nacional para a Conservação dos Muriquis.'
+      },
+      {
+        id: 'tuiuiu',
+        commonName: 'Tuiuiú (Jaburu)',
+        scientificName: 'Jabiru mycteria',
+        category: 'Ave ciconiforme • Piscívoro / Carnívoro',
+        biomes: ['pantanal', 'cerrado', 'amazonia'],
+        primaryBiome: 'pantanal',
+        pinPos: { x: 266, y: 312 },
+        dietTag: 'Peixes, moluscos e anfíbios',
+        habitat: 'Áreas úmidas abertas, baías, vazantes, rios e planícies inundáveis do Pantanal, ocorrendo também em áreas úmidas do Cerrado e da Amazônia.',
+        diet: 'Consome principalmente peixes (como mussuns e pequenos bagres), além de moluscos, crustáceos, anfíbios e insetos aquáticos capturados em águas rasas.',
+        behaviorAdaptation: 'Pernas muito longas e bico robusto ligeiramente recurvado para cima permitem caminhar em áreas alagadas e capturar presas na água turva durante a vazante.',
+        ecologicalRole: 'Indicador ecológico da dinâmica de inundação e da produtividade pesqueira das planícies alagáveis.',
+        conservation: 'Pouco Preocupante (LC) globalmente, mas sensível a alterações nos regimes hídricos, drenagem de áreas úmidas e queimadas.',
+        didYouKnow: 'Constrói ninhos gigantescos no topo de árvores altas (como o piúva e o manduvi), reutilizados e ampliados por vários anos consecutivos.',
+        source: 'ICMBio / WikiAves / Embrapa Pantanal — Fauna das Áreas Úmidas.'
+      },
+      {
+        id: 'cervo_do_pantanal',
+        commonName: 'Cervo-do-pantanal',
+        scientificName: 'Blastocerus dichotomus',
+        category: 'Maior cervídeo da América do Sul • Herbívoro',
+        biomes: ['pantanal', 'cerrado', 'mata_atlantica'],
+        primaryBiome: 'pantanal',
+        pinPos: { x: 282, y: 345 },
+        dietTag: 'Plantas aquáticas e brotos palustres',
+        habitat: 'Várzeas, brejos, margens de rios e planícies alagadas com vegetação emergente no Pantanal, Cerrado e remanescentes úmidos da Mata Atlântica.',
+        diet: 'Herbívoro seletivo: alimenta-se de macrófitas aquáticas, gramíneas palustres, brotos e folhas de arbustos das áreas úmidas.',
+        behaviorAdaptation: 'Cascos alongados unidos por membranas interdigitais elásticas aumentam a área de apoio e evitam que o animal afunde em solos encharcados e lodosos.',
+        ecologicalRole: 'Modelador da vegetação aquática e palustre; sensível às mudanças no pulso de inundação.',
+        conservation: 'Vulnerável (VU) — ameaçado pela construção de hidrelétricas que inundam permanentemente suas várzeas, drenagem agrícola e doenças.',
+        didYouKnow: 'Suas membranas entre os dedos dos cascos funcionam como "raquetes de neve" adaptadas à lama e às águas rasas do Pantanal.',
+        source: 'ICMBio — Plano de Ação Nacional para a Conservação dos Cervídeos Brasileiros.'
+      },
+      {
+        id: 'veado_campeiro',
+        commonName: 'Veado-campeiro',
+        scientificName: 'Ozotoceros bezoarticus',
+        category: 'Mamífero cervídeo • Herbívoro campestre',
+        biomes: ['pampa', 'cerrado', 'pantanal'],
+        primaryBiome: 'pampa',
+        pinPos: { x: 325, y: 505 },
+        dietTag: 'Gramíneas, ervas e brotos campestres',
+        habitat: 'Campos naturais abertos (coxilhas no Pampa, campos limpos no Cerrado e cordilheiras secas no Pantanal), evitando florestas fechadas.',
+        diet: 'Alimenta-se de gramíneas tenras, ervas dicotiledôneas, flores e brotos que rebrotam nos campos nativos.',
+        behaviorAdaptation: 'Visão aguçada e audição sensível para detectar predadores em paisagens abertas; velocidade e saltos ágeis para fuga em campo aberto.',
+        ecologicalRole: 'Herbívoro nativo chave para a manutenção da diversidade florística dos campos sulinos e savanas abertas.',
+        conservation: 'Vulnerável (VU) — sofreu drástica redução populacional pela conversão dos campos nativos em agricultura e silvicultura.',
+        didYouKnow: 'Os machos possuem glândulas tarsais que liberam odor característico usado na comunicação territorial nos campos abertos.',
+        source: 'ICMBio — Avaliação do Estado de Conservação de Ozotoceros bezoarticus.'
+      },
+      {
+        id: 'graxaim_do_campo',
+        commonName: 'Graxaim-do-campo',
+        scientificName: 'Lycalopex gymnocercus',
+        category: 'Mamífero canídeo • Onívoro',
+        biomes: ['pampa', 'mata_atlantica'],
+        primaryBiome: 'pampa',
+        pinPos: { x: 352, y: 492 },
+        dietTag: 'Roedores, aves, insetos e frutos nativos',
+        habitat: 'Campos naturais, coxilhas, bordas de banhados e campos de altitude no Pampa e na porção sul da Mata Atlântica.',
+        diet: 'Onívoro oportunista: consome pequenos roedores (como preás), aves, insetos, répteis e frutos silvestres (como butiá e araçá).',
+        behaviorAdaptation: 'Adapta-se às variações térmicas marcadas do clima subtropical com pelagem densa no inverno; hábitos predominantemente crepusculares e noturnos.',
+        ecologicalRole: 'Regulador de populações de pequenos roedores e insetos nos campos sulinos e dispersor secundário de sementes.',
+        conservation: 'Pouco Preocupante (LC), porém vulnerável a atropelamentos, envenenamento retaliatório e doenças de cães domésticos.',
+        didYouKnow: 'Quando ameaçado, o graxaim-do-campo pode fingir-se de morto (tanatose) até que o predador perca o interesse.',
+        source: 'ICMBio — Plano de Ação Nacional para a Conservação dos Canídeos Silvestres.'
+      }
+    ];
+
+    /**
+     * MINIGAMES_DATA: Estrutura dos 4 minijogos educativos interativos
+     */
+    const MINIGAMES_DATA = {
+      challenge1: {
+        id: 'challenge1',
+        title: 'Desafio 1 — Onde eu moro?',
+        subtitle: 'Associe cada espécie aos seus biomas reais de ocorrência. Atenção: alguns animais vivem em múltiplos biomas!',
+        items: [
+          {
+            speciesId: 'lobo_guara',
+            prompt: 'Em quais biomas o Lobo-guará (Chrysocyon brachyurus) possui ocorrência confirmada?',
+            correctBiomes: ['cerrado', 'mata_atlantica', 'pampa', 'pantanal'],
+            successFeedback: 'Excelente! O lobo-guará não é exclusivo do Cerrado: ele também ocorre na Mata Atlântica, no Pampa e no Pantanal, preferindo paisagens abertas e de transição.',
+            errorFeedback: 'Quase! Lembre-se do rigor científico: além do Cerrado, o lobo-guará também habita áreas abertas da Mata Atlântica, do Pampa e do Pantanal.'
+          },
+          {
+            speciesId: 'arara_azul_de_lear',
+            prompt: 'Onde vive a Arara-azul-de-lear (Anodorhynchus leari), especialista nos paredões rochosos e palmeiras licuri?',
+            correctBiomes: ['caatinga'],
+            successFeedback: 'Isso mesmo! A arara-azul-de-lear é endêmica da Caatinga (região do Raso da Catarina, na Bahia), onde nidifica em cânions de arenito.',
+            errorFeedback: 'Observe o ambiente de origem: essa espécie é endêmica do semiárido nordestino, na Caatinga.'
+          },
+          {
+            speciesId: 'tamandua_bandeira',
+            prompt: 'Quais biomas continentais brasileiros fazem parte da distribuição do Tamanduá-bandeira?',
+            correctBiomes: ['amazonia', 'caatinga', 'cerrado', 'mata_atlantica', 'pantanal', 'pampa'],
+            successFeedback: 'Perfeito! O tamanduá-bandeira ocorre nos SEIS biomas continentais do Brasil, utilizando áreas abertas para forragear e florestas como refúgio térmico.',
+            errorFeedback: 'Atenção à ficha científica: o tamanduá-bandeira não vive apenas no Cerrado — ele ocorre em todos os 6 biomas brasileiros!'
+          },
+          {
+            speciesId: 'boto_cor_de_rosa',
+            prompt: 'Qual bioma abriga os rios, várzeas e igapós onde vive o Boto-cor-de-rosa?',
+            correctBiomes: ['amazonia'],
+            successFeedback: 'Correto! O boto-cor-de-rosa (Inia geoffrensis) é um cetáceo de água doce típico da bacia hidrográfica da Amazônia.',
+            errorFeedback: 'Tente novamente! Esse golfinho de água doce navega pelos rios e florestas inundadas da Amazônia.'
+          }
+        ]
+      },
+      challenge2: {
+        id: 'challenge2',
+        title: 'Desafio 2 — Qual é o meu alimento?',
+        subtitle: 'Relacione cada espécie à sua principal fonte alimentar com base na ecologia alimentar.',
+        pairs: [
+          {
+            id: 'food_arara',
+            speciesId: 'arara_azul_de_lear',
+            correctFoodId: 'licuri',
+            feedbackOk: 'Isso mesmo! A arara-azul-de-lear utiliza principalmente os frutos da palmeira licuri como alimento. A disponibilidade dessa palmeira está diretamente relacionada à manutenção de suas populações.',
+            feedbackErr: 'Quase! Vamos conhecer melhor a dieta dessa espécie: seu bico robusto quebra os coquinhos da palmeira licuri na Caatinga.'
+          },
+          {
+            id: 'food_tamandua',
+            speciesId: 'tamandua_bandeira',
+            correctFoodId: 'formigas_cupins',
+            feedbackOk: 'Exato! O tamanduá-bandeira é um especialista insetívoro que consome milhares de formigas e cupins diariamente com sua língua longa e pegajosa.',
+            feedbackErr: 'Observe suas garras e focinho alongado sem dentes: ele é adaptado para abrir cupinzeiros e formigueiros.'
+          },
+          {
+            id: 'food_lobo',
+            speciesId: 'lobo_guara',
+            correctFoodId: 'lobeira_vertebrados',
+            feedbackOk: 'Muito bem! O lobo-guará é onívoro: cerca de metade da sua dieta vem de frutos como a lobeira, complementada por pequenos roedores, aves e insetos.',
+            feedbackErr: 'Pense na dieta onívora do lobo-guará: ele consome muitos frutos nativos (especialmente a lobeira) e pequenos vertebrados.'
+          },
+          {
+            id: 'food_boto',
+            speciesId: 'boto_cor_de_rosa',
+            correctFoodId: 'peixes_agua_doce',
+            feedbackOk: 'Perfeito! O boto-cor-de-rosa utiliza ecolocalização para caçar mais de 40 espécies de peixes nos rios e várzeas amazônicas.',
+            feedbackErr: 'Tente novamente! Como predador aquático dos rios amazônicos, sua base alimentar são os peixes de água doce.'
+          }
+        ],
+        options: [
+          { id: 'licuri', label: 'Frutos da palmeira licuri', icon: '🌴' },
+          { id: 'formigas_cupins', label: 'Formigas e cupins', icon: '🐜' },
+          { id: 'lobeira_vertebrados', label: 'Frutos (lobeira) e pequenos vertebrados', icon: '🍈' },
+          { id: 'peixes_agua_doce', label: 'Peixes de água doce (bagres e caracídeos)', icon: '🐟' }
+        ]
+      },
+      challenge3: {
+        id: 'challenge3',
+        title: 'Desafio 3 — Adaptação ao ambiente',
+        subtitle: 'Identifique como as características climáticas e físicas do habitat explicam as adaptações de cada espécie.',
+        scenarios: [
+          {
+            id: 'adapt_moco',
+            habitatCue: 'Afloramentos rochosos quentes e secos da Caatinga, onde escapar rápido entre pedras é vital.',
+            question: 'Qual espécie possui almofadas plantares acolchoadas e unhas rombudas que garantem aderência para escalar rochas sem escorregar?',
+            options: [
+              { id: 'moco', label: 'Mocó (Kerodon rupestris)', correct: true },
+              { id: 'cervo_do_pantanal', label: 'Cervo-do-pantanal (Blastocerus dichotomus)', correct: false },
+              { id: 'boto_cor_de_rosa', label: 'Boto-cor-de-rosa (Inia geoffrensis)', correct: false }
+            ],
+            explanation: 'O mocó evoluiu almofadas plantares especiais e perda de cauda para escalar com agilidade os lajedos rochosos da Caatinga e se abrigar do calor nas fendas.'
+          },
+          {
+            id: 'adapt_cervo',
+            habitatCue: 'Planícies sazonalmente inundadas e solos lodosos do Pantanal e várzeas.',
+            question: 'Qual característica explica o sucesso do Cervo-do-pantanal ao caminhar em terrenos alagados?',
+            options: [
+              { id: 'cascos_membrana', label: 'Cascos alongados unidos por membranas interdigitais que ampliam o apoio na lama', correct: true },
+              { id: 'cauda_preensil', label: 'Cauda preênsil com almofada tátil para se pendurar no dossel', correct: false },
+              { id: 'bico_licuri', label: 'Bico curvo adaptado para quebrar coquinhos rígidos', correct: false }
+            ],
+            explanation: 'As membranas interdigitais do cervo-do-pantanal abrem-se ao pisar no solo encharcado, distribuindo o peso corporal e evitando que o animal atole.'
+          },
+          {
+            id: 'adapt_tamandua',
+            habitatCue: 'Dieta de insetos pouco energética aliada a variações térmicas entre áreas abertas e matas.',
+            question: 'Por que o Tamanduá-bandeira depende tanto da presença de matas e capões florestais mesmo forrageando em campos?',
+            options: [
+              { id: 'refugio_termico', label: 'Possui metabolismo baixo e usa ambientes florestais como refúgio térmico', correct: true },
+              { id: 'hibernacao', label: 'Hiberna durante seis meses em cavernas subterrâneas', correct: false },
+              { id: 'fotossintese', label: 'Absorve energia solar pelas garras para produzir glicose', correct: false }
+            ],
+            explanation: 'Devido à dieta pouco calórica de formigas e cupins, o tamanduá-bandeira mantém baixa temperatura corporal (~32,7°C) e busca a sombra e estabilidade térmica das matas.'
+          }
+        ]
+      },
+      challenge4: {
+        id: 'challenge4',
+        title: 'Desafio 4 — Quem depende de quem?',
+        subtitle: 'Complete as relações ecológicas conectando vegetação, alimento, abrigo, fauna e processos ecossistêmicos.',
+        webs: [
+          {
+            id: 'web_caatinga',
+            biomeId: 'caatinga',
+            title: 'Teia Ecológica da Caatinga',
+            chain: ['Palmeira Licuri + Paredões de Arenito', '→ Alimento e Abrigo →', '[ ? ]', '→ Processo Ecológico →', 'Dispersão e renovação dos licurizais'],
+            question: 'Qual espécie completa essa relação de interdependência na Caatinga?',
+            options: [
+              { id: 'arara_azul_de_lear', label: 'Arara-azul-de-lear', correct: true },
+              { id: 'muriqui', label: 'Muriqui (Mono-carvoeiro)', correct: false },
+              { id: 'tuiuiu', label: 'Tuiuiú', correct: false }
+            ],
+            explanation: 'A arara-azul-de-lear depende dos paredões rochosos para nidificar e dos frutos do licuri para se alimentar, ao mesmo tempo em que dispersa sementes dessa palmeira.'
+          },
+          {
+            id: 'web_cerrado',
+            biomeId: 'cerrado',
+            title: 'Teia Ecológica do Cerrado',
+            chain: ['Fruteira Lobeira (Solanum lycocarpum)', '→ Alimento →', 'Lobo-guará', '→ Processo Ecológico →', '[ ? ]'],
+            question: 'Qual processo ecológico resulta dessa interação entre a lobeira e o lobo-guará?',
+            options: [
+              { id: 'dispersao_germinacao', label: 'Dispersão de sementes e aumento da taxa de germinação em campos', correct: true },
+              { id: 'inundacao_rios', label: 'Aumento do nível dos rios na estação seca', correct: false },
+              { id: 'polinizacao_aquatica', label: 'Polinização subaquática de macrófitas', correct: false }
+            ],
+            explanation: 'Ao consumir os frutos da lobeira e defecar em áreas abertas (muitas vezes sobre formigueiros), o lobo-guará dispersa sementes viáveis e favorece a regeneração do Cerrado.'
+          },
+          {
+            id: 'web_mata_atlantica',
+            biomeId: 'mata_atlantica',
+            title: 'Teia Ecológica da Mata Atlântica',
+            chain: ['Florestas contínuas com árvores de grande porte e bromélias', '→ Abrigo em ocos e forrageio →', 'Mico-leão-dourado e Muriqui', '→ Processo Ecológico →', '[ ? ]'],
+            question: 'Como esses primatas contribuem para a sustentabilidade da Mata Atlântica?',
+            options: [
+              { id: 'regeneracao_florestal', label: 'Dispersão de sementes de árvores nativas e manutenção da diversidade florestal', correct: true },
+              { id: 'desertificacao', label: 'Substituição da floresta por campos secos', correct: false },
+              { id: 'controle_tubaroes', label: 'Controle populacional de peixes marinhos', correct: false }
+            ],
+            explanation: 'Primatas frugívoros como o mico-leão-dourado e o muriqui dispersam sementes de dezenas de espécies arbóreas, sustentando a regeneração natural da Mata Atlântica.'
+          }
+        ]
+      }
+    };
+
+    /**
+     * DISCOVERY_QUIZ_DATA: Etapa 4 — Questões Analíticas com explicação científica
+     */
+    const DISCOVERY_QUIZ_DATA = [
+      {
+        id: 'q1',
+        question: 'Por que o Pantanal apresenta mudanças tão significativas na paisagem ao longo do ano?',
+        options: [
+          { id: 'a', text: 'Porque o bioma é desértico e não recebe chuvas.' },
+          { id: 'b', text: 'Porque há alternância entre períodos de cheia e seca (pulso de inundação).', correct: true },
+          { id: 'c', text: 'Porque não possui rios permanentes em sua bacia.' },
+          { id: 'd', text: 'Porque toda a vegetação arbórea desaparece durante o inverno.' }
+        ],
+        explanation: 'O Pantanal é uma grande planície sedimentar de baixa declividade na bacia do Alto Paraguai. O pulso sazonal entre cheia e seca transforma campos secos em áreas alagadas e vice-versa, regulando a reprodução dos peixes e a oferta de alimento para aves e mamíferos.',
+        reference: 'IBGE — Biomas Brasileiros; Embrapa Pantanal.'
+      },
+      {
+        id: 'q2',
+        question: 'Qual é a principal fonte alimentar da arara-azul-de-lear (Anodorhynchus leari)?',
+        options: [
+          { id: 'a', text: 'Frutos da palmeira licuri (Syagrus coronata).', correct: true },
+          { id: 'b', text: 'Peixes de rios temporários.' },
+          { id: 'c', text: 'Gramíneas rasteiras dos campos sulinos.' },
+          { id: 'd', text: 'Formigas e cupins arborícolas.' }
+        ],
+        explanation: 'A arara-azul-de-lear possui um bico extremamente forte adaptado para abrir os cocos do licuri, palmeira nativa da Caatinga que constitui a base energética de sua dieta.',
+        reference: 'ICMBio — Plano de Ação Nacional para a Conservação da Arara-azul-de-lear.'
+      },
+      {
+        id: 'q3',
+        question: 'O lobo-guará (Chrysocyon brachyurus) é encontrado exclusivamente no Cerrado?',
+        options: [
+          { id: 'a', text: 'Sim, vive apenas nas savanas do Brasil Central.' },
+          { id: 'b', text: 'Não, ocorre também em outros biomas como Mata Atlântica, Pampa e Pantanal.', correct: true }
+        ],
+        explanation: 'Embora seja emblemático do Cerrado, registros científicos oficiais do ICMBio comprovam sua ocorrência em áreas abertas e de transição da Mata Atlântica, do Pampa e do Pantanal.',
+        reference: 'ICMBio — Avaliação do Risco de Extinção de Chrysocyon brachyurus.'
+      },
+      {
+        id: 'q4',
+        question: 'Por que a fragmentação de habitats pode ameaçar uma população animal?',
+        options: [
+          { id: 'a', text: 'Porque reduz a conectividade entre áreas e dificulta o acesso a recursos e parceiros reprodutivos.', correct: true },
+          { id: 'b', text: 'Porque aumenta automaticamente a oferta de alimentos naturais.' },
+          { id: 'c', text: 'Porque todas as espécies passam a viver perfeitamente em centros urbanos.' },
+          { id: 'd', text: 'Porque modifica a alimentação de todas as espécies da mesma maneira.' }
+        ],
+        explanation: 'Quando florestas ou campos contínuos são divididos em ilhas isoladas, animais como o muriqui, o mico-leão-dourado e o lobo-guará enfrentam escassez de alimento, maior risco de atropelamentos e perda de variabilidade genética.',
+        reference: 'MMA — Biodiversidade e Biomas; ICMBio — Corredores Ecológicos.'
+      }
+    ];
+
+    /**
+     * SOURCES_DATA: Referências científicas institucionais e por espécie
+     */
+    const SOURCES_DATA = [
+      {
+        institution: 'IBGE — Biomas Brasileiros (Educa IBGE)',
+        contribution: 'Delimitação conceitual, extensão territorial e características gerais de vegetação e paisagem dos seis biomas continentais.',
+        url: 'https://educa.ibge.gov.br/jovens/conheca-o-brasil/territorio/18307-biomas-brasileiros.html'
+      },
+      {
+        institution: 'IBGE — Biomas e Sistema Costeiro-Marinho',
+        contribution: 'Base cartográfica oficial e distinção geográfica entre os seis biomas continentais e o Sistema Costeiro-Marinho.',
+        url: 'https://www.ibge.gov.br/geociencias/cartas-e-mapas/informacoes-ambientais/15842'
+      },
+      {
+        institution: 'Ministério do Meio Ambiente e Mudança do Clima (MMA)',
+        contribution: 'Panorama nacional da biodiversidade, políticas de conservação e conectividade de paisagens.',
+        url: 'https://www.gov.br/mma/pt-br/assuntos/biodiversidade-e-biomas'
+      },
+      {
+        institution: 'ICMBio — Planos de Ação Nacional para Conservação (PANs)',
+        contribution: 'Distribuição geográfica multi-bioma, ameaças (fragmentação, atropelamentos) e status de conservação (IUCN/ICMBio) das espécies.',
+        url: 'https://www.gov.br/icmbio/'
+      },
+      {
+        institution: 'Embrapa — Restauração de Ecossistemas e Biomas Brasileiros',
+        contribution: 'Relações ecológicas, solos, recursos hídricos e dinâmicas sazonais dos ecossistemas brasileiros.',
+        url: 'https://www.atermaisdigital.cnptia.embrapa.br/web/restauracao-de-ecossistemas/biomas-brasileiros'
+      },
+      {
+        institution: 'ICMBio — Tamanduá-bandeira (Myrmecophaga tridactyla)',
+        contribution: 'Dados sobre dieta mirmecófaga, termorregulação, uso de refúgios florestais e ocorrência nos seis biomas.',
+        url: 'https://www.gov.br/icmbio/pt-br/assuntos/biodiversidade/programa-de-manejo-populacional/tamandua-bandeira'
+      },
+      {
+        institution: 'ICMBio — PAN Arara-azul-de-lear (Anodorhynchus leari)',
+        contribution: 'Ecologia alimentar baseada nos frutos do licuri, nidificação em paredões rochosos e conservação na Caatinga.',
+        url: 'https://www.gov.br/icmbio/pt-br/assuntos/biodiversidade/pan/pan-arara-azul-de-lear'
+      }
+    ];
+
+    /**
+     * =========================================================================
+     * 2. GERADOR DE ILUSTRAÇÕES VETORIAIS ORIGINAIS DAS ESPÉCIES (SVG)
+     * Arte editorial contemporânea em estilo atlas natural (sem URLs externas).
+     * =========================================================================
+     */
+    function getSpeciesIllustrationSVG(speciesId, accentColor = '#173B32') {
+      const illustrations = {
+        boto_cor_de_rosa: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <defs>
+              <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#D4EDE8"/>
+                <stop offset="100%" stop-color="#8EC5BC"/>
+              </linearGradient>
+            </defs>
+            <rect width="220" height="150" rx="16" fill="url(#waterGrad)"/>
+            <path d="M0 105 Q 55 95 110 105 T 220 105 L 220 150 L 0 150 Z" fill="#2B7A78" opacity="0.25"/>
+            <!-- Boto estilizado -->
+            <path d="M 38 92 C 58 55, 118 45, 156 76 C 172 88, 192 92, 202 90 C 194 98, 175 100, 155 95 C 122 108, 72 106, 48 96 L 26 112 L 32 94 L 18 82 Z" fill="#F29CB0" stroke="#173B32" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 102 58 Q 112 46 122 59" fill="#E87A96" stroke="#173B32" stroke-width="2"/>
+            <path d="M 110 92 Q 102 114 86 110 Q 96 98 102 92" fill="#E87A96" stroke="#173B32" stroke-width="2"/>
+            <circle cx="152" cy="80" r="3" fill="#173B32"/>
+            <path d="M 164 89 Q 182 91 198 90" stroke="#173B32" stroke-width="1.5" fill="none"/>
+            <!-- Ondas -->
+            <path d="M 30 122 Q 60 116 90 122 M 125 128 Q 160 122 195 128" stroke="#173B32" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.5"/>
+          </svg>`,
+        ariranha: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <rect width="220" height="150" rx="16" fill="#DCEEE6"/>
+            <path d="M0 112 Q 110 100 220 112 L 220 150 L 0 150 Z" fill="#1E5631" opacity="0.22"/>
+            <!-- Ariranha -->
+            <path d="M 24 102 C 52 98, 75 74, 114 70 C 138 68, 154 54, 172 58 C 184 60, 188 72, 178 80 C 168 88, 154 96, 144 114 L 130 114 L 134 96 C 110 102, 85 104, 65 114 L 52 114 L 60 100 C 44 106, 30 106, 24 102 Z" fill="#5A3E2B" stroke="#173B32" stroke-width="2.2" stroke-linejoin="round"/>
+            <!-- Mancha característica na garganta -->
+            <path d="M 156 76 Q 165 86 152 94 Q 146 84 156 76 Z" fill="#F6F3EC"/>
+            <circle cx="172" cy="64" r="2.8" fill="#173B32"/>
+            <circle cx="182" cy="68" r="2.2" fill="#173B32"/>
+          </svg>`,
+        arara_azul_de_lear: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <rect width="220" height="150" rx="16" fill="#FCEFD9"/>
+            <!-- Cânion / Arenito Caatinga -->
+            <path d="M 145 150 L 162 45 L 220 45 L 220 150 Z" fill="#D98A3C" opacity="0.35"/>
+            <!-- Palmeira Licuri estilizada -->
+            <path d="M 48 150 L 54 78" stroke="#7A5230" stroke-width="5" stroke-linecap="round"/>
+            <path d="M 54 78 Q 25 62 16 80 M 54 78 Q 32 48 22 55 M 54 78 Q 76 52 88 66 M 54 78 Q 80 74 86 90" stroke="#4D7C2B" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+            <circle cx="58" cy="84" r="4" fill="#D98A3C"/>
+            <circle cx="64" cy="88" r="4" fill="#B5651D"/>
+            <!-- Arara-azul-de-lear -->
+            <path d="M 125 46 C 142 46, 152 62, 146 84 L 128 136 L 120 134 L 126 92 C 112 86, 108 66, 118 52 Z" fill="#1E5AA8" stroke="#173B32" stroke-width="2.2" stroke-linejoin="round"/>
+            <!-- Anel ocular amarelo e bico negro -->
+            <circle cx="123" cy="54" r="4.5" fill="#F4C430"/>
+            <circle cx="123" cy="54" r="2" fill="#173B32"/>
+            <path d="M 116 53 C 106 53, 104 62, 112 66 C 114 61, 116 58, 118 57 Z" fill="#1E2926"/>
+          </svg>`,
+        moco: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <rect width="220" height="150" rx="16" fill="#F9ECDC"/>
+            <!-- Lajedo rochoso -->
+            <path d="M 20 150 L 42 108 L 118 96 L 185 112 L 205 150 Z" fill="#B8A99A" stroke="#173B32" stroke-width="2"/>
+            <!-- Mocó -->
+            <ellipse cx="108" cy="82" rx="32" ry="22" fill="#9E8B76" stroke="#173B32" stroke-width="2.2"/>
+            <circle cx="136" cy="74" r="14" fill="#9E8B76" stroke="#173B32" stroke-width="2.2"/>
+            <ellipse cx="130" cy="61" rx="4" ry="7" fill="#857360" stroke="#173B32" stroke-width="1.8"/>
+            <circle cx="141" cy="72" r="2.6" fill="#173B32"/>
+            <path d="M 90 101 L 86 108 M 126 101 L 130 108" stroke="#173B32" stroke-width="3" stroke-linecap="round"/>
+          </svg>`,
+        lobo_guara: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <rect width="220" height="150" rx="16" fill="#F7E8D8"/>
+            <path d="M 0 124 L 220 124 L 220 150 L 0 150 Z" fill="#B5651D" opacity="0.22"/>
+            <!-- Pernas longas escuras -->
+            <path d="M 86 88 L 78 130 M 100 88 L 96 130 M 136 86 L 134 130 M 148 86 L 154 130" stroke="#1E2926" stroke-width="4" stroke-linecap="round"/>
+            <!-- Corpo dourado-avermelhado -->
+            <path d="M 62 84 C 72 68, 122 64, 152 68 L 166 52 L 182 58 L 168 68 L 158 84 C 132 90, 92 92, 74 86 L 52 102 L 46 92 Z" fill="#D4652F" stroke="#173B32" stroke-width="2.2" stroke-linejoin="round"/>
+            <!-- Orelhas grandes e crina -->
+            <path d="M 158 56 L 156 38 L 166 50 Z M 166 55 L 170 38 L 174 53 Z" fill="#D4652F" stroke="#173B32" stroke-width="1.8"/>
+            <path d="M 122 65 Q 140 58 156 62" stroke="#1E2926" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="171" cy="57" r="2.2" fill="#173B32"/>
+          </svg>`,
+        tamandua_bandeira: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <rect width="220" height="150" rx="16" fill="#EFECE4"/>
+            <path d="M 0 124 L 220 124 L 220 150 L 0 150 Z" fill="#173B32" opacity="0.14"/>
+            <!-- Cauda em bandeira -->
+            <path d="M 82 84 C 52 72, 24 84, 16 112 C 42 118, 68 112, 86 98 Z" fill="#4A443F" stroke="#173B32" stroke-width="2.2"/>
+            <!-- Corpo e faixa diagonal -->
+            <path d="M 80 84 C 102 68, 136 68, 158 78 L 198 92 L 196 98 L 154 92 L 146 124 L 134 124 L 136 96 L 102 98 L 96 124 L 84 124 L 86 94 Z" fill="#6E655F" stroke="#173B32" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 104 94 L 136 72 L 146 76 L 116 96 Z" fill="#1E2926" stroke="#F6F3EC" stroke-width="1.5"/>
+            <circle cx="164" cy="82" r="2" fill="#173B32"/>
+          </svg>`,
+        mico_leao_dourado: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <rect width="220" height="150" rx="16" fill="#E3F2E5"/>
+            <!-- Galho Mata Atlântica -->
+            <path d="M 15 118 Q 110 102 205 114" stroke="#6B4C35" stroke-width="8" stroke-linecap="round" fill="none"/>
+            <!-- Juba dourada -->
+            <circle cx="122" cy="64" r="24" fill="#F29F05" stroke="#173B32" stroke-width="2.2"/>
+            <circle cx="122" cy="65" r="12" fill="#C97A42"/>
+            <circle cx="118" cy="63" r="2" fill="#173B32"/>
+            <circle cx="126" cy="63" r="2" fill="#173B32"/>
+            <!-- Corpo e cauda -->
+            <path d="M 105 82 C 92 92, 92 108, 108 110 L 126 110 C 134 102, 132 88, 124 82 Z" fill="#F29F05" stroke="#173B32" stroke-width="2"/>
+            <path d="M 94 104 C 68 104, 58 134, 78 138" stroke="#D97706" stroke-width="4" stroke-linecap="round" fill="none"/>
+          </svg>`,
+        muriqui: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <rect width="220" height="150" rx="16" fill="#E1EFE3"/>
+            <!-- Galho superior -->
+            <path d="M 10 28 Q 110 38 210 24" stroke="#5C4033" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <!-- Cauda preênsil enrolada no galho -->
+            <path d="M 88 30 C 86 52, 96 68, 106 78" stroke="#8C7A65" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+            <!-- Corpo e braço longo -->
+            <ellipse cx="116" cy="92" rx="18" ry="24" fill="#A6937C" stroke="#173B32" stroke-width="2.2"/>
+            <path d="M 124 74 L 146 32" stroke="#8C7A65" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="118" cy="64" r="11" fill="#4A423B" stroke="#173B32" stroke-width="2"/>
+            <circle cx="115" cy="63" r="1.8" fill="#F6F3EC"/>
+            <circle cx="122" cy="63" r="1.8" fill="#F6F3EC"/>
+          </svg>`,
+        tuiuiu: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <rect width="220" height="150" rx="16" fill="#E1F2F1"/>
+            <path d="M 0 126 Q 110 120 220 126 L 220 150 L 0 150 Z" fill="#2B7A78" opacity="0.28"/>
+            <!-- Pernas longas -->
+            <path d="M 104 94 L 102 136 M 116 94 L 122 136" stroke="#1E2926" stroke-width="2.6" stroke-linecap="round"/>
+            <!-- Corpo branco -->
+            <ellipse cx="108" cy="78" rx="26" ry="17" fill="#FFFFFF" stroke="#173B32" stroke-width="2.2"/>
+            <!-- Pescoço preto + faixa vermelha -->
+            <path d="M 128 74 C 138 62, 136 44, 144 40" stroke="#1E2926" stroke-width="7" stroke-linecap="round" fill="none"/>
+            <path d="M 126 70 Q 134 74 136 66" stroke="#C83E37" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <!-- Bico robusto -->
+            <path d="M 146 38 L 182 42 L 146 46 Z" fill="#1E2926"/>
+            <circle cx="144" cy="40" r="2" fill="#FFFFFF"/>
+          </svg>`,
+        cervo_do_pantanal: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <rect width="220" height="150" rx="16" fill="#E3F1EF"/>
+            <path d="M 0 122 Q 110 116 220 122 L 220 150 L 0 150 Z" fill="#2B7A78" opacity="0.25"/>
+            <!-- Pernas escuras na água -->
+            <path d="M 86 92 L 84 130 M 98 92 L 98 130 M 130 92 L 128 130 M 142 92 L 146 130" stroke="#1E2926" stroke-width="3.2" stroke-linecap="round"/>
+            <!-- Corpo castanho-avermelhado -->
+            <path d="M 76 88 C 82 72, 128 70, 146 74 L 154 54 L 168 58 L 156 72 L 148 90 Z" fill="#B85D32" stroke="#173B32" stroke-width="2.2" stroke-linejoin="round"/>
+            <!-- Galhada ramificada -->
+            <path d="M 154 52 L 150 32 M 151 42 L 143 36 M 159 52 L 164 32 M 162 42 L 170 36" stroke="#5C4033" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <circle cx="161" cy="57" r="2" fill="#173B32"/>
+          </svg>`,
+        veado_campeiro: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <rect width="220" height="150" rx="16" fill="#EDF4DF"/>
+            <!-- Coxilhas do Pampa -->
+            <path d="M 0 124 Q 75 110 150 122 T 220 118 L 220 150 L 0 150 Z" fill="#6B8E23" opacity="0.28"/>
+            <path d="M 88 94 L 84 126 M 100 94 L 100 126 M 130 94 L 128 126 M 140 94 L 144 126" stroke="#6E4E34" stroke-width="3" stroke-linecap="round"/>
+            <path d="M 78 90 C 84 74, 126 72, 144 76 L 152 58 L 165 62 L 154 74 L 146 92 Z" fill="#C48B5A" stroke="#173B32" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 152 56 L 150 40 M 157 56 L 161 40" stroke="#5C4033" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="159" cy="61" r="2" fill="#173B32"/>
+          </svg>`,
+        graxaim_do_campo: `
+          <svg viewBox="0 0 220 150" class="w-full h-full">
+            <rect width="220" height="150" rx="16" fill="#EBF2DF"/>
+            <path d="M 0 124 L 220 124 L 220 150 L 0 150 Z" fill="#6B8E23" opacity="0.25"/>
+            <path d="M 90 96 L 88 126 M 102 96 L 102 126 M 130 96 L 128 126 M 140 96 L 144 126" stroke="#3E3A36" stroke-width="3.2" stroke-linecap="round"/>
+            <!-- Cauda peluda -->
+            <path d="M 80 86 C 56 84, 44 98, 52 110 C 66 112, 78 102, 84 94 Z" fill="#7D7872" stroke="#173B32" stroke-width="2"/>
+            <!-- Corpo cinza-amarelado -->
+            <path d="M 80 86 C 92 74, 128 74, 146 78 L 158 64 L 172 70 L 158 78 L 148 94 L 84 94 Z" fill="#9A938A" stroke="#173B32" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M 154 66 L 153 52 L 161 62 Z M 162 66 L 166 52 L 169 65 Z" fill="#B5835A" stroke="#173B32" stroke-width="1.8"/>
+            <circle cx="163" cy="69" r="2" fill="#173B32"/>
+          </svg>`
+      };
+      return illustrations[speciesId] || illustrations.lobo_guara;
+    }
+
+    /**
+     * =========================================================================
+     * 3. ESTADO DA EXPEDIÇÃO & CONTROLADOR PRINCIPAL
+     * =========================================================================
+     */
+    const app = {
+      state: {
+        screen: 'intro', // 'intro' | 'map' | 'minigames' | 'discovery' | 'results'
+        selectedBiomeId: 'amazonia',
+        mapLayer: 'biomes', // 'biomes' | 'climate' | 'fauna'
+        zoom: 1,
+        pan: { x: 0, y: 0 },
+        isDragging: false,
+        dragStart: { x: 0, y: 0 },
+        exploredBiomes: new Set(['amazonia']),
+        discoveredSpecies: new Set(),
+        activeMinigameTab: 'challenge1',
+        // Progresso dos minijogos
+        c1Index: 0,
+        c1SelectedBiomes: new Set(),
+        c1Completed: {},
+        c2Selections: {},
+        c2Completed: {},
+        c3Answers: {},
+        c4Answers: {},
+        // Progresso das 4 perguntas de descoberta
+        quizAnswers: {},
+        score: 0,
+        mapDragMoved: false,
+        suppressMapClick: false
+      },
+      mapPanAbortController: null,
+
+      init() {
+        this.render();
+        this.bindGlobalEvents();
+      },
+
+      bindGlobalEvents() {
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            this.closeSpeciesModal();
+            this.closeSourcesModal();
+          }
+        });
+      },
+
+      showToast(message, type = 'info') {
+        const box = document.getElementById('toast-box');
+        const msg = document.getElementById('toast-message');
+        const icon = type === 'success' ? '✓' : 'ℹ';
+        msg.innerHTML = `<span class="w-5 h-5 rounded-full bg-naqi-terracotta text-white flex items-center justify-center text-xs font-bold">${icon}</span><span>${message}</span>`;
+        box.classList.remove('opacity-0', 'translate-y-3');
+        clearTimeout(this._toastTimer);
+        this._toastTimer = setTimeout(() => {
+          box.classList.add('opacity-0', 'translate-y-3');
+        }, 3200);
+      },
+
+      updateTelemetry() {
+        const telemetry = document.getElementById('header-telemetry');
+        if (this.state.screen === 'intro') {
+          telemetry.classList.add('hidden');
+          telemetry.classList.remove('flex');
+        } else {
+          telemetry.classList.remove('hidden');
+          telemetry.classList.add('flex');
+        }
+
+        document.getElementById('stat-biomes').textContent = `${this.state.exploredBiomes.size}/6`;
+        document.getElementById('stat-species').textContent = `${this.state.discoveredSpecies.size}/12`;
+        document.getElementById('stat-points').textContent = this.calculateTotalScore();
+
+        ['map', 'minigames', 'discovery', 'results'].forEach(tab => {
+          const btn = document.getElementById(`nav-${tab}`);
+          if (!btn) return;
+          if (this.state.screen === tab) {
+            btn.className = 'px-2.5 py-1.5 rounded-lg bg-naqi-terracotta text-white font-semibold shadow-sm';
+          } else {
+            btn.className = 'px-2.5 py-1.5 rounded-lg text-naqi-paper/80 hover:text-white hover:bg-white/10 transition-colors';
+          }
+        });
+      },
+
+      calculateTotalScore() {
+        let pts = 0;
+        // Pontos por exploração (até 18 pts)
+        pts += this.state.exploredBiomes.size * 2;
+        pts += this.state.discoveredSpecies.size * 2;
+        // Minijogo 1 (4 itens x 10 pts)
+        pts += Object.values(this.state.c1Completed).filter(Boolean).length * 10;
+        // Minijogo 2 (4 itens x 10 pts)
+        pts += Object.values(this.state.c2Completed).filter(Boolean).length * 10;
+        // Minijogo 3 (3 cenários x 10 pts)
+        pts += Object.values(this.state.c3Answers).filter(a => a.correct).length * 10;
+        // Minijogo 4 (3 teias x 10 pts)
+        pts += Object.values(this.state.c4Answers).filter(a => a.correct).length * 10;
+        // Etapa 4 Descobertas (4 questões x 15 pts)
+        pts += Object.values(this.state.quizAnswers).filter(a => a.correct).length * 15;
+        return pts;
+      },
+
+      goToScreen(screenName, preselectBiome = null) {
+        this.state.screen = screenName;
+        if (preselectBiome) {
+          this.state.selectedBiomeId = preselectBiome;
+          this.state.exploredBiomes.add(preselectBiome);
+        }
+        this.render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+
+      render() {
+        if (this.mapPanAbortController) {
+          this.mapPanAbortController.abort();
+          this.mapPanAbortController = null;
+        }
+        this.updateTelemetry();
+        const root = document.getElementById('app-root');
+        if (this.state.screen === 'intro') root.innerHTML = this.renderIntroScreen();
+        else if (this.state.screen === 'map') {
+          root.innerHTML = this.renderMapScreen();
+          this.attachMapPanEvents();
+        }
+        else if (this.state.screen === 'minigames') root.innerHTML = this.renderMinigamesScreen();
+        else if (this.state.screen === 'discovery') root.innerHTML = this.renderDiscoveryScreen();
+        else if (this.state.screen === 'results') root.innerHTML = this.renderResultsScreen();
+      },
+
+      /**
+       * =====================================================================
+       * TELA INICIAL — ESCOLHA SUA EXPEDIÇÃO
+       * =====================================================================
+       */
+      renderIntroScreen() {
+        return `
+          <section class="fade-in space-y-8">
+            <div class="bg-white/90 border border-naqi-forest/15 rounded-3xl p-6 sm:p-10 card-shadow grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <!-- Coluna Editorial -->
+              <div class="lg:col-span-7 space-y-5">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-naqi-forest/10 text-naqi-forest text-xs font-semibold tracking-wide">
+                  <span>ATLAS NATURAL INTERATIVO</span>
+                  <span>•</span>
+                  <span>BIODIVERSIDADE &amp; CIÊNCIA</span>
+                </div>
+
+                <h1 class="font-atlas text-3xl sm:text-5xl font-bold text-naqi-forest leading-tight">
+                  Expedição pelos Biomas do Brasil
+                </h1>
+
+                <p class="font-atlas italic text-lg sm:text-xl text-naqi-terracotta font-medium">
+                  Um país, seis biomas, milhares de formas de vida.
+                </p>
+
+                <div class="bg-naqi-paper border-l-4 border-naqi-terracotta p-4 sm:p-5 rounded-r-2xl text-naqi-ink/90 text-sm sm:text-base leading-relaxed space-y-2">
+                  <p>
+                    Você conhece os animais que vivem no Brasil? Sabe onde encontram alimento, como se adaptam ao clima e quais ambientes sustentam sua sobrevivência?
+                  </p>
+                  <p class="font-medium text-naqi-forest">
+                    Embarque nesta expedição e descubra as relações entre a fauna, os biomas e as paisagens brasileiras.
+                  </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-4 pt-2">
+                  <button onclick="app.goToScreen('map')" class="px-7 py-4 rounded-2xl bg-naqi-forest hover:bg-naqi-forestDark text-white font-semibold text-base shadow-lg hover:shadow-xl transition-all flex items-center gap-3 group">
+                    <span>Iniciar expedição</span>
+                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </button>
+
+                  <button onclick="app.openSourcesModal()" class="px-5 py-3.5 rounded-2xl bg-naqi-paper hover:bg-naqi-paperDark text-naqi-forest border border-naqi-forest/20 font-medium text-sm transition-colors">
+                    Base Científica (IBGE / ICMBio)
+                  </button>
+                </div>
+
+                <p class="text-xs text-naqi-muted pt-1">
+                  Duração estimada: 8 a 15 minutos • Experiência educativa gratuita e sem coleta de dados pessoais.
+                </p>
+              </div>
+
+              <!-- Coluna Ilustração do Mapa do Brasil com Fauna Distribuída -->
+              <div class="lg:col-span-5">
+                <div class="bg-naqi-paper border border-naqi-forest/15 rounded-3xl p-4 sm:p-6 relative overflow-hidden">
+                  <div class="text-[11px] uppercase tracking-wider text-naqi-muted font-semibold mb-2 flex justify-between">
+                    <span>Cartografia dos Biomas Continentais</span>
+                    <span>IBGE</span>
+                  </div>
+                  <svg viewBox="0 0 600 600" class="w-full max-h-[370px] mx-auto drop-shadow-sm">
+                    <!-- Polígonos dos 6 Biomas -->
+                    ${BIOMES_DATA.map(b => `
+                      <path d="${b.svgPath}" fill="${b.color}" fill-opacity="0.88" stroke="#F6F3EC" stroke-width="2.2" class="biome-poly" onclick="app.goToScreen('map', '${b.id}')">
+                        <title>Explorar ${b.name}</title>
+                      </path>
+                    `).join('')}
+
+                    <!-- Marcadores ilustrativos de fauna distribuídos pelo território -->
+                    <g transform="translate(175, 130)" class="pointer-events-none">
+                      <circle r="18" fill="#F6F3EC" stroke="#173B32" stroke-width="2"/>
+                      <text y="5" text-anchor="middle" font-size="16">🐬</text>
+                    </g>
+                    <g transform="translate(480, 212)" class="pointer-events-none">
+                      <circle r="18" fill="#F6F3EC" stroke="#173B32" stroke-width="2"/>
+                      <text y="5" text-anchor="middle" font-size="16">🦜</text>
+                    </g>
+                    <g transform="translate(362, 282)" class="pointer-events-none">
+                      <circle r="18" fill="#F6F3EC" stroke="#173B32" stroke-width="2"/>
+                      <text y="5" text-anchor="middle" font-size="16">🐺</text>
+                    </g>
+                    <g transform="translate(465, 368)" class="pointer-events-none">
+                      <circle r="18" fill="#F6F3EC" stroke="#173B32" stroke-width="2"/>
+                      <text y="5" text-anchor="middle" font-size="16">🐒</text>
+                    </g>
+                    <g transform="translate(272, 322)" class="pointer-events-none">
+                      <circle r="18" fill="#F6F3EC" stroke="#173B32" stroke-width="2"/>
+                      <text y="5" text-anchor="middle" font-size="16">🦩</text>
+                    </g>
+                    <g transform="translate(334, 505)" class="pointer-events-none">
+                      <circle r="18" fill="#F6F3EC" stroke="#173B32" stroke-width="2"/>
+                      <text y="5" text-anchor="middle" font-size="16">🦌</text>
+                    </g>
+
+                    <!-- Indicação Sistema Costeiro-Marinho -->
+                    <path d="M 380,45 L 575,180 L 555,285 L 470,415 L 365,555" fill="none" stroke="#2B7A78" stroke-width="2.5" stroke-dasharray="5,5" opacity="0.75"/>
+                    <text x="485" y="455" font-size="11" fill="#2B7A78" font-weight="600" transform="rotate(-48 485,455)">Sistema Costeiro-Marinho (IBGE)</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Seis Ícones dos Biomas Continentais -->
+            <div class="space-y-3">
+              <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                <div>
+                  <h2 class="font-atlas text-xl font-bold text-naqi-forest">Os Seis Biomas Continentais Brasileiros</h2>
+                  <p class="text-xs sm:text-sm text-naqi-muted">Clique em qualquer bioma abaixo para iniciar diretamente sua investigação no mapa interativo.</p>
+                </div>
+                <span class="text-[11px] bg-white px-3 py-1 rounded-full border border-naqi-forest/15 text-naqi-muted">
+                  Nota: O IBGE delimita os 6 biomas continentais e separadamente o Sistema Costeiro-Marinho.
+                </span>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                ${BIOMES_DATA.map(biome => `
+                  <button onclick="app.goToScreen('map', '${biome.id}')" class="bg-white hover:bg-naqi-paper border border-naqi-forest/15 rounded-2xl p-4 text-left transition-all hover:-translate-y-1 card-shadow flex flex-col justify-between gap-3 group">
+                    <div class="flex items-center justify-between">
+                      <span class="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold shadow-sm" style="background-color: ${biome.color}">
+                        ${this.getBiomeGlyphSVG(biome.id)}
+                      </span>
+                      <span class="text-[11px] font-semibold text-naqi-muted group-hover:text-naqi-forest">Explorar →</span>
+                    </div>
+                    <div>
+                      <div class="font-atlas font-bold text-base text-naqi-forest">${biome.name}</div>
+                      <div class="text-xs text-naqi-muted line-clamp-2 mt-0.5">${biome.shortTag}</div>
+                    </div>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+        `;
+      },
+
+      getBiomeGlyphSVG(biomeId) {
+        const glyphs = {
+          amazonia: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C7 7 5 11 5 15a7 7 0 0014 0c0-4-2-8-7-13z"/><path d="M12 22v-9"/></svg>`,
+          caatinga: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M7 8v4a2 2 0 002 2h3M17 6v5a2 2 0 01-2 2h-3"/></svg>`,
+          cerrado: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>`,
+          mata_atlantica: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20l6-10 4 6 4-8 4 12H3z"/></svg>`,
+          pantanal: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0M2 17c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>`,
+          pampa: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18c4-4 8-4 16 0M8 15c1-4 3-7 6-9M12 16c1-3 3-5 5-6"/></svg>`
+        };
+        return glyphs[biomeId] || glyphs.amazonia;
+      },
+
+      /**
+       * =====================================================================
+       * ETAPA 1 — MAPA INTERATIVO DO BRASIL (ATLAS NATURAL)
+       * =====================================================================
+       */
+      selectBiome(biomeId, event = null) {
+        if (this.state.suppressMapClick) {
+          this.state.suppressMapClick = false;
+          if (event && event.target.closest && event.target.closest('.biome-poly')) return;
+        }
+        this.state.selectedBiomeId = biomeId;
+        this.state.exploredBiomes.add(biomeId);
+        this.render();
+      },
+
+      setMapLayer(layer) {
+        this.state.mapLayer = layer;
+        this.render();
+      },
+
+      zoomMap(delta) {
+        const next = Math.min(2.4, Math.max(0.85, +(this.state.zoom + delta).toFixed(2)));
+        this.state.zoom = next;
+        if (next === 1) this.state.pan = { x: 0, y: 0 };
+        this.applyMapTransform();
+      },
+
+      resetMapView() {
+        this.state.zoom = 1;
+        this.state.pan = { x: 0, y: 0 };
+        this.applyMapTransform();
+      },
+
+      applyMapTransform() {
+        const g = document.getElementById('map-viewport-group');
+        const label = document.getElementById('zoom-indicator');
+        const svg = document.getElementById('brazil-atlas-svg');
+        if (g && svg) {
+          const viewBox = svg.viewBox.baseVal;
+          const centerX = viewBox.x + viewBox.width / 2;
+          const centerY = viewBox.y + viewBox.height / 2;
+          const translateX = (centerX * (1 - this.state.zoom) + this.state.pan.x).toFixed(2);
+          const translateY = (centerY * (1 - this.state.zoom) + this.state.pan.y).toFixed(2);
+          g.setAttribute('transform', `translate(${translateX}, ${translateY}) scale(${this.state.zoom})`);
+        }
+        if (label) {
+          label.textContent = `${Math.round(this.state.zoom * 100)}%`;
+        }
+      },
+
+      attachMapPanEvents() {
+        const svg = document.getElementById('brazil-atlas-svg');
+        if (!svg) return;
+
+        this.mapPanAbortController = new AbortController();
+        const listenerOptions = { signal: this.mapPanAbortController.signal };
+        let activePointerId = null;
+        const toViewBoxPoint = (clientX, clientY) => {
+          const matrix = svg.getScreenCTM();
+          if (!matrix) return { x: clientX, y: clientY };
+          const point = svg.createSVGPoint();
+          point.x = clientX;
+          point.y = clientY;
+          const transformed = point.matrixTransform(matrix.inverse());
+          return { x: transformed.x, y: transformed.y };
+        };
+        const startDrag = (clientX, clientY) => {
+          const point = toViewBoxPoint(clientX, clientY);
+          this.state.suppressMapClick = false;
+          this.state.isDragging = true;
+          this.state.mapDragMoved = false;
+          this.state.dragStart = {
+            x: point.x,
+            y: point.y,
+            panX: this.state.pan.x,
+            panY: this.state.pan.y,
+            clientX,
+            clientY
+          };
+        };
+        const moveDrag = (clientX, clientY) => {
+          if (!this.state.isDragging) return;
+          if (!this.state.mapDragMoved && Math.hypot(clientX - this.state.dragStart.clientX, clientY - this.state.dragStart.clientY) < 4) return;
+          this.state.mapDragMoved = true;
+          const point = toViewBoxPoint(clientX, clientY);
+          this.state.pan = {
+            x: Math.max(-180, Math.min(180, this.state.dragStart.panX + point.x - this.state.dragStart.x)),
+            y: Math.max(-180, Math.min(180, this.state.dragStart.panY + point.y - this.state.dragStart.y))
+          };
+          this.applyMapTransform();
+        };
+        const endDrag = (event) => {
+          if (event.pointerId !== activePointerId) return;
+          this.state.isDragging = false;
+          activePointerId = null;
+          if (this.state.mapDragMoved) {
+            this.state.suppressMapClick = true;
+            window.setTimeout(() => { this.state.suppressMapClick = false; }, 250);
+          }
+          this.state.mapDragMoved = false;
+        };
+
+        svg.addEventListener('pointerdown', (e) => {
+          if (activePointerId !== null || (e.pointerType === 'mouse' && e.button !== 0)) return;
+          if (e.target.closest('.species-pin')) return;
+          activePointerId = e.pointerId;
+          startDrag(e.clientX, e.clientY);
+        }, listenerOptions);
+        window.addEventListener('pointermove', (e) => {
+          if (e.pointerId === activePointerId) moveDrag(e.clientX, e.clientY);
+        }, listenerOptions);
+        window.addEventListener('pointerup', endDrag, listenerOptions);
+        window.addEventListener('pointercancel', endDrag, listenerOptions);
+      },
+
+      renderMapScreen() {
+        const activeBiome = BIOMES_DATA.find(b => b.id === this.state.selectedBiomeId) || BIOMES_DATA[0];
+        const biomeSpecies = SPECIES_DATA.filter(sp => sp.biomes.includes(activeBiome.id));
+
+        return `
+          <section class="fade-in space-y-6">
+            <!-- Barra de Etapa e Camadas -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-naqi-forest/15 rounded-2xl p-4 card-shadow">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-naqi-terracotta">Etapa 1 &amp; 2 • Atlas Geográfico &amp; Fauna</div>
+                <h1 class="font-atlas text-2xl font-bold text-naqi-forest">Mapa Interativo dos Biomas do Brasil</h1>
+              </div>
+
+              <!-- Alternador de Camadas -->
+              <div class="flex flex-wrap items-center gap-1.5 bg-naqi-paper p-1.5 rounded-xl border border-naqi-forest/10 text-xs font-semibold">
+                <button onclick="app.setMapLayer('biomes')" class="px-3 py-2 rounded-lg transition-all ${this.state.mapLayer === 'biomes' ? 'bg-naqi-forest text-white shadow' : 'text-naqi-muted hover:text-naqi-forest'}">
+                  🗺️ Biomas (IBGE)
+                </button>
+                <button onclick="app.setMapLayer('climate')" class="px-3 py-2 rounded-lg transition-all ${this.state.mapLayer === 'climate' ? 'bg-naqi-forest text-white shadow' : 'text-naqi-muted hover:text-naqi-forest'}">
+                  🌦️ Características Climáticas
+                </button>
+                <button onclick="app.setMapLayer('fauna')" class="px-3 py-2 rounded-lg transition-all ${this.state.mapLayer === 'fauna' ? 'bg-naqi-forest text-white shadow' : 'text-naqi-muted hover:text-naqi-forest'}">
+                  🐾 Distribuição da Fauna
+                </button>
+              </div>
+            </div>
+
+            <!-- Grid Principal: Mapa à Esquerda (7 cols) | Ficha do Bioma & Espécies à Direita (5 cols) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              <!-- Canvas do Mapa Vetorial -->
+              <div class="lg:col-span-7 bg-white border border-naqi-forest/15 rounded-3xl p-4 sm:p-5 card-shadow relative overflow-hidden">
+                <!-- Controles de Zoom & Pan -->
+                <div class="flex items-center justify-between mb-3 gap-2 flex-wrap">
+                  <div class="text-xs text-naqi-muted flex items-center gap-2">
+                    <span class="inline-block w-2.5 h-2.5 rounded-full bg-naqi-terracotta animate-pulse"></span>
+                    Clique em um bioma para explorar ou arraste para mover o mapa
+                  </div>
+                  <div class="flex items-center gap-1 bg-naqi-paper border border-naqi-forest/15 rounded-xl p-1 text-xs font-bold">
+                    <button onclick="app.zoomMap(-0.2)" class="w-8 h-8 rounded-lg hover:bg-white text-naqi-forest" title="Afastar">−</button>
+                    <span id="zoom-indicator" class="px-2 text-naqi-muted font-mono">${Math.round(this.state.zoom * 100)}%</span>
+                    <button onclick="app.zoomMap(0.2)" class="w-8 h-8 rounded-lg hover:bg-white text-naqi-forest" title="Aproximar">+</button>
+                    <button onclick="app.resetMapView()" class="px-2.5 h-8 rounded-lg hover:bg-white text-naqi-forest font-medium" title="Centralizar mapa">Reset</button>
+                  </div>
+                </div>
+
+                <!-- SVG do Brasil -->
+                <div class="bg-naqi-paper rounded-2xl border border-naqi-forest/10 overflow-hidden touch-none">
+                  <svg id="brazil-atlas-svg" viewBox="0 0 600 585" class="w-full h-[380px] sm:h-[490px] cursor-grab active:cursor-grabbing select-none">
+                    <!-- Grade cartográfica de fundo -->
+                    <g stroke="#173B32" stroke-opacity="0.06" stroke-width="1">
+                      <line x1="0" y1="120" x2="600" y2="120" stroke-dasharray="4,4"/>
+                      <line x1="0" y1="290" x2="600" y2="290" stroke-dasharray="4,4"/>
+                      <line x1="0" y1="450" x2="600" y2="450" stroke-dasharray="4,4"/>
+                      <line x1="200" y1="0" x2="200" y2="585" stroke-dasharray="4,4"/>
+                      <line x1="400" y1="0" x2="400" y2="585" stroke-dasharray="4,4"/>
+                    </g>
+                    <text x="16" y="114" font-size="10" fill="#52605C" opacity="0.6">Linha do Equador (0°)</text>
+                    <text x="16" y="444" font-size="10" fill="#52605C" opacity="0.6">Trópico de Capricórnio (23°26'S)</text>
+
+                    <g id="map-viewport-group" transform="translate(${this.state.pan.x}, ${this.state.pan.y}) scale(${this.state.zoom})">
+                      <!-- Polígonos dos 6 Biomas -->
+                      ${BIOMES_DATA.map(b => {
+                        const isSelected = b.id === activeBiome.id;
+                        const fillOpacity = this.state.mapLayer === 'climate' ? '0.78' : (isSelected ? '0.96' : '0.82');
+                        return `
+                          <path
+                            d="${b.svgPath}"
+                            fill="${b.color}"
+                            fill-opacity="${fillOpacity}"
+                            stroke="#F6F3EC"
+                            stroke-width="${isSelected ? '3' : '1.8'}"
+                            class="biome-poly ${isSelected ? 'biome-active' : ''}"
+                            onclick="app.selectBiome('${b.id}', event)"
+                          />
+                        `;
+                      }).join('')}
+
+                      <!-- Sistema Costeiro-Marinho (IBGE) -->
+                      <path d="M 380,45 L 575,180 L 555,285 L 470,415 L 365,555" fill="none" stroke="#2B7A78" stroke-width="2.5" stroke-dasharray="6,5" opacity="0.75"/>
+
+                      <!-- Rótulos dos Biomas ou Indicadores Climáticos conforme camada -->
+                      ${BIOMES_DATA.map(b => {
+                        if (this.state.mapLayer === 'climate') {
+                          return `
+                            <g transform="translate(${b.labelPos.x}, ${b.labelPos.y})" class="pointer-events-none">
+                              <rect x="-58" y="-16" width="116" height="32" rx="8" fill="#173B32" fill-opacity="0.9"/>
+                              <text y="-2" text-anchor="middle" font-size="9.5" font-weight="700" fill="#FFFFFF">${b.name}</text>
+                              <text y="10" text-anchor="middle" font-size="8" fill="#FDE68A">${b.climateMetric.split('•')[0]}</text>
+                            </g>
+                          `;
+                        }
+                        return `
+                          <g transform="translate(${b.labelPos.x}, ${b.labelPos.y})" class="pointer-events-none">
+                            <text text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF" stroke="#173B32" stroke-width="2.5" paint-order="stroke">${b.name}</text>
+                          </g>
+                        `;
+                      }).join('')}
+
+                      <!-- Pins de Espécies (destaca as do bioma ativo ou todas no modo fauna) -->
+                      ${SPECIES_DATA.map(sp => {
+                        const occursInActive = sp.biomes.includes(activeBiome.id);
+                        const showPin = this.state.mapLayer === 'fauna' || occursInActive;
+                        if (!showPin) return '';
+                        const isDiscovered = this.state.discoveredSpecies.has(sp.id);
+                        return `
+                          <g transform="translate(${sp.pinPos.x}, ${sp.pinPos.y})" class="species-pin" onclick="app.openSpeciesModal('${sp.id}')">
+                            <circle r="15" fill="${isDiscovered ? '#173B32' : '#F6F3EC'}" stroke="${occursInActive ? '#C86D51' : '#173B32'}" stroke-width="2.5"/>
+                            <text y="4" text-anchor="middle" font-size="12" font-weight="700" fill="${isDiscovered ? '#FFFFFF' : '#173B32'}">
+                              ${this.getSpeciesEmoji(sp.id)}
+                            </text>
+                            <title>${sp.commonName} (${sp.scientificName}) — Clique para abrir ficha</title>
+                          </g>
+                        `;
+                      }).join('')}
+                    </g>
+                  </svg>
+                </div>
+
+                <!-- Legenda rápida dos 6 biomas -->
+                <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+                  <div class="flex flex-wrap gap-1.5">
+                    ${BIOMES_DATA.map(b => `
+                      <button onclick="app.selectBiome('${b.id}')" class="px-2.5 py-1 rounded-lg border text-xs font-medium flex items-center gap-1.5 transition-all ${b.id === activeBiome.id ? 'bg-naqi-forest text-white border-naqi-forest' : 'bg-naqi-paper text-naqi-ink border-naqi-forest/15 hover:bg-white'}">
+                        <span class="w-2.5 h-2.5 rounded-full" style="background-color:${b.color}"></span>
+                        ${b.name}
+                        ${this.state.exploredBiomes.has(b.id) ? '<span class="text-[10px] opacity-80">✓</span>' : ''}
+                      </button>
+                    `).join('')}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Painel Lateral: Ficha Científica do Bioma & Espécies Associadas -->
+              <div class="lg:col-span-5 space-y-5">
+                <div class="bg-white border border-naqi-forest/15 rounded-3xl p-5 sm:p-6 card-shadow space-y-4">
+                  <div class="flex items-start justify-between gap-3 border-b border-naqi-forest/10 pb-4">
+                    <div>
+                      <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md text-xs font-bold text-white mb-1.5" style="background-color:${activeBiome.color}">
+                        Bioma Continental • ${activeBiome.areaPct}
+                      </div>
+                      <h2 class="font-atlas text-2xl sm:text-3xl font-bold text-naqi-forest">${activeBiome.name}</h2>
+                    </div>
+                    <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-white shrink-0" style="background-color:${activeBiome.color}">
+                      ${this.getBiomeGlyphSVG(activeBiome.id)}
+                    </div>
+                  </div>
+
+                  <!-- Ficha Ambiental do Bioma -->
+                  <div class="space-y-3 text-sm">
+                    <div class="p-3 rounded-2xl" style="background-color:${activeBiome.lightBg}">
+                      <div class="font-bold text-naqi-forest text-xs uppercase tracking-wider mb-1">🌿 Vegetação e Paisagem</div>
+                      <p class="text-naqi-ink/90 leading-relaxed">${activeBiome.vegetation}</p>
+                    </div>
+
+                    <div class="p-3 rounded-2xl bg-naqi-paper border border-naqi-forest/10">
+                      <div class="font-bold text-naqi-forest text-xs uppercase tracking-wider mb-1">🌦️ Clima e Sazonalidade</div>
+                      <p class="text-naqi-ink/90 leading-relaxed">${activeBiome.climate}</p>
+                      <div class="mt-1.5 text-xs font-semibold text-naqi-terracotta">${activeBiome.climateMetric}</div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                      <div class="p-3 rounded-xl bg-naqi-paper/70 border border-naqi-forest/10">
+                        <div class="font-bold text-naqi-forest mb-1">💧 Água e Solo</div>
+                        <p class="text-naqi-muted leading-relaxed">${activeBiome.hydrologySoil}</p>
+                      </div>
+                      <div class="p-3 rounded-xl bg-naqi-paper/70 border border-naqi-forest/10">
+                        <div class="font-bold text-naqi-forest mb-1">🧭 Variações Internas</div>
+                        <p class="text-naqi-muted leading-relaxed">${activeBiome.internalVariations}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Espécies que ocorrem neste bioma (incluindo distribuição multi-bioma) -->
+                  <div class="pt-2 border-t border-naqi-forest/10">
+                    <div class="flex items-center justify-between mb-2.5">
+                      <h3 class="font-atlas font-bold text-base text-naqi-forest">
+                        Fauna com ocorrência registrada (${biomeSpecies.length})
+                      </h3>
+                      <span class="text-[11px] text-naqi-muted">Clique para abrir ficha</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      ${biomeSpecies.map(sp => {
+                        const discovered = this.state.discoveredSpecies.has(sp.id);
+                        return `
+                          <button onclick="app.openSpeciesModal('${sp.id}')" class="flex items-center gap-3 p-2.5 rounded-2xl border text-left transition-all hover:shadow-md ${discovered ? 'bg-emerald-50/70 border-emerald-600/30' : 'bg-naqi-paper hover:bg-white border-naqi-forest/15'}">
+                            <div class="w-10 h-10 rounded-xl bg-white border border-naqi-forest/10 flex items-center justify-center text-xl shrink-0">
+                              ${this.getSpeciesEmoji(sp.id)}
+                            </div>
+                            <div class="min-w-0 flex-grow">
+                              <div class="font-bold text-xs sm:text-sm text-naqi-forest truncate">${sp.commonName}</div>
+                              <div class="text-[11px] italic text-naqi-muted truncate">${sp.scientificName}</div>
+                              <div class="text-[10px] font-semibold mt-0.5 ${sp.biomes.length > 1 ? 'text-naqi-terracotta' : 'text-naqi-muted'}">
+                                ${sp.biomes.length === 6 ? 'Ocorre nos 6 biomas' : (sp.biomes.length > 1 ? `Ocorre em ${sp.biomes.length} biomas` : 'Ocorrência focal')}
+                              </div>
+                            </div>
+                          </button>
+                        `;
+                      }).join('')}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Botão para avançar aos Minijogos -->
+                <div class="bg-naqi-forest text-white rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
+                  <div class="text-xs sm:text-sm">
+                    <strong class="block font-atlas text-base">Pronto para testar suas descobertas?</strong>
+                    <span class="text-white/80">Avance para os 4 minijogos ecológicos interativos.</span>
+                  </div>
+                  <button onclick="app.goToScreen('minigames')" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-naqi-terracotta hover:bg-naqi-terracottaDark text-white font-semibold text-sm shrink-0 transition-colors">
+                    Ir para Minijogos →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        `;
+      },
+
+      getSpeciesEmoji(speciesId) {
+        const map = {
+          boto_cor_de_rosa: '🐬',
+          ariranha: '🦦',
+          arara_azul_de_lear: '🦜',
+          moco: '🐹',
+          lobo_guara: '🐺',
+          tamandua_bandeira: '🐜',
+          mico_leao_dourado: '🐒',
+          muriqui: '🦧',
+          tuiuiu: '🦩',
+          cervo_do_pantanal: '🦌',
+          veado_campeiro: '🦌',
+          graxaim_do_campo: '🦊'
+        };
+        return map[speciesId] || '🐾';
+      },
+
+      /**
+       * =====================================================================
+       * ETAPA 2 — MODAL DE FICHA CIENTÍFICA DA ESPÉCIE (9 CAMPOS OBRIGATÓRIOS)
+       * =====================================================================
+       */
+      openSpeciesModal(speciesId) {
+        const sp = SPECIES_DATA.find(s => s.id === speciesId);
+        if (!sp) return;
+
+        this.state.discoveredSpecies.add(speciesId);
+        this.updateTelemetry();
+
+        const modal = document.getElementById('species-modal');
+        const content = document.getElementById('species-modal-content');
+
+        const biomeBadges = sp.biomes.map(bId => {
+          const b = BIOMES_DATA.find(item => item.id === bId);
+          return `<span class="px-2.5 py-1 rounded-lg text-xs font-bold text-white" style="background-color:${b.color}">${b.name}</span>`;
+        }).join('');
+
+        content.innerHTML = `
+          <div class="p-5 sm:p-8 space-y-5">
+            <!-- Cabeçalho -->
+            <div class="flex items-start justify-between gap-4 border-b border-naqi-forest/10 pb-4">
+              <div>
+                <span class="inline-block px-3 py-1 rounded-full bg-naqi-forest/10 text-naqi-forest text-xs font-semibold mb-2">
+                  ${sp.category}
+                </span>
+                <h2 class="font-atlas text-2xl sm:text-3xl font-bold text-naqi-forest">${sp.commonName}</h2>
+                <p class="italic text-sm sm:text-base text-naqi-terracotta font-medium">${sp.scientificName}</p>
+              </div>
+              <button onclick="app.closeSpeciesModal()" class="w-10 h-10 rounded-full bg-naqi-paperDark hover:bg-naqi-forest hover:text-white flex items-center justify-center font-bold text-lg transition-colors" aria-label="Fechar ficha">
+                ✕
+              </button>
+            </div>
+
+            <!-- Ilustração + Biomas de Ocorrência -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+              <div class="md:col-span-5 h-44 rounded-2xl overflow-hidden border border-naqi-forest/15 shadow-inner">
+                ${getSpeciesIllustrationSVG(sp.id)}
+              </div>
+              <div class="md:col-span-7 space-y-3">
+                <div>
+                  <div class="text-xs font-bold uppercase tracking-wider text-naqi-muted mb-1.5">3. Biomas de ocorrência registrada</div>
+                  <div class="flex flex-wrap gap-1.5">${biomeBadges}</div>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-white border border-naqi-forest/10 text-sm">
+                  <div class="text-xs font-bold uppercase tracking-wider text-naqi-forest mb-1">4. Habitat específico</div>
+                  <p class="text-naqi-ink/90 leading-relaxed">${sp.habitat}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Grade com Alimentação, Adaptações e Papel Ecológico -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+              <div class="p-4 rounded-2xl bg-white border border-naqi-forest/10 space-y-1.5">
+                <div class="font-bold text-naqi-forest text-xs uppercase tracking-wider">5. Alimentação (com exemplos)</div>
+                <p class="text-naqi-ink/90 leading-relaxed">${sp.diet}</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-white border border-naqi-forest/10 space-y-1.5">
+                <div class="font-bold text-naqi-forest text-xs uppercase tracking-wider">6. Comportamento e adaptações</div>
+                <p class="text-naqi-ink/90 leading-relaxed">${sp.behaviorAdaptation}</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-white border border-naqi-forest/10 space-y-1.5">
+                <div class="font-bold text-naqi-forest text-xs uppercase tracking-wider">7. Papel ecológico</div>
+                <p class="text-naqi-ink/90 leading-relaxed">${sp.ecologicalRole}</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-amber-50/80 border border-amber-600/20 space-y-1.5">
+                <div class="font-bold text-amber-900 text-xs uppercase tracking-wider">8. Situação de conservação</div>
+                <p class="text-amber-950/90 leading-relaxed">${sp.conservation}</p>
+              </div>
+            </div>
+
+            <!-- Você sabia? + Fonte Científica -->
+            <div class="p-4 rounded-2xl bg-naqi-forest text-naqi-paper text-sm space-y-2">
+              <div class="font-atlas font-bold text-amber-300">💡 Você sabia?</div>
+              <p class="leading-relaxed">${sp.didYouKnow}</p>
+              <div class="pt-2 border-t border-white/15 text-xs text-naqi-paper/80">
+                <strong>9. Fonte científica consultada:</strong> ${sp.source}
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button onclick="app.closeSpeciesModal()" class="px-6 py-2.5 rounded-xl bg-naqi-terracotta hover:bg-naqi-terracottaDark text-white font-semibold text-sm">
+                Continuar expedição
+              </button>
+            </div>
+          </div>
+        `;
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      },
+
+      closeSpeciesModal() {
+        const modal = document.getElementById('species-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        if (this.state.screen === 'map') this.render();
+      },
+
+      /**
+       * =====================================================================
+       * ETAPA 3 — QUATRO MINIJOGOS INTERATIVOS
+       * =====================================================================
+       */
+      setMinigameTab(tabId) {
+        this.state.activeMinigameTab = tabId;
+        this.render();
+      },
+
+      renderMinigamesScreen() {
+        const tabs = [
+          { id: 'challenge1', label: '1. Onde eu moro?', done: Object.keys(this.state.c1Completed).length === 4 },
+          { id: 'challenge2', label: '2. Qual é o meu alimento?', done: Object.keys(this.state.c2Completed).length === 4 },
+          { id: 'challenge3', label: '3. Adaptação ao ambiente', done: Object.values(this.state.c3Answers).filter(a => a.correct).length === 3 },
+          { id: 'challenge4', label: '4. Quem depende de quem?', done: Object.values(this.state.c4Answers).filter(a => a.correct).length === 3 }
+        ];
+
+        return `
+          <section class="fade-in space-y-6">
+            <div class="bg-white border border-naqi-forest/15 rounded-3xl p-5 sm:p-6 card-shadow space-y-4">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <div class="text-xs font-bold uppercase tracking-wider text-naqi-terracotta">Etapa 3 • Laboratório de Relações Ecológicas</div>
+                  <h1 class="font-atlas text-2xl sm:text-3xl font-bold text-naqi-forest">Minijogos Interativos</h1>
+                </div>
+                <button onclick="app.goToScreen('discovery')" class="px-5 py-2.5 rounded-xl bg-naqi-forest hover:bg-naqi-forestDark text-white font-semibold text-sm self-start md:self-auto">
+                  Avançar para Desafios de Descoberta →
+                </button>
+              </div>
+
+              <!-- Abas dos 4 desafios -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-2">
+                ${tabs.map(t => `
+                  <button onclick="app.setMinigameTab('${t.id}')" class="p-3 rounded-2xl border text-left transition-all flex items-center justify-between ${this.state.activeMinigameTab === t.id ? 'bg-naqi-forest text-white border-naqi-forest shadow' : 'bg-naqi-paper hover:bg-white text-naqi-ink border-naqi-forest/15'}">
+                    <span class="font-semibold text-xs sm:text-sm">${t.label}</span>
+                    <span class="text-xs px-2 py-0.5 rounded-full ${t.done ? 'bg-emerald-500 text-white' : 'bg-black/10'}">
+                      ${t.done ? '✓' : '•'}
+                    </span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Conteúdo do Minijogo Ativo -->
+            <div class="bg-white border border-naqi-forest/15 rounded-3xl p-5 sm:p-8 card-shadow">
+              ${this.state.activeMinigameTab === 'challenge1' ? this.renderChallenge1() : ''}
+              ${this.state.activeMinigameTab === 'challenge2' ? this.renderChallenge2() : ''}
+              ${this.state.activeMinigameTab === 'challenge3' ? this.renderChallenge3() : ''}
+              ${this.state.activeMinigameTab === 'challenge4' ? this.renderChallenge4() : ''}
+            </div>
+          </section>
+        `;
+      },
+
+      // --- MINIJOGO 1: ONDE EU MORO? (MULTI-BIOMA) ---
+      toggleC1Biome(biomeId) {
+        if (this.state.c1SelectedBiomes.has(biomeId)) this.state.c1SelectedBiomes.delete(biomeId);
+        else this.state.c1SelectedBiomes.add(biomeId);
+        this.render();
+      },
+
+      verifyC1Answer() {
+        const item = MINIGAMES_DATA.challenge1.items[this.state.c1Index];
+        const chosen = Array.from(this.state.c1SelectedBiomes).sort();
+        const expected = [...item.correctBiomes].sort();
+        const isCorrect = chosen.length === expected.length && chosen.every((val, i) => val === expected[i]);
+
+        this.state.c1LastFeedback = {
+          correct: isCorrect,
+          text: isCorrect ? item.successFeedback : item.errorFeedback
+        };
+
+        if (isCorrect) {
+          this.state.c1Completed[item.speciesId] = true;
+        }
+        this.render();
+      },
+
+      nextC1Item() {
+        const total = MINIGAMES_DATA.challenge1.items.length;
+        this.state.c1Index = (this.state.c1Index + 1) % total;
+        this.state.c1SelectedBiomes.clear();
+        this.state.c1LastFeedback = null;
+        this.render();
+      },
+
+      renderChallenge1() {
+        const data = MINIGAMES_DATA.challenge1;
+        const item = data.items[this.state.c1Index];
+        const sp = SPECIES_DATA.find(s => s.id === item.speciesId);
+
+        return `
+          <div class="space-y-6">
+            <div class="border-b border-naqi-forest/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h2 class="font-atlas text-xl sm:text-2xl font-bold text-naqi-forest">${data.title}</h2>
+                <p class="text-sm text-naqi-muted">${data.subtitle}</p>
+              </div>
+              <span class="text-xs font-bold px-3 py-1 rounded-full bg-naqi-paper border border-naqi-forest/15">
+                Espécie ${this.state.c1Index + 1} de ${data.items.length}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+              <!-- Cartão do Animal -->
+              <div class="md:col-span-5 bg-naqi-paper border border-naqi-forest/15 rounded-2xl p-4 text-center space-y-3">
+                <div class="h-36 rounded-xl overflow-hidden">${getSpeciesIllustrationSVG(sp.id)}</div>
+                <div>
+                  <div class="font-atlas text-xl font-bold text-naqi-forest">${sp.commonName}</div>
+                  <div class="italic text-xs text-naqi-muted">${sp.scientificName}</div>
+                </div>
+                <button onclick="app.openSpeciesModal('${sp.id}')" class="text-xs underline text-naqi-terracotta font-semibold">
+                  Consultar ficha científica
+                </button>
+              </div>
+
+              <!-- Seleção dos Biomas -->
+              <div class="md:col-span-7 space-y-4">
+                <p class="font-semibold text-naqi-forest text-base">${item.prompt}</p>
+                <p class="text-xs text-naqi-muted">Toque ou clique para marcar um ou mais biomas e depois confirme sua resposta:</p>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                  ${BIOMES_DATA.map(b => {
+                    const active = this.state.c1SelectedBiomes.has(b.id);
+                    return `
+                      <button onclick="app.toggleC1Biome('${b.id}')" class="p-3 rounded-2xl border-2 text-left transition-all flex items-center gap-2.5 ${active ? 'border-naqi-forest bg-naqi-forest text-white shadow-md' : 'border-naqi-forest/15 bg-naqi-paper hover:bg-white text-naqi-ink'}">
+                        <span class="w-4 h-4 rounded-full shrink-0 border border-white/40" style="background-color:${b.color}"></span>
+                        <span class="text-xs sm:text-sm font-bold">${b.name}</span>
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 pt-2">
+                  <button onclick="app.verifyC1Answer()" class="px-6 py-3 rounded-xl bg-naqi-terracotta hover:bg-naqi-terracottaDark text-white font-semibold text-sm shadow">
+                    Verificar ocorrência
+                  </button>
+                  <button onclick="app.nextC1Item()" class="px-4 py-3 rounded-xl bg-naqi-paper hover:bg-naqi-paperDark text-naqi-forest font-semibold text-sm border border-naqi-forest/15">
+                    Próxima espécie →
+                  </button>
+                </div>
+
+                ${this.state.c1LastFeedback ? `
+                  <div class="p-4 rounded-2xl border text-sm leading-relaxed ${this.state.c1LastFeedback.correct ? 'bg-emerald-50 border-emerald-600/30 text-emerald-950' : 'bg-amber-50 border-amber-600/30 text-amber-950'}">
+                    <strong>${this.state.c1LastFeedback.correct ? '✓ Resposta confirmada:' : '⚠ Vamos revisar:'}</strong>
+                    ${this.state.c1LastFeedback.text}
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      // --- MINIJOGO 2: QUAL É O MEU ALIMENTO? ---
+      selectC2Food(pairId, foodId) {
+        const data = MINIGAMES_DATA.challenge2;
+        const pair = data.pairs.find(p => p.id === pairId);
+        const isCorrect = pair.correctFoodId === foodId;
+        this.state.c2Selections[pairId] = { foodId, correct: isCorrect };
+        if (isCorrect) this.state.c2Completed[pairId] = true;
+        this.render();
+      },
+
+      renderChallenge2() {
+        const data = MINIGAMES_DATA.challenge2;
+        return `
+          <div class="space-y-6">
+            <div class="border-b border-naqi-forest/10 pb-4">
+              <h2 class="font-atlas text-xl sm:text-2xl font-bold text-naqi-forest">${data.title}</h2>
+              <p class="text-sm text-naqi-muted">${data.subtitle}</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              ${data.pairs.map(pair => {
+                const sp = SPECIES_DATA.find(s => s.id === pair.speciesId);
+                const sel = this.state.c2Selections[pair.id];
+                return `
+                  <div class="p-4 rounded-2xl bg-naqi-paper border border-naqi-forest/15 space-y-3">
+                    <div class="flex items-center gap-3">
+                      <span class="text-2xl w-11 h-11 rounded-xl bg-white flex items-center justify-center border border-naqi-forest/10">${this.getSpeciesEmoji(sp.id)}</span>
+                      <div>
+                        <div class="font-atlas font-bold text-base text-naqi-forest">${sp.commonName}</div>
+                        <div class="italic text-xs text-naqi-muted">${sp.scientificName}</div>
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-2">
+                      ${data.options.map(opt => {
+                        const isChosen = sel && sel.foodId === opt.id;
+                        let btnStyle = 'bg-white hover:bg-naqi-paperDark/50 border-naqi-forest/15 text-naqi-ink';
+                        if (isChosen) {
+                          btnStyle = sel.correct
+                            ? 'bg-emerald-700 text-white border-emerald-700 font-semibold'
+                            : 'bg-amber-600 text-white border-amber-600 font-semibold';
+                        }
+                        return `
+                          <button onclick="app.selectC2Food('${pair.id}', '${opt.id}')" class="p-2.5 rounded-xl border text-left text-xs sm:text-sm transition-all flex items-center gap-2 ${btnStyle}">
+                            <span>${opt.icon}</span>
+                            <span>${opt.label}</span>
+                          </button>
+                        `;
+                      }).join('')}
+                    </div>
+
+                    ${sel ? `
+                      <div class="p-3 rounded-xl text-xs leading-relaxed ${sel.correct ? 'bg-emerald-100/80 text-emerald-950' : 'bg-amber-100/80 text-amber-950'}">
+                        ${sel.correct ? pair.feedbackOk : pair.feedbackErr}
+                      </div>
+                    ` : ''}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      },
+
+      // --- MINIJOGO 3: ADAPTAÇÃO AO AMBIENTE ---
+      selectC3Option(scenarioId, optionId, isCorrect) {
+        this.state.c3Answers[scenarioId] = { optionId, correct: isCorrect };
+        this.render();
+      },
+
+      renderChallenge3() {
+        const data = MINIGAMES_DATA.challenge3;
+        return `
+          <div class="space-y-6">
+            <div class="border-b border-naqi-forest/10 pb-4">
+              <h2 class="font-atlas text-xl sm:text-2xl font-bold text-naqi-forest">${data.title}</h2>
+              <p class="text-sm text-naqi-muted">${data.subtitle}</p>
+            </div>
+
+            <div class="space-y-5">
+              ${data.scenarios.map((sc, idx) => {
+                const ans = this.state.c3Answers[sc.id];
+                return `
+                  <div class="p-5 rounded-2xl bg-naqi-paper border border-naqi-forest/15 space-y-3">
+                    <div class="inline-block px-3 py-1 rounded-lg bg-naqi-forest/10 text-naqi-forest text-xs font-semibold">
+                      Cenário ${idx + 1} • Condição Ambiental: ${sc.habitatCue}
+                    </div>
+                    <h3 class="font-bold text-base text-naqi-forest">${sc.question}</h3>
+
+                    <div class="grid grid-cols-1 gap-2">
+                      ${sc.options.map(opt => {
+                        const chosen = ans && ans.optionId === opt.id;
+                        let style = 'bg-white hover:border-naqi-forest border-naqi-forest/15 text-naqi-ink';
+                        if (chosen) {
+                          style = opt.correct
+                            ? 'bg-emerald-700 text-white border-emerald-700 font-semibold'
+                            : 'bg-amber-600 text-white border-amber-600 font-semibold';
+                        }
+                        return `
+                          <button onclick="app.selectC3Option('${sc.id}', '${opt.id}', ${opt.correct})" class="p-3 rounded-xl border text-left text-xs sm:text-sm transition-all ${style}">
+                            ${opt.label}
+                          </button>
+                        `;
+                      }).join('')}
+                    </div>
+
+                    ${ans ? `
+                      <div class="p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed ${ans.correct ? 'bg-emerald-100/80 text-emerald-950' : 'bg-amber-100/80 text-amber-950'}">
+                        <strong>${ans.correct ? '✓ Explicação científica:' : '⚠ Observe a adaptação:'}</strong> ${sc.explanation}
+                      </div>
+                    ` : ''}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      },
+
+      // --- MINIJOGO 4: QUEM DEPENDE DE QUEM? ---
+      selectC4Option(webId, optionId, isCorrect) {
+        this.state.c4Answers[webId] = { optionId, correct: isCorrect };
+        this.render();
+      },
+
+      renderChallenge4() {
+        const data = MINIGAMES_DATA.challenge4;
+        return `
+          <div class="space-y-6">
+            <div class="border-b border-naqi-forest/10 pb-4">
+              <h2 class="font-atlas text-xl sm:text-2xl font-bold text-naqi-forest">${data.title}</h2>
+              <p class="text-sm text-naqi-muted">${data.subtitle}</p>
+            </div>
+
+            <div class="space-y-5">
+              ${data.webs.map(web => {
+                const biome = BIOMES_DATA.find(b => b.id === web.biomeId);
+                const ans = this.state.c4Answers[web.id];
+                return `
+                  <div class="p-5 rounded-2xl bg-naqi-paper border border-naqi-forest/15 space-y-4">
+                    <div class="flex items-center justify-between">
+                      <span class="font-atlas font-bold text-lg text-naqi-forest">${web.title}</span>
+                      <span class="px-2.5 py-1 rounded-lg text-xs font-bold text-white" style="background-color:${biome.color}">${biome.name}</span>
+                    </div>
+
+                    <!-- Fluxo visual da teia -->
+                    <div class="flex flex-wrap items-center gap-2 bg-white p-3.5 rounded-xl border border-naqi-forest/10 text-xs sm:text-sm">
+                      ${web.chain.map(node => {
+                        if (node.startsWith('→')) {
+                          return `<span class="font-bold text-naqi-terracotta">${node}</span>`;
+                        }
+                        if (node === '[ ? ]') {
+                          return `<span class="px-3 py-1 rounded-lg bg-naqi-forest text-white font-bold">${ans && ans.correct ? '✓ Elo conectado!' : 'Complete o elo'}</span>`;
+                        }
+                        return `<span class="px-3 py-1 rounded-lg bg-naqi-paper font-medium text-naqi-forest">${node}</span>`;
+                      }).join('')}
+                    </div>
+
+                    <div class="font-semibold text-sm text-naqi-forest">${web.question}</div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                      ${web.options.map(opt => {
+                        const chosen = ans && ans.optionId === opt.id;
+                        let style = 'bg-white hover:border-naqi-forest border-naqi-forest/15 text-naqi-ink';
+                        if (chosen) {
+                          style = opt.correct
+                            ? 'bg-emerald-700 text-white border-emerald-700 font-semibold'
+                            : 'bg-amber-600 text-white border-amber-600 font-semibold';
+                        }
+                        return `
+                          <button onclick="app.selectC4Option('${web.id}', '${opt.id}', ${opt.correct})" class="p-3 rounded-xl border text-left text-xs sm:text-sm transition-all ${style}">
+                            ${opt.label}
+                          </button>
+                        `;
+                      }).join('')}
+                    </div>
+
+                    ${ans ? `
+                      <div class="p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed ${ans.correct ? 'bg-emerald-100/80 text-emerald-950' : 'bg-amber-100/80 text-amber-950'}">
+                        <strong>${ans.correct ? '✓ Relação ecológica compreendida:' : '⚠ Tente outro elo:'}</strong> ${web.explanation}
+                      </div>
+                    ` : ''}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      },
+
+      /**
+       * =====================================================================
+       * ETAPA 4 — DESAFIOS DE DESCOBERTA (QUESTÕES ANALÍTICAS)
+       * =====================================================================
+       */
+      answerDiscoveryQuiz(qId, optId, isCorrect) {
+        this.state.quizAnswers[qId] = { optId, correct: isCorrect };
+        this.render();
+      },
+
+      renderDiscoveryScreen() {
+        const answeredCount = Object.keys(this.state.quizAnswers).length;
+        return `
+          <section class="fade-in space-y-6 max-w-4xl mx-auto">
+            <div class="bg-white border border-naqi-forest/15 rounded-3xl p-6 sm:p-8 card-shadow space-y-3">
+              <div class="text-xs font-bold uppercase tracking-wider text-naqi-terracotta">Etapa 4 • Síntese Científica</div>
+              <h1 class="font-atlas text-2xl sm:text-3xl font-bold text-naqi-forest">Desafios de Descoberta</h1>
+              <p class="text-sm text-naqi-muted">
+                Aplique o que você observou nos mapas, fichas de fauna e teias ecológicas para responder às questões analíticas abaixo.
+              </p>
+            </div>
+
+            <div class="space-y-5">
+              ${DISCOVERY_QUIZ_DATA.map((q, index) => {
+                const userAns = this.state.quizAnswers[q.id];
+                return `
+                  <div class="bg-white border border-naqi-forest/15 rounded-3xl p-6 card-shadow space-y-4">
+                    <div class="flex items-center justify-between">
+                      <span class="px-3 py-1 rounded-full bg-naqi-paper text-naqi-forest text-xs font-bold border border-naqi-forest/10">
+                        Questão ${index + 1} de ${DISCOVERY_QUIZ_DATA.length}
+                      </span>
+                      ${userAns ? `<span class="text-xs font-bold ${userAns.correct ? 'text-emerald-700' : 'text-amber-700'}">${userAns.correct ? '+15 pts' : 'Revisada'}</span>` : ''}
+                    </div>
+
+                    <h2 class="font-atlas text-lg sm:text-xl font-bold text-naqi-forest">${q.question}</h2>
+
+                    <div class="space-y-2.5">
+                      ${q.options.map(opt => {
+                        const isChosen = userAns && userAns.optId === opt.id;
+                        let style = 'bg-naqi-paper/70 hover:bg-naqi-paper border-naqi-forest/15 text-naqi-ink';
+                        if (userAns) {
+                          if (opt.correct) style = 'bg-emerald-700 text-white border-emerald-700 font-semibold';
+                          else if (isChosen) style = 'bg-amber-600 text-white border-amber-600 font-semibold';
+                        }
+                        return `
+                          <button onclick="app.answerDiscoveryQuiz('${q.id}', '${opt.id}', ${!!opt.correct})" class="w-full p-3.5 rounded-2xl border text-left text-sm transition-all flex items-center justify-between gap-3 ${style}">
+                            <span>${opt.text}</span>
+                            ${userAns && opt.correct ? '<span>✓</span>' : ''}
+                          </button>
+                        `;
+                      }).join('')}
+                    </div>
+
+                    ${userAns ? `
+                      <div class="p-4 rounded-2xl bg-naqi-paper border-l-4 border-naqi-forest text-xs sm:text-sm space-y-1.5">
+                        <div class="font-bold text-naqi-forest">Fundamentação Científica:</div>
+                        <p class="text-naqi-ink/90 leading-relaxed">${q.explanation}</p>
+                        <div class="text-xs text-naqi-muted pt-1"><strong>Referência:</strong> ${q.reference}</div>
+                      </div>
+                    ` : ''}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <div class="bg-naqi-forest text-white rounded-3xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+              <div>
+                <div class="font-atlas text-xl font-bold">Progresso: ${answeredCount}/${DISCOVERY_QUIZ_DATA.length} questões respondidas</div>
+                <p class="text-xs sm:text-sm text-white/80">Conclua sua expedição para visualizar seu distintivo e o relatório completo.</p>
+              </div>
+              <button onclick="app.goToScreen('results')" class="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-naqi-terracotta hover:bg-naqi-terracottaDark text-white font-semibold text-sm shadow">
+                Concluir expedição →
+              </button>
+            </div>
+          </section>
+        `;
+      },
+
+      /**
+       * =====================================================================
+       * ETAPA 5 — TELA FINAL (SUA EXPEDIÇÃO & FONTES CIENTÍFICAS)
+       * =====================================================================
+       */
+      shareResult() {
+        const score = this.calculateTotalScore();
+        const text = `🌿 Concluí a "Expedição pelos Biomas do Brasil" (NaqīKarbon GameQuiz)!\n• Pontuação: ${score} pts\n• Biomas explorados: ${this.state.exploredBiomes.size}/6\n• Espécies descobertas: ${this.state.discoveredSpecies.size}/12\nConhecimento em circulação!`;
+
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          this.showToast('Resultado copiado para a área de transferência!', 'success');
+        } catch (err) {
+          this.showToast('Não foi possível copiar automaticamente.', 'info');
+        }
+        document.body.removeChild(textarea);
+      },
+
+      resetExpedition() {
+        this.state = {
+          screen: 'intro',
+          selectedBiomeId: 'amazonia',
+          mapLayer: 'biomes',
+          zoom: 1,
+          pan: { x: 0, y: 0 },
+          isDragging: false,
+          dragStart: { x: 0, y: 0 },
+          exploredBiomes: new Set(['amazonia']),
+          discoveredSpecies: new Set(),
+          activeMinigameTab: 'challenge1',
+          c1Index: 0,
+          c1SelectedBiomes: new Set(),
+          c1Completed: {},
+          c2Selections: {},
+          c2Completed: {},
+          c3Answers: {},
+          c4Answers: {},
+          quizAnswers: {},
+          score: 0
+        };
+        this.render();
+      },
+
+      renderResultsScreen() {
+        const totalScore = this.calculateTotalScore();
+        const maxPossible = 236;
+        const quizCorrect = Object.values(this.state.quizAnswers).filter(a => a.correct).length;
+        const minigameHits =
+          Object.values(this.state.c1Completed).filter(Boolean).length +
+          Object.values(this.state.c2Completed).filter(Boolean).length +
+          Object.values(this.state.c3Answers).filter(a => a.correct).length +
+          Object.values(this.state.c4Answers).filter(a => a.correct).length;
+
+        const badgeTitle = totalScore >= 160
+          ? 'Naturalista Guardião da Biodiversidade'
+          : (totalScore >= 80 ? 'Explorador da Biodiversidade' : 'Pesquisador Iniciante de Campo');
+
+        return `
+          <section class="fade-in space-y-8 max-w-4xl mx-auto">
+            <div class="bg-white border border-naqi-forest/15 rounded-3xl p-6 sm:p-10 card-shadow text-center space-y-6">
+              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-naqi-forest/10 text-naqi-forest text-xs font-bold uppercase tracking-wider">
+                Expedição Concluída • NaqīKarbon GameQuiz
+              </div>
+
+              <!-- Distintivo Digital SVG -->
+              <div class="w-32 h-32 mx-auto">
+                <svg viewBox="0 0 140 140" class="w-full h-full drop-shadow-md">
+                  <circle cx="70" cy="70" r="64" fill="#173B32" stroke="#C86D51" stroke-width="4"/>
+                  <circle cx="70" cy="70" r="54" fill="none" stroke="#F6F3EC" stroke-width="1.5" stroke-dasharray="4,3"/>
+                  <path d="M70 28 C52 46, 46 62, 46 76 A 24 24 0 0 0 94 76 C94 62, 88 46, 70 28 Z" fill="#2E7D32"/>
+                  <path d="M70 40 L70 96 M70 64 L56 54 M70 76 L84 66" stroke="#F6F3EC" stroke-width="2.5" stroke-linecap="round"/>
+                  <rect x="24" y="96" width="92" height="20" rx="10" fill="#C86D51"/>
+                  <text x="70" y="109" text-anchor="middle" font-size="9.5" font-weight="700" fill="#FFFFFF">BIOMAS DO BRASIL</text>
+                </svg>
+              </div>
+
+              <div class="space-y-2">
+                <h1 class="font-atlas text-3xl sm:text-4xl font-bold text-naqi-forest">${badgeTitle}</h1>
+                <p class="text-sm sm:text-base text-naqi-muted max-w-xl mx-auto">
+                  Você descobriu relações entre os animais, o clima e seus habitats ao longo dos seis biomas continentais brasileiros. <strong>Conhecimento em circulação!</strong>
+                </p>
+              </div>
+
+              <!-- Indicadores Consolidados -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                <div class="p-4 rounded-2xl bg-naqi-paper border border-naqi-forest/10">
+                  <div class="text-2xl font-atlas font-bold text-naqi-terracotta">${totalScore} pts</div>
+                  <div class="text-xs text-naqi-muted font-medium mt-0.5">Pontuação total</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-naqi-paper border border-naqi-forest/10">
+                  <div class="text-2xl font-atlas font-bold text-naqi-forest">${this.state.exploredBiomes.size}/6</div>
+                  <div class="text-xs text-naqi-muted font-medium mt-0.5">Biomas explorados</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-naqi-paper border border-naqi-forest/10">
+                  <div class="text-2xl font-atlas font-bold text-naqi-forest">${this.state.discoveredSpecies.size}/12</div>
+                  <div class="text-xs text-naqi-muted font-medium mt-0.5">Espécies descobertas</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-naqi-paper border border-naqi-forest/10">
+                  <div class="text-2xl font-atlas font-bold text-naqi-forest">${minigameHits + quizCorrect}/18</div>
+                  <div class="text-xs text-naqi-muted font-medium mt-0.5">Desafios concluídos</div>
+                </div>
+              </div>
+
+              <!-- Ações Finais -->
+              <div class="flex flex-wrap items-center justify-center gap-3 pt-4">
+                <button onclick="app.resetExpedition()" class="px-6 py-3.5 rounded-2xl bg-naqi-forest hover:bg-naqi-forestDark text-white font-semibold text-sm shadow">
+                  Jogar novamente
+                </button>
+                <button onclick="app.shareResult()" class="px-6 py-3.5 rounded-2xl bg-naqi-terracotta hover:bg-naqi-terracottaDark text-white font-semibold text-sm shadow">
+                  Compartilhar resultado
+                </button>
+                <button onclick="app.openSourcesModal()" class="px-6 py-3.5 rounded-2xl bg-naqi-paper hover:bg-naqi-paperDark text-naqi-forest border border-naqi-forest/20 font-semibold text-sm">
+                  Conhecer as fontes
+                </button>
+              </div>
+            </div>
+
+            <!-- Bloco Embutido de Fontes Científicas -->
+            <div class="bg-white border border-naqi-forest/15 rounded-3xl p-6 sm:p-8 card-shadow space-y-4">
+              <h2 class="font-atlas text-xl sm:text-2xl font-bold text-naqi-forest">Fontes Científicas e Referências Institucionais</h2>
+              <p class="text-xs sm:text-sm text-naqi-muted">
+                Cada informação geográfica, climática e ecológica desta expedição está fundamentada em bases públicas oficiais:
+              </p>
+              <div class="divide-y divide-naqi-forest/10">
+                ${SOURCES_DATA.map((src, i) => `
+                  <div class="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="space-y-0.5">
+                      <div class="font-bold text-sm text-naqi-forest">${i + 1}. ${src.institution}</div>
+                      <p class="text-xs text-naqi-muted">${src.contribution}</p>
+                    </div>
+                    <a href="${src.url}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-naqi-terracotta hover:underline shrink-0">
+                      Acessar fonte ↗
+                    </a>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+        `;
+      },
+
+      openSourcesModal() {
+        const modal = document.getElementById('sources-modal');
+        const content = document.getElementById('sources-modal-content');
+        content.innerHTML = `
+          <div class="space-y-5">
+            <div class="flex items-start justify-between gap-4 border-b border-naqi-forest/10 pb-4">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-naqi-terracotta">Rigor Científico • NaqīKarbon</div>
+                <h2 class="font-atlas text-2xl font-bold text-naqi-forest">Fontes Científicas Consultadas</h2>
+              </div>
+              <button onclick="app.closeSourcesModal()" class="w-9 h-9 rounded-full bg-naqi-paperDark hover:bg-naqi-forest hover:text-white flex items-center justify-center font-bold">✕</button>
+            </div>
+
+            <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
+              ${SOURCES_DATA.map((src, i) => `
+                <div class="p-3.5 rounded-2xl bg-white border border-naqi-forest/10 space-y-1">
+                  <div class="font-bold text-sm text-naqi-forest">${i + 1}. ${src.institution}</div>
+                  <p class="text-xs text-naqi-muted leading-relaxed">${src.contribution}</p>
+                  <a href="${src.url}" target="_blank" rel="noopener noreferrer" class="inline-block text-xs font-semibold text-naqi-terracotta hover:underline pt-1">
+                    ${src.url} ↗
+                  </a>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="flex justify-end pt-2">
+              <button onclick="app.closeSourcesModal()" class="px-5 py-2.5 rounded-xl bg-naqi-forest text-white text-sm font-semibold">Fechar</button>
+            </div>
+          </div>
+        `;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      },
+
+      closeSourcesModal() {
+        const modal = document.getElementById('sources-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => app.init());
+  </script>
+</body>
+</html>

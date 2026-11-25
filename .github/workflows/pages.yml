@@ -30,3 +30,7 @@ jobs:
           test -f assets/favicon.ico
           test -s robots.txt
           test -s sitemap.xml
+          test -s projetos/expedicao-pelos-biomas/index.html
+          test -s projetos/expedicao-pelos-biomas/css/expedicao.css
+          test -s projetos/expedicao-pelos-biomas/kids/index.html
+          test -s projetos/expedicao-pelos-biomas/adulto/index.html

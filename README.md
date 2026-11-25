@@ -13,6 +13,15 @@ configure o DNS e confirme o domínio em **Settings → Pages**.
 O workflow **Validate website** verifica os arquivos estáticos em cada push. A
 publicação é feita pela configuração do GitHub Pages, não por esse workflow.
 
+## Expedição pelos Biomas do Brasil
+
+A apresentação e as duas versões do jogo ficam em
+`projetos/expedicao-pelos-biomas/`. A página permite escolher entre a versão
+infantil, com narração do navegador, e a experiência para jovens e adultos.
+Após a publicação na branch `main`, o projeto estará disponível em:
+
+`https://grainprotocol.github.io/naqikarbon/projetos/expedicao-pelos-biomas/`
+
 ## Antes de divulgar
 
 - Envie um teste pelo formulário e confirme a ativação do FormSubmit no e-mail
