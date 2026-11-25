@@ -223,6 +223,7 @@
       <!-- Conteúdo dinâmico -->
     </div>
   </div>
+  <div id="voice-live-status" class="sr-only" role="status" aria-live="polite"></div>
 
   <!-- ===================================================================== -->
   <!-- DADOS MODULARES + MOTOR DE VOZ HUMANA + 4 MODALIDADES LÚDICAS         -->
@@ -723,7 +724,14 @@
       audioCtx: null,
       voices: [],
       selectedVoiceURI: null,
+      speakerProfile: 'feminina',
       speechQueueTimer: null,
+      speechRequestId: 0,
+      lastSpeechStatus: '',
+
+      isSpeechSupported() {
+        return 'speechSynthesis' in window && typeof window.SpeechSynthesisUtterance === 'function';
+      },
 
       init() {
         // Desbloqueio automático no primeiro toque (essencial no iOS Safari e Android)
@@ -735,7 +743,7 @@
         window.addEventListener('touchstart', unlockHandler, { passive: true });
         window.addEventListener('pointerdown', unlockHandler, { passive: true });
 
-        if ('speechSynthesis' in window) {
+        if (this.isSpeechSupported()) {
           this.loadVoices();
           window.speechSynthesis.onvoiceschanged = () => this.loadVoices();
         }
@@ -755,20 +763,15 @@
             src.connect(this.audioCtx.destination);
             src.start(0);
           }
-          if ('speechSynthesis' in window) {
-            const silentUtterance = new SpeechSynthesisUtterance('');
-            silentUtterance.volume = 0;
-            window.speechSynthesis.speak(silentUtterance);
-          }
           this.unlocked = true;
         } catch (e) {
-          // Segue sem interromper
+          this.lastSpeechStatus = 'Os efeitos sonoros não puderam ser ativados neste dispositivo.';
         }
       },
 
       loadVoices() {
-        if (!('speechSynthesis' in window)) return;
-        const allVoices = window.speechSynthesis.getVoices() || [];
+        if (!this.isSpeechSupported()) return;
+        const allVoices = window.speechSynthesis.getVoices();
         const ptVoices = allVoices.filter(v =>
           (v.lang || '').toLowerCase().includes('pt')
         );
@@ -790,20 +793,46 @@
         };
 
         this.voices = ptVoices.sort((a, b) => scoreVoice(b) - scoreVoice(a));
+      },
 
-        if (this.voices.length > 0 && !this.selectedVoiceURI) {
-          this.selectedVoiceURI = this.voices[0].voiceURI;
-        }
+      getProfileVoice(profile = this.speakerProfile) {
+        const voiceNames = {
+          feminina: ['female', 'feminina', 'francisca', 'luciana', 'thalita', 'maria', 'camila', 'brenda', 'vitoria', 'victoria', 'gabriela', 'helena', 'sofia'],
+          masculina: ['male', 'masculina', 'antonio', 'antônio', 'daniel', 'felipe', 'ricardo', 'bruno', 'joao', 'joão', 'pedro', 'rafael', 'miguel', 'paulo', 'henrique']
+        };
+        const keywords = voiceNames[profile] || [];
+        const matchingVoice = this.voices.find(voice => {
+          const name = (voice.name || '').toLowerCase();
+          return keywords.some(keyword => name.includes(keyword));
+        });
+        if (matchingVoice) return matchingVoice;
+        if (profile === 'masculina' && this.voices.length > 1) return this.voices[1];
+        return this.voices[0] || null;
       },
 
       getActiveVoice() {
         if (!this.voices.length) this.loadVoices();
-        return this.voices.find(v => v.voiceURI === this.selectedVoiceURI) || this.voices[0] || null;
+        return this.voices.find(v => v.voiceURI === this.selectedVoiceURI) || this.getProfileVoice();
+      },
+
+      setSpeakerProfile(profile) {
+        if (profile !== 'feminina' && profile !== 'masculina') return;
+        this.speakerProfile = profile;
+        this.selectedVoiceURI = null;
+        this.speak('Olá! Vamos explorar os biomas do Brasil juntos?');
       },
 
       setVoiceByURI(uri) {
         this.selectedVoiceURI = uri;
-        this.speak('Olá! Agora eu vou contar as histórias dos bichinhos com essa voz!');
+        this.speak('Olá! Vamos explorar os biomas do Brasil juntos?');
+      },
+
+      setSpeechStatus(message) {
+        this.lastSpeechStatus = message;
+        const status = document.getElementById('voice-settings-status');
+        if (status) status.textContent = message;
+        const liveStatus = document.getElementById('voice-live-status');
+        if (liveStatus) liveStatus.textContent = message;
       },
 
       // Efeitos sonoros suaves em timbre de marimba / kalimba (Web Audio API)
@@ -852,47 +881,54 @@
 
       // Fala humanizada: divide frases por pontuação para entonação natural e pausas suaves
       speak(fullText) {
-        if (!this.enabled || !('speechSynthesis' in window)) return;
+        if (!this.enabled) return;
+        if (!this.isSpeechSupported()) {
+          this.setSpeechStatus('Este navegador não oferece narração por voz. Use uma versão atual do Chrome ou Microsoft Edge.');
+          return;
+        }
         this.unlockMobileAudio();
 
-        try {
-          clearTimeout(this.speechQueueTimer);
-          window.speechSynthesis.cancel();
+        clearTimeout(this.speechQueueTimer);
+        const requestId = ++this.speechRequestId;
+        const synthesizer = window.speechSynthesis;
+        const wasSpeaking = synthesizer.speaking || synthesizer.pending;
+        if (wasSpeaking) synthesizer.cancel();
 
-          // Divide em sentenças curtas para evitar fala corrida robótica
-          const sentences = fullText
-            .split(/(?<=[!?.])\s+/)
-            .map(s => s.trim())
-            .filter(Boolean);
+        const sentences = fullText
+          .split(/(?<=[!?.])\s+/)
+          .map(sentence => sentence.trim())
+          .filter(Boolean);
+        if (!sentences.length) return;
 
-          const chosenVoice = this.getActiveVoice();
+        const speakNext = (index) => {
+          if (requestId !== this.speechRequestId || index >= sentences.length || !this.enabled) return;
+          const utterance = new window.SpeechSynthesisUtterance(sentences[index]);
+          const selectedVoice = this.getActiveVoice();
+          utterance.lang = 'pt-BR';
+          if (selectedVoice) utterance.voice = selectedVoice;
+          utterance.rate = 0.96;
+          utterance.pitch = this.speakerProfile === 'masculina' ? 0.98 : 1.02;
+          utterance.volume = 1;
 
-          const speakNext = (idx) => {
-            if (idx >= sentences.length || !this.enabled) return;
-            const utt = new SpeechSynthesisUtterance(sentences[idx]);
-            utt.lang = 'pt-BR';
-            if (chosenVoice) utt.voice = chosenVoice;
-
-            // Prosódia calorosa e infantil sem distorção
-            utt.rate = 0.93;
-            utt.pitch = 1.08;
-            utt.volume = 1.0;
-
-            utt.onend = () => {
-              this.speechQueueTimer = setTimeout(() => speakNext(idx + 1), 160);
-            };
-            utt.onerror = () => {
-              // Tenta próxima frase se houver erro pontual
-              speakNext(idx + 1);
-            };
-
-            window.speechSynthesis.speak(utt);
+          utterance.onstart = () => this.setSpeechStatus('');
+          utterance.onend = () => {
+            if (requestId === this.speechRequestId) {
+              this.speechQueueTimer = window.setTimeout(() => speakNext(index + 1), 120);
+            }
+          };
+          utterance.onerror = (event) => {
+            if (requestId !== this.speechRequestId || event.error === 'canceled' || event.error === 'interrupted') return;
+            const message = event.error === 'not-allowed'
+              ? 'O navegador bloqueou a narração. Toque novamente em Ouvir para liberar o áudio.'
+              : 'Não foi possível iniciar a voz. Confira o volume e as vozes de português do dispositivo.';
+            this.setSpeechStatus(message);
           };
 
-          speakNext(0);
-        } catch (e) {
-          // Ignora falha eventual
+          synthesizer.speak(utterance);
         }
+
+        if (wasSpeaking) this.speechQueueTimer = window.setTimeout(() => speakNext(0), 80);
+        else speakNext(0);
       }
     };
 
@@ -1805,6 +1841,17 @@
         const body = document.getElementById('voice-modal-body');
 
         const activeVoice = voiceEngine.getActiveVoice();
+        const profilesHTML = [
+          { id: 'feminina', label: 'Voz feminina' },
+          { id: 'masculina', label: 'Voz masculina' }
+        ].map(profile => {
+          const selected = !voiceEngine.selectedVoiceURI && voiceEngine.speakerProfile === profile.id;
+          return `
+            <button onclick="app.chooseVoiceProfile('${profile.id}')" class="flex-1 p-3 rounded-2xl border-2 text-sm font-bold ${selected ? 'bg-naqi-forest text-white border-naqi-forest' : 'bg-white text-naqi-forest border-naqi-forest/15'}">
+              ${profile.label}${selected ? ' ✓' : ''}
+            </button>
+          `;
+        }).join('');
         const listHTML = voiceEngine.voices.length > 0
           ? voiceEngine.voices.map(v => {
               const selected = activeVoice && v.voiceURI === activeVoice.voiceURI;
@@ -1815,7 +1862,10 @@
                 </button>
               `;
             }).join('')
-          : `<div class="p-4 rounded-2xl bg-white text-sm text-naqi-forest">A voz em Português do seu aparelho está ativa automaticamente!</div>`;
+          : `<div class="p-4 rounded-2xl bg-white text-sm text-naqi-forest">A narração usa as vozes disponíveis no navegador e no dispositivo.</div>`;
+        const supportMessage = !voiceEngine.isSpeechSupported()
+          ? 'Este navegador não oferece narração por voz. Use uma versão atual do Chrome ou Microsoft Edge.'
+          : voiceEngine.lastSpeechStatus || 'As vozes variam conforme as opções instaladas no dispositivo. Para melhor resultado, habilite uma voz em Português (Brasil).';
 
         body.innerHTML = `
           <div class="space-y-4">
@@ -1824,8 +1874,11 @@
               <button onclick="app.closeVoiceSettings()" class="w-11 h-11 rounded-2xl bg-naqi-terracotta text-white font-bold text-xl">✕</button>
             </div>
             <p class="text-xs text-naqi-forest/80">
-              Selecionamos automaticamente a voz mais natural e acolhedora disponível no seu celular ou computador. Se quiser, toque em outra opção abaixo para testar:
+              Escolha uma voz e toque para ouvir uma amostra. A fala é leve e natural; as opções dependem das vozes instaladas no dispositivo.
             </p>
+            <div class="flex gap-2">${profilesHTML}</div>
+            <p id="voice-settings-status" class="text-xs text-naqi-forest/75" role="status" aria-live="polite">${supportMessage}</p>
+            <div class="text-[11px] font-bold uppercase tracking-wider text-naqi-forest/60">Outras vozes do dispositivo</div>
             <div class="space-y-2 max-h-60 overflow-y-auto pr-1">
               ${listHTML}
             </div>
@@ -1841,6 +1894,11 @@
 
       chooseVoice(uri) {
         voiceEngine.setVoiceByURI(uri);
+        this.openVoiceSettings();
+      },
+
+      chooseVoiceProfile(profile) {
+        voiceEngine.setSpeakerProfile(profile);
         this.openVoiceSettings();
       },
 
