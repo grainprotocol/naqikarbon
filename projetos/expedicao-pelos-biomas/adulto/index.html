@@ -3,7 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Expedição pelos Biomas do Brasil — NaqīKarbon GameQuiz</title>
+  <meta name="description" content="Jogo da NaqīKarbon para explorar os biomas brasileiros, seus climas, fauna e biodiversidade em uma experiência educativa interativa.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#173B32">
+  <link rel="canonical" href="https://naqikarbon.com.br/projetos/expedicao-pelos-biomas/adulto/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Instituto NaqīKarbon">
+  <meta property="og:title" content="Expedição pelos Biomas do Brasil — desafio interativo | Instituto NaqīKarbon">
+  <meta property="og:description" content="Jogo da NaqīKarbon para explorar os biomas brasileiros, seus climas, fauna e biodiversidade em uma experiência educativa interativa.">
+  <meta property="og:url" content="https://naqikarbon.com.br/projetos/expedicao-pelos-biomas/adulto/">
+  <meta property="og:image" content="https://naqikarbon.com.br/assets/blog/images/naqikarboncircular-63b7988077.png">
+  <meta property="og:image:alt" content="Logotipo do Instituto NaqīKarbon em formato circular, com um broto estilizado.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Expedição pelos Biomas do Brasil — desafio interativo | Instituto NaqīKarbon">
+  <meta name="twitter:description" content="Jogo da NaqīKarbon para explorar os biomas brasileiros, seus climas, fauna e biodiversidade em uma experiência educativa interativa.">
+  <meta name="twitter:image" content="https://naqikarbon.com.br/assets/blog/images/naqikarboncircular-63b7988077.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://naqikarbon.com.br/projetos/expedicao-pelos-biomas/adulto/#webpage",
+    "url": "https://naqikarbon.com.br/projetos/expedicao-pelos-biomas/adulto/",
+    "name": "Expedição pelos Biomas do Brasil — desafio interativo | Instituto NaqīKarbon",
+    "description": "Jogo da NaqīKarbon para explorar os biomas brasileiros, seus climas, fauna e biodiversidade em uma experiência educativa interativa.",
+    "isPartOf": {
+      "@id": "https://naqikarbon.com.br/#website"
+    },
+    "about": {
+      "@type": "Game",
+      "name": "Expedição pelos Biomas do Brasil",
+      "genre": "Jogo educativo",
+      "gamePlatform": "Navegador web",
+      "publisher": {
+        "@id": "https://naqikarbon.com.br/#organization"
+      }
+    },
+    "inLanguage": "pt-BR"
+  }
+  </script>
+  <title>Expedição pelos Biomas do Brasil — desafio interativo | Instituto NaqīKarbon</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,6 +151,9 @@
           </div>
         </button>
       </div>
+      <a href="../../../" class="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-xs font-semibold text-naqi-paper transition-colors hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200" aria-label="Voltar ao início do site NaqīKarbon">
+        <span aria-hidden="true">←</span> Início do site
+      </a>
 
       <!-- Navigation Pills & Telemetry -->
       <div id="header-telemetry" class="hidden items-center gap-2 sm:gap-4 flex-wrap">
@@ -178,11 +220,14 @@
   <!-- FOOTER                                                                -->
   <!-- ===================================================================== -->
   <footer class="border-t border-naqi-forest/10 bg-naqi-paperDark/60 py-4 px-4 sm:px-6 text-xs text-naqi-muted">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
-      <div>
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <div class="space-y-1">
         <strong class="text-naqi-forest">Instituto NaqīKarbon</strong> — Coleção GameQuiz (Jogo 04: Expedição pelos Biomas do Brasil). Base cartográfica e conceitual fundamentada no IBGE, ICMBio, MMA e Embrapa.
+        <p>São Paulo - SP, Brasil</p>
       </div>
-      <div class="flex items-center gap-4">
+      <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+        <a href="https://wa.me/5511993563952" target="_blank" rel="noopener noreferrer" class="font-semibold text-naqi-forest hover:text-naqi-terracotta">WhatsApp: (11) 99356-3952</a>
+        <a href="mailto:naqikarbon@gmail.com" class="underline hover:text-naqi-forest">E-mail</a>
         <button onclick="app.openSourcesModal()" class="underline hover:text-naqi-forest font-semibold">Fontes Científicas</button>
         <span>Sem coleta de dados pessoais</span>
       </div>
@@ -1333,6 +1378,61 @@
       renderMapScreen() {
         const activeBiome = BIOMES_DATA.find(b => b.id === this.state.selectedBiomeId) || BIOMES_DATA[0];
         const biomeSpecies = SPECIES_DATA.filter(sp => sp.biomes.includes(activeBiome.id));
+        const faunaSpeciesList = biomeSpecies.map(sp => {
+          const discovered = this.state.discoveredSpecies.has(sp.id);
+          return `
+            <button type="button" onclick="app.openSpeciesModal('${sp.id}')" class="flex items-center gap-3 p-2.5 rounded-2xl border text-left transition-all hover:shadow-md ${discovered ? 'bg-emerald-50/70 border-emerald-600/30' : 'bg-naqi-paper hover:bg-white border-naqi-forest/15'}">
+              <div class="w-10 h-10 rounded-xl bg-white border border-naqi-forest/10 flex items-center justify-center text-xl shrink-0">
+                ${this.getSpeciesEmoji(sp.id)}
+              </div>
+              <div class="min-w-0 flex-grow">
+                <div class="font-bold text-xs sm:text-sm text-naqi-forest truncate">${sp.commonName}</div>
+                <div class="text-[11px] italic text-naqi-muted truncate">${sp.scientificName}</div>
+                <div class="text-[10px] font-semibold mt-0.5 ${sp.biomes.length > 1 ? 'text-naqi-terracotta' : 'text-naqi-muted'}">
+                  ${sp.biomes.length === 6 ? 'Ocorre nos 6 biomas' : (sp.biomes.length > 1 ? `Ocorre em ${sp.biomes.length} biomas` : 'Ocorrência focal')}
+                </div>
+              </div>
+            </button>
+          `;
+        }).join('');
+        const layerDetails = this.state.mapLayer === 'climate'
+          ? `
+            <div class="p-4 rounded-2xl bg-naqi-paper border border-naqi-forest/10">
+              <div class="font-bold text-naqi-forest text-xs uppercase tracking-wider mb-2">🌦️ Clima e sazonalidade</div>
+              <p class="text-naqi-ink/90 leading-relaxed text-sm">${activeBiome.climate}</p>
+              <div class="mt-3 pt-3 border-t border-naqi-forest/10 text-sm font-semibold text-naqi-terracotta">${activeBiome.climateMetric}</div>
+            </div>
+            <p class="text-xs text-naqi-muted">Os indicadores climáticos do bioma selecionado também estão destacados no mapa.</p>
+          `
+          : this.state.mapLayer === 'fauna'
+            ? `
+              <div>
+                <div class="flex items-center justify-between gap-3 mb-2.5">
+                  <h3 class="font-atlas font-bold text-base text-naqi-forest">🐾 Fauna com ocorrência neste bioma</h3>
+                  <span class="text-[11px] text-naqi-muted shrink-0">${biomeSpecies.length} espécies</span>
+                </div>
+                <p class="text-xs text-naqi-muted mb-3">Selecione uma espécie para abrir sua ficha. Os marcadores no mapa mostram registros nos diferentes biomas.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  ${faunaSpeciesList || '<p class="text-sm text-naqi-muted">Não há espécies cadastradas para este bioma.</p>'}
+                </div>
+              </div>
+            `
+            : `
+              <div class="p-3 rounded-2xl" style="background-color:${activeBiome.lightBg}">
+                <div class="font-bold text-naqi-forest text-xs uppercase tracking-wider mb-1">🌿 Vegetação e paisagem</div>
+                <p class="text-naqi-ink/90 leading-relaxed text-sm">${activeBiome.vegetation}</p>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                <div class="p-3 rounded-xl bg-naqi-paper/70 border border-naqi-forest/10">
+                  <div class="font-bold text-naqi-forest mb-1">💧 Água e solo</div>
+                  <p class="text-naqi-muted leading-relaxed">${activeBiome.hydrologySoil}</p>
+                </div>
+                <div class="p-3 rounded-xl bg-naqi-paper/70 border border-naqi-forest/10">
+                  <div class="font-bold text-naqi-forest mb-1">🧭 Variações internas</div>
+                  <p class="text-naqi-muted leading-relaxed">${activeBiome.internalVariations}</p>
+                </div>
+              </div>
+            `;
 
         return `
           <section class="fade-in space-y-6">
@@ -1344,14 +1444,14 @@
               </div>
 
               <!-- Alternador de Camadas -->
-              <div class="flex flex-wrap items-center gap-1.5 bg-naqi-paper p-1.5 rounded-xl border border-naqi-forest/10 text-xs font-semibold">
-                <button onclick="app.setMapLayer('biomes')" class="px-3 py-2 rounded-lg transition-all ${this.state.mapLayer === 'biomes' ? 'bg-naqi-forest text-white shadow' : 'text-naqi-muted hover:text-naqi-forest'}">
+              <div role="group" aria-label="Camadas do mapa" class="flex flex-wrap items-center gap-1.5 bg-naqi-paper p-1.5 rounded-xl border border-naqi-forest/10 text-xs font-semibold">
+                <button type="button" aria-pressed="${this.state.mapLayer === 'biomes'}" onclick="app.setMapLayer('biomes')" class="px-3 py-2 rounded-lg transition-all ${this.state.mapLayer === 'biomes' ? 'bg-naqi-forest text-white shadow' : 'text-naqi-muted hover:text-naqi-forest'}">
                   🗺️ Biomas (IBGE)
                 </button>
-                <button onclick="app.setMapLayer('climate')" class="px-3 py-2 rounded-lg transition-all ${this.state.mapLayer === 'climate' ? 'bg-naqi-forest text-white shadow' : 'text-naqi-muted hover:text-naqi-forest'}">
+                <button type="button" aria-pressed="${this.state.mapLayer === 'climate'}" onclick="app.setMapLayer('climate')" class="px-3 py-2 rounded-lg transition-all ${this.state.mapLayer === 'climate' ? 'bg-naqi-forest text-white shadow' : 'text-naqi-muted hover:text-naqi-forest'}">
                   🌦️ Características Climáticas
                 </button>
-                <button onclick="app.setMapLayer('fauna')" class="px-3 py-2 rounded-lg transition-all ${this.state.mapLayer === 'fauna' ? 'bg-naqi-forest text-white shadow' : 'text-naqi-muted hover:text-naqi-forest'}">
+                <button type="button" aria-pressed="${this.state.mapLayer === 'fauna'}" onclick="app.setMapLayer('fauna')" class="px-3 py-2 rounded-lg transition-all ${this.state.mapLayer === 'fauna' ? 'bg-naqi-forest text-white shadow' : 'text-naqi-muted hover:text-naqi-forest'}">
                   🐾 Distribuição da Fauna
                 </button>
               </div>
@@ -1477,59 +1577,8 @@
                     </div>
                   </div>
 
-                  <!-- Ficha Ambiental do Bioma -->
-                  <div class="space-y-3 text-sm">
-                    <div class="p-3 rounded-2xl" style="background-color:${activeBiome.lightBg}">
-                      <div class="font-bold text-naqi-forest text-xs uppercase tracking-wider mb-1">🌿 Vegetação e Paisagem</div>
-                      <p class="text-naqi-ink/90 leading-relaxed">${activeBiome.vegetation}</p>
-                    </div>
-
-                    <div class="p-3 rounded-2xl bg-naqi-paper border border-naqi-forest/10">
-                      <div class="font-bold text-naqi-forest text-xs uppercase tracking-wider mb-1">🌦️ Clima e Sazonalidade</div>
-                      <p class="text-naqi-ink/90 leading-relaxed">${activeBiome.climate}</p>
-                      <div class="mt-1.5 text-xs font-semibold text-naqi-terracotta">${activeBiome.climateMetric}</div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
-                      <div class="p-3 rounded-xl bg-naqi-paper/70 border border-naqi-forest/10">
-                        <div class="font-bold text-naqi-forest mb-1">💧 Água e Solo</div>
-                        <p class="text-naqi-muted leading-relaxed">${activeBiome.hydrologySoil}</p>
-                      </div>
-                      <div class="p-3 rounded-xl bg-naqi-paper/70 border border-naqi-forest/10">
-                        <div class="font-bold text-naqi-forest mb-1">🧭 Variações Internas</div>
-                        <p class="text-naqi-muted leading-relaxed">${activeBiome.internalVariations}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Espécies que ocorrem neste bioma (incluindo distribuição multi-bioma) -->
-                  <div class="pt-2 border-t border-naqi-forest/10">
-                    <div class="flex items-center justify-between mb-2.5">
-                      <h3 class="font-atlas font-bold text-base text-naqi-forest">
-                        Fauna com ocorrência registrada (${biomeSpecies.length})
-                      </h3>
-                      <span class="text-[11px] text-naqi-muted">Clique para abrir ficha</span>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      ${biomeSpecies.map(sp => {
-                        const discovered = this.state.discoveredSpecies.has(sp.id);
-                        return `
-                          <button onclick="app.openSpeciesModal('${sp.id}')" class="flex items-center gap-3 p-2.5 rounded-2xl border text-left transition-all hover:shadow-md ${discovered ? 'bg-emerald-50/70 border-emerald-600/30' : 'bg-naqi-paper hover:bg-white border-naqi-forest/15'}">
-                            <div class="w-10 h-10 rounded-xl bg-white border border-naqi-forest/10 flex items-center justify-center text-xl shrink-0">
-                              ${this.getSpeciesEmoji(sp.id)}
-                            </div>
-                            <div class="min-w-0 flex-grow">
-                              <div class="font-bold text-xs sm:text-sm text-naqi-forest truncate">${sp.commonName}</div>
-                              <div class="text-[11px] italic text-naqi-muted truncate">${sp.scientificName}</div>
-                              <div class="text-[10px] font-semibold mt-0.5 ${sp.biomes.length > 1 ? 'text-naqi-terracotta' : 'text-naqi-muted'}">
-                                ${sp.biomes.length === 6 ? 'Ocorre nos 6 biomas' : (sp.biomes.length > 1 ? `Ocorre em ${sp.biomes.length} biomas` : 'Ocorrência focal')}
-                              </div>
-                            </div>
-                          </button>
-                        `;
-                      }).join('')}
-                    </div>
+                  <div id="map-layer-details" class="space-y-4" aria-live="polite">
+                    ${layerDetails}
                   </div>
                 </div>
 

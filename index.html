@@ -3,17 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="O Instituto NaqīKarbon conecta ciência, inovação e organizações para contribuir com uma transição socioambiental ética, inclusiva e fundamentada em conhecimento.">
+    <meta name="description" content="O Instituto NaqīKarbon conecta ciência e inovação para contribuir com uma transição socioambiental ética, inclusiva e fundamentada em conhecimento.">
     <meta name="theme-color" content="#173B32">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://naqikarbon.com/">
+    <link rel="canonical" href="https://naqikarbon.com.br/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="Instituto NaqīKarbon">
     <meta property="og:title" content="Instituto NaqīKarbon — Ciência, inovação e compromisso socioambiental">
     <meta property="og:description" content="Conectamos ciência, inovação e ação para apoiar uma transição socioambiental ética, inclusiva e fundamentada em conhecimento.">
-    <meta property="og:url" content="https://naqikarbon.com/">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:url" content="https://naqikarbon.com.br/">
+    <meta property="og:image" content="https://naqikarbon.com.br/assets/blog/images/naqikarboncircular-63b7988077.png">
+    <meta property="og:image:alt" content="Logotipo do Instituto NaqīKarbon em formato circular, com um broto estilizado.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Instituto NaqīKarbon — Ciência, inovação e compromisso socioambiental">
+    <meta name="twitter:description" content="Conectamos ciência, inovação e ação para apoiar uma transição socioambiental ética, inclusiva e fundamentada em conhecimento.">
+    <meta name="twitter:image" content="https://naqikarbon.com.br/assets/blog/images/naqikarboncircular-63b7988077.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://naqikarbon.com.br/#organization",
+          "name": "Instituto NaqīKarbon",
+          "url": "https://naqikarbon.com.br/",
+          "description": "O Instituto NaqīKarbon conecta ciência e inovação para contribuir com uma transição socioambiental ética, inclusiva e fundamentada em conhecimento.",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://naqikarbon.com.br/assets/blog/images/naqikarboncircular-63b7988077.png"
+          },
+          "sameAs": [
+            "https://www.linkedin.com/company/naqikarbon/"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://naqikarbon.com.br/#website",
+          "url": "https://naqikarbon.com.br/",
+          "name": "Instituto NaqīKarbon",
+          "inLanguage": "pt-BR",
+          "publisher": {
+            "@id": "https://naqikarbon.com.br/#organization"
+          }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://naqikarbon.com.br/#webpage",
+          "url": "https://naqikarbon.com.br/",
+          "name": "Instituto NaqīKarbon — Ciência, inovação e compromisso socioambiental",
+          "description": "O Instituto NaqīKarbon conecta ciência e inovação para contribuir com uma transição socioambiental ética, inclusiva e fundamentada em conhecimento.",
+          "isPartOf": {
+            "@id": "https://naqikarbon.com.br/#website"
+          },
+          "about": {
+            "@id": "https://naqikarbon.com.br/#organization"
+          },
+          "inLanguage": "pt-BR"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://naqikarbon.com.br/#victoria-alves",
+          "name": "Victoria Alves",
+          "jobTitle": "Bióloga e fundadora",
+          "description": "Bióloga e doutora em Biotecnociência pela Universidade Federal do ABC, com atuação em fisiologia e bioquímica vegetal, metabolismo de carbono e desenvolvimento tecnológico.",
+          "image": "https://naqikarbon.com.br/assets/victoria-alves.jpg",
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Universidade Federal do ABC"
+          },
+          "worksFor": {
+            "@id": "https://naqikarbon.com.br/#organization"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://naqikarbon.com.br/#pedro-azevedo-boreck",
+          "name": "Pedro Azevedo Boreck",
+          "jobTitle": "Cientista social, professor e cofundador",
+          "description": "Cientista social e professor, graduado pela Universidade Federal de São Paulo, com atuação em pesquisa sobre cidadania e articulação entre comunidades, políticas públicas e instituições.",
+          "image": "https://naqikarbon.com.br/assets/pedro-azevedo-boreck.jpg",
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Universidade Federal de São Paulo"
+          },
+          "worksFor": {
+            "@id": "https://naqikarbon.com.br/#organization"
+          }
+        }
+      ]
+    }
+    </script>
     <title>Instituto NaqīKarbon — Ciência, inovação e compromisso socioambiental</title>
     <link rel="icon" href="assets/favicon.ico" sizes="any">
     <!-- Tailwind CSS -->
@@ -104,37 +184,6 @@
 
         .contact-section {
             background-color: #173B32;
-        }
-
-        .founder-portrait-fallback {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle at 50% 38%, rgba(182, 111, 80, 0.34), transparent 36%), linear-gradient(145deg, #244D40, #173B32);
-        }
-
-        .founder-portrait-fallback::before {
-            content: "VA";
-            color: #F6F3EC;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(6rem, 18vw, 12rem);
-            font-weight: 500;
-            letter-spacing: -0.08em;
-            line-height: 1;
-        }
-
-        .founder-portrait-fallback::after {
-            content: "Ciência · Pesquisa · Inovação";
-            position: absolute;
-            right: 1rem;
-            bottom: 1.25rem;
-            left: 1rem;
-            color: rgba(246, 243, 236, 0.72);
-            font-size: 0.62rem;
-            letter-spacing: 0.16em;
-            text-align: center;
-            text-transform: uppercase;
         }
 
         .contact-section::before,
@@ -508,6 +557,29 @@
             line-height: 1.45;
         }
 
+        html.scroll-reveal-ready [data-scroll-reveal] {
+            opacity: 0;
+            transform: translate3d(0, 14px, 0);
+            transition:
+                opacity 800ms cubic-bezier(0.2, 0.65, 0.3, 1),
+                transform 800ms cubic-bezier(0.2, 0.65, 0.3, 1);
+            transition-delay: var(--scroll-reveal-delay, 0ms);
+        }
+
+        html.scroll-reveal-ready [data-scroll-reveal].is-revealed,
+        html.scroll-reveal-ready [data-scroll-reveal]:focus-within {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html.scroll-reveal-ready [data-scroll-reveal] {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+
         @media (max-width: 767px) {
             .market-strip {
                 padding: 0.55rem 0 0.45rem;
@@ -552,7 +624,7 @@
                 <a href="#conhecimento" class="text-sm font-medium hover:text-terracota transition-colors">Conhecimento</a>
                 <a href="#games" class="text-sm font-medium hover:text-terracota transition-colors">Games</a>
                 <a href="#sobre" class="text-sm font-medium hover:text-terracota transition-colors">Sobre</a>
-                <a href="https://naqikarbon.com/insights/" target="_blank" rel="noopener noreferrer" class="text-sm font-medium hover:text-terracota transition-colors">Blog</a>
+                <a href="/blog/" target="_blank" rel="noopener noreferrer" class="text-sm font-medium hover:text-terracota transition-colors">Blog</a>
             </nav>
 
             <!-- CTA Desktop -->
@@ -584,7 +656,7 @@
             <a href="#metodologia" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Como trabalhamos</a>
             <a href="#conhecimento" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Conhecimento</a>
             <a href="#games" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Games</a>
-            <a href="https://naqikarbon.com/insights/" target="_blank" rel="noopener noreferrer" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Blog</a>
+            <a href="/blog/" target="_blank" rel="noopener noreferrer" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Blog</a>
             <a href="#diferenciais" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Diferenciais</a>
             <a href="#sobre" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Sobre</a>
             <a href="#contato" class="mobile-link text-xl font-serif text-offwhite hover:text-terracota transition-colors">Contato</a>
@@ -653,7 +725,7 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-deep via-deep/30 to-transparent"></div>
                         <div class="absolute bottom-8 left-8 right-8 text-warm">
                             <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-2 block">Infraestrutura & Transição</span>
-                            <h3 class="font-serif text-2xl font-medium leading-snug">Alinhando desempenho econômico, ciência e responsabilidade socioambiental.</h3>
+                            <h2 class="font-serif text-2xl font-medium leading-snug">Alinhando desempenho econômico, ciência e responsabilidade socioambiental.</h2>
                         </div>
                     </div>
                 </div>
@@ -921,10 +993,10 @@
             <div class="network-marquee" aria-label="Logotipos de redes e instituições">
                 <div class="network-track">
                     <div class="network-logo-group" role="list">
-                        <div class="network-logo-card" role="listitem"><img src="https://sbenergy.org.br/wp-content/uploads/2024/04/logo-sbe.webp" alt="Logotipo de organização parceira 1"></div>
+                        <div class="network-logo-card" role="listitem"><img src="https://sbenergy.org.br/wp-content/uploads/2024/04/logo-sbe.webp" alt="Logotipo da SBE — The Bioenergy Society"></div>
                         <div class="network-logo-card" role="listitem"><img src="https://climaesociedade.org/wp-content/uploads/2023/10/logo-onda-verde.png" alt="Logotipo A Onda Verde"></div>
-                        <div class="network-logo-card" role="listitem"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Sebrae.svg" alt="Logotipo da SBE, The Bioenergy Society"></div>
-                        <div class="network-logo-card" role="listitem"><img src="https://media.licdn.com/dms/image/v2/D4E0BAQFDjcRK1pwQzA/company-logo_200_200/company-logo_200_200/0/1686855358776?e=1796256000&amp;v=beta&amp;t=7YxqqtRKh3pscF0CbrbQ2irlkofTn3xIc-Ou6tOf99U" alt="Logotipo do Sebrae"></div>
+                        <div class="network-logo-card" role="listitem"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Sebrae.svg" alt="Logotipo do Sebrae"></div>
+                        <div class="network-logo-card" role="listitem"><img src="https://media.licdn.com/dms/image/v2/D4E0BAQFDjcRK1pwQzA/company-logo_200_200/company-logo_200_200/0/1686855358776?e=1796256000&amp;v=beta&amp;t=7YxqqtRKh3pscF0CbrbQ2irlkofTn3xIc-Ou6tOf99U" alt="Logotipo da ABNT/CEE-256"></div>
                     </div>
                     <div class="network-logo-group" aria-hidden="true">
                         <div class="network-logo-card"><img src="https://sbenergy.org.br/wp-content/uploads/2024/04/logo-sbe.webp" alt=""></div>
@@ -971,7 +1043,7 @@
                             Relatórios e análises que conectam pesquisa, governança, sistemas produtivos e questões socioambientais.
                         </p>
                     </div>
-                    <a href="https://naqikarbon.com/naqikarbon-reports/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-deep hover:text-terracota transition-colors pt-4 border-t border-deep/10">
+                    <a href="/blog/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-deep hover:text-terracota transition-colors pt-4 border-t border-deep/10">
                         Explorar publicações <i class="fa-solid fa-arrow-up-right-from-square text-[11px] text-terracota"></i>
                     </a>
                 </div>
@@ -1112,69 +1184,64 @@
     </section>
 
 
-<!-- SOBRE A FUNDADORA -->
+<!-- SOBRE OS FUNDADORES -->
 <section id="sobre" class="py-24 lg:py-32 bg-warm border-t border-deep/10">
 
     <div class="max-w-7xl mx-auto px-6 lg:px-12">
 
-        <!-- GRID: IMAGEM À ESQUERDA / TEXTO À DIREITA -->
         <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 lg:gap-16 items-center">
 
-            <!-- COLUNA ESQUERDA: FOTOGRAFIA -->
             <div class="md:col-span-5 relative w-full">
-
-                <div class="relative mx-auto max-w-xs md:mx-0 md:max-w-none">
-
-                    <!-- Moldura decorativa -->
-                    <div class="absolute -inset-3 sm:-inset-4 border border-terracota/35 rounded-2xl rotate-2 pointer-events-none"></div>
-
-                    <!-- Quadro da fotografia -->
-                    <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-deep aspect-[4/5]">
-
-                        <img
-                            src="https://media.licdn.com/dms/image/v2/D4D03AQH_Gho_PYqkvg/profile-displayphoto-shrink_400_400/B4DZZthvkbHIAg-/0/1745594284898?e=1796860800&v=beta&t=icjSTtvzwS1VI46y-3kw58dcT8izBQiEsXvUXiYTdBI"
-                            alt="Victoria Alves, fundadora do Instituto NaqīKarbon"
-                            class="w-full h-full object-cover grayscale contrast-125 opacity-90"
-                            onerror="this.hidden=true; this.parentElement.classList.add('founder-portrait-fallback'); this.parentElement.setAttribute('role','img'); this.parentElement.setAttribute('aria-label','Retrato de Victoria Alves');">
-
-                    </div>
+                <div class="mx-auto grid max-w-md grid-cols-2 gap-4 sm:gap-6 md:mx-0 md:max-w-none">
+                    <figure class="flex min-w-0 flex-col items-center text-center">
+                        <div class="h-32 w-32 overflow-hidden rounded-full border border-deep/15 bg-offwhite sm:h-36 sm:w-36 lg:h-40 lg:w-40">
+                            <img
+                                src="assets/victoria-alves.jpg"
+                                alt="Victoria Alves, bióloga e fundadora do Instituto NaqīKarbon"
+                                class="h-full w-full object-cover object-center grayscale"
+                                loading="lazy"
+                                decoding="async">
+                        </div>
+                        <figcaption class="mt-3">
+                            <strong class="block font-serif text-lg leading-tight text-deep sm:text-xl">Victoria Alves</strong>
+                            <span class="mt-1 block text-xs leading-relaxed text-darktext/70">Fundadora · Bióloga · Doutora em Biotecnociência (UFABC)</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="flex min-w-0 flex-col items-center text-center">
+                        <div class="h-32 w-32 overflow-hidden rounded-full border border-deep/15 bg-offwhite sm:h-36 sm:w-36 lg:h-40 lg:w-40">
+                            <img
+                                src="assets/pedro-azevedo-boreck.jpg"
+                                alt="Pedro Azevedo Boreck, cientista social e cofundador do Instituto NaqīKarbon"
+                                class="h-full w-full object-cover object-center grayscale"
+                                loading="lazy"
+                                decoding="async">
+                        </div>
+                        <figcaption class="mt-3">
+                            <strong class="block font-serif text-lg leading-tight text-deep sm:text-xl">Pedro Azevedo Boreck</strong>
+                            <span class="mt-1 block text-xs leading-relaxed text-darktext/70">Cofundador · Cientista Social · Professor (UNIFESP)</span>
+                        </figcaption>
+                    </figure>
                 </div>
             </div>
 
-            <!-- COLUNA DIREITA: TEXTO -->
             <div class="md:col-span-7 flex flex-col justify-center">
-
-                <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-3 block">
-                    Sobre a fundadora
-                </span>
-
-                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-deep mb-6 leading-tight">
-                    Uma trajetória construída entre ciência, pesquisa e inovação.
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-deep mb-3 leading-tight">
+                    Sobre os fundadores
                 </h2>
-
-                <p class="text-darktext/80 text-base leading-relaxed mb-6">
-                    O Instituto NaqīKarbon foi idealizado por Victoria Alves, bióloga e doutora em Biotecnociência pela Universidade Federal do ABC (UFABC).
+                <p class="font-serif text-xl sm:text-2xl italic leading-snug text-terracota mb-6">
+                    Duas trajetórias, um olhar integrado sobre ambiente e sociedade.
                 </p>
-
-                <p class="text-darktext/80 text-base leading-relaxed mb-6">
-                    Sua trajetória reúne experiência em pesquisa científica, desenvolvimento tecnológico, análise de projetos de inovação e participação em iniciativas voltadas à sustentabilidade e à governança socioambiental.
-                </p>
-
-                <p class="text-darktext/80 text-base leading-relaxed mb-8">
-                    Essa experiência orienta uma atuação que busca aproximar diferentes campos do conhecimento, desenvolver abordagens tecnicamente consistentes e tornar informações complexas mais compreensíveis e úteis para a sociedade.
-                </p>
-
-                <!-- Assinatura -->
-                <div class="pt-6 border-t border-deep/10">
-                    <strong class="block font-serif text-2xl font-bold text-deep">
-                        Victoria Alves
-                    </strong>
-
-                    <span class="text-xs text-darktext/70 mt-1 block">
-                        Fundadora · Doutora em Biotecnociência · UFABC
-                    </span>
+                <div class="space-y-4 text-darktext/80 text-base leading-relaxed">
+                    <p>
+                        O Instituto NaqīKarbon nasce do encontro entre biologia e ciências sociais. Victoria Alves é bióloga e doutora em Biotecnociência pela Universidade Federal do ABC (UFABC), com trajetória em pesquisa científica nas áreas de fisiologia e bioquímica vegetal, metabolismo de carbono e desenvolvimento tecnológico. Sua experiência investiga processos biológicos e suas relações com o funcionamento dos sistemas naturais, conectando ciência, inovação e sustentabilidade.
+                    </p>
+                    <p>
+                        Pedro Azevedo Boreck é cientista social e professor, graduado pela Universidade Federal de São Paulo (UNIFESP). Sua trajetória reúne pesquisa sobre cidadania, participação em iniciativas de prevenção da violência e atuação na articulação entre comunidades, políticas públicas e instituições, com atenção à inclusão social e aos grupos em situação de vulnerabilidade.
+                    </p>
+                    <p>
+                        Juntos, aproximam o conhecimento sobre os processos naturais e as dinâmicas sociais para desenvolver abordagens de sustentabilidade fundamentadas na ciência, conectadas aos territórios e comprometidas com as pessoas.
+                    </p>
                 </div>
-
             </div>
         </div>
     </div>
@@ -1204,15 +1271,20 @@
                         <a href="mailto:contato@naqikarbon.com" class="font-medium text-offwhite hover:text-terracota transition-colors">contato@naqikarbon.com</a>
                     </div>
                 </div>
+                <div class="mt-6 space-y-4 text-sm">
+                    <a href="https://wa.me/5511993563952" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-offwhite hover:text-terracota transition-colors">
+                        <i class="fa-brands fa-whatsapp w-5 text-lg text-terracota" aria-hidden="true"></i>
+                        <span><span class="block text-xs text-offwhite/60 uppercase">WhatsApp</span>(11) 99356-3952</span>
+                    </a>
+                    <p class="flex items-center gap-3 text-offwhite/80">
+                        <i class="fa-solid fa-location-dot w-5 text-terracota" aria-hidden="true"></i>
+                        <span>São Paulo - SP, Brasil</span>
+                    </p>
+                </div>
             </div>
 
             <div class="contact-form-panel lg:col-span-7 p-6 sm:p-10 lg:translate-y-3">
-                <form id="contact-form" action="https://formsubmit.co/naqikarbon@gmail.com" method="POST" class="space-y-5">
-                    <input type="hidden" name="_subject" value="[Contato Site] Nova mensagem do Instituto NaqīKarbon">
-                    <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_next" value="https://naqikarbon.com/#contato">
-                    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+                <form id="contact-form" class="space-y-5">
                     <div>
                         <label for="name" class="contact-label">Seu Nome / Empresa *</label>
                         <input type="text" id="name" name="name" autocomplete="name" required class="contact-field" placeholder="Nome completo ou da organização">
@@ -1265,7 +1337,7 @@
                     <button type="submit" class="contact-submit font-medium">
                         Enviar mensagem
                     </button>
-                    <p class="text-xs text-darktext/65 leading-relaxed">Ao enviar, seus dados serão encaminhados diretamente para a caixa de entrada institucional.</p>
+                    <p class="text-xs text-darktext/65 leading-relaxed">Ao clicar em enviar, seu aplicativo de e-mail será aberto com a mensagem preparada para revisão e envio.</p>
                 </form>
 
                 <!-- Feedback Message Box -->
@@ -1301,14 +1373,14 @@
                 </div>
 
                 <div>
-                    <h4 class="font-serif text-lg font-bold text-offwhite mb-4">Navegação</h4>
+                    <h2 class="font-serif text-lg font-bold text-offwhite mb-4">Navegação</h2>
                     <ul class="space-y-3 text-sm">
                         <li><a href="#atuacao" class="hover:text-terracota transition-colors">Nossa atuação</a></li>
                         <li><a href="#articulacao" class="hover:text-terracota transition-colors">Articulação e projetos</a></li>
                         <li><a href="#servicos" class="hover:text-terracota transition-colors">Serviços técnicos</a></li>
                         <li><a href="#metodologia" class="hover:text-terracota transition-colors">Como trabalhamos</a></li>
                         <li><a href="#conhecimento" class="hover:text-terracota transition-colors">Reports & NaqīLetter</a></li>
-                        <li><a href="https://naqikarbon.com/insights/" target="_blank" rel="noopener noreferrer" class="hover:text-terracota transition-colors">Blog</a></li>
+                        <li><a href="/blog/" target="_blank" rel="noopener noreferrer" class="hover:text-terracota transition-colors">Blog</a></li>
                         <li><a href="#redes" class="hover:text-terracota transition-colors">Redes e conexões</a></li>
                         <li><a href="#diferenciais" class="hover:text-terracota transition-colors">Diferenciais</a></li>
                         <li><a href="#sobre" class="hover:text-terracota transition-colors">Sobre</a></li>
@@ -1317,7 +1389,7 @@
                 </div>
 
                 <div>
-                    <h4 class="font-serif text-lg font-bold text-offwhite mb-4">Serviços & Frentes</h4>
+                    <h2 class="font-serif text-lg font-bold text-offwhite mb-4">Serviços & Frentes</h2>
                     <ul class="space-y-3 text-sm text-offwhite/60">
                         <li>Diagnóstico e Planejamento</li>
                         <li>Projetos de Descarbonização</li>
@@ -1329,9 +1401,11 @@
                 </div>
 
                 <div>
-                    <h4 class="font-serif text-lg font-bold text-offwhite mb-4">Contato Direto</h4>
+                    <h2 class="font-serif text-lg font-bold text-offwhite mb-4">Contato Direto</h2>
                     <p class="text-sm text-offwhite/60 mb-2">E-mail oficial:</p>
                     <a href="mailto:contato@naqikarbon.com" class="text-sm font-medium text-offwhite hover:text-terracota transition-colors block mb-4">contato@naqikarbon.com</a>
+                    <a href="https://wa.me/5511993563952" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-offwhite hover:text-terracota transition-colors block mb-4">WhatsApp: (11) 99356-3952</a>
+                    <p class="text-sm text-offwhite/60 mb-4">São Paulo - SP, Brasil</p>
                     <a href="https://www.linkedin.com/company/naqikarbon/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-terracota font-bold hover:text-offwhite transition-colors">
                         <i class="fa-brands fa-linkedin"></i> LinkedIn Institucional
                     </a>
@@ -1355,29 +1429,34 @@
                         <span class="market-strip-placeholder">Carregando cotações…</span>
                     </div>
                     <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" target="_blank" rel="noopener nofollow">TradingView</a></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-                    {
-                        "symbols": [
-                            { "proName": "BMFBOVESPA:ICO2", "title": "ICO2 B3" },
-                            { "proName": "FX_IDC:XAUUSD", "title": "Ouro (USD/oz)" },
-                            { "proName": "BMFBOVESPA:SJC1!", "title": "Soja (B3)" },
-                            { "proName": "BMFBOVESPA:CCM1!", "title": "Milho (B3)" },
-                            { "proName": "BMFBOVESPA:BGI1!", "title": "Boi gordo (B3)" },
-                            { "proName": "BMFBOVESPA:ICF1!", "title": "Café arábica (B3)" },
-                            { "proName": "FX_IDC:USDBRL", "title": "Dólar / real" },
-                            { "proName": "FX_IDC:EURBRL", "title": "Euro / real" },
-                            { "proName": "FX_IDC:GBPBRL", "title": "Libra / real" },
-                            { "proName": "FX_IDC:USDCNH", "title": "Dólar / yuan offshore" },
-                            { "proName": "BMFBOVESPA:PETR4", "title": "Petrobras" },
-                            { "proName": "BMFBOVESPA:WEGE3", "title": "WEG3" },
-                            { "proName": "BMFBOVESPA:EGIE3", "title": "ENGIE" }
-                        ],
-                        "showSymbolLogo": false,
-                        "isTransparent": true,
-                        "displayMode": "adaptive",
-                        "colorTheme": "light",
-                        "locale": "br"
-                    }
+                    <script>
+                        const tickerTapeConfig = {
+                            symbols: [
+                                { proName: "BMFBOVESPA:ICO2", title: "ICO2 B3" },
+                                { proName: "FX_IDC:XAUUSD", title: "Ouro (USD/oz)" },
+                                { proName: "BMFBOVESPA:SJC1!", title: "Soja (B3)" },
+                                { proName: "BMFBOVESPA:CCM1!", title: "Milho (B3)" },
+                                { proName: "BMFBOVESPA:BGI1!", title: "Boi gordo (B3)" },
+                                { proName: "BMFBOVESPA:ICF1!", title: "Café arábica (B3)" },
+                                { proName: "FX_IDC:USDBRL", title: "Dólar / real" },
+                                { proName: "FX_IDC:EURBRL", title: "Euro / real" },
+                                { proName: "FX_IDC:GBPBRL", title: "Libra / real" },
+                                { proName: "FX_IDC:USDCNH", title: "Dólar / yuan offshore" },
+                                { proName: "BMFBOVESPA:PETR4", title: "Petrobras" },
+                                { proName: "BMFBOVESPA:WEGE3", title: "WEG3" },
+                                { proName: "BMFBOVESPA:EGIE3", title: "ENGIE" }
+                            ],
+                            showSymbolLogo: false,
+                            isTransparent: true,
+                            displayMode: "adaptive",
+                            colorTheme: "light",
+                            locale: "br"
+                        };
+                        const tickerTapeScript = document.createElement("script");
+                        tickerTapeScript.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
+                        tickerTapeScript.async = true;
+                        tickerTapeScript.textContent = JSON.stringify(tickerTapeConfig);
+                        document.currentScript.parentElement.appendChild(tickerTapeScript);
                     </script>
                 </div>
             </div>
@@ -1387,6 +1466,37 @@
 
     <!-- Scripts de Interação -->
     <script>
+        const CONTACT_EMAIL = 'naqikarbon@gmail.com';
+        const contactForm = document.getElementById('contact-form');
+
+        contactForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            if (!contactForm.reportValidity()) {
+                return;
+            }
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const profile = document.getElementById('profile').value;
+            const subject = document.getElementById('interest').value;
+            const message = document.getElementById('message').value.trim();
+            const body = [
+                `Nome: ${name}`,
+                `E-mail para resposta: ${email}`,
+                `Telefone / WhatsApp: ${phone || 'Não informado'}`,
+                `Perfil: ${profile}`,
+                `Assunto: ${subject}`,
+                '',
+                'Mensagem:',
+                message
+            ].join('\n');
+            const mailtoUrl = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`[Contato Site] ${subject}`)}&body=${encodeURIComponent(body)}`;
+
+            window.location.href = mailtoUrl;
+        });
+
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenuClose = document.getElementById('mobile-menu-close');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -1448,6 +1558,74 @@
 
         window.addEventListener('scroll', updateHeaderAppearance, { passive: true });
         updateHeaderAppearance();
+
+        const prefersReducedMotion = window.matchMedia
+            ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            : false;
+
+        if ('IntersectionObserver' in window && !prefersReducedMotion) {
+            const revealContentSelector = [
+                'main section:not(#inicio):not(.network-section):not(.market-strip) h2',
+                'main section:not(#inicio):not(.network-section):not(.market-strip) h3',
+                'main section:not(#inicio):not(.network-section):not(.market-strip) p',
+                'main section:not(#inicio):not(.network-section):not(.market-strip) img',
+                '#redes .network-heading',
+                '.market-strip-note',
+                'footer .grid > div'
+            ].join(', ');
+            const revealContainerSelector = [
+                '#atuacao article',
+                '#articulacao article',
+                '#servicos .grid > .group',
+                '#metodologia .grid > .p-8',
+                '#conhecimento .grid > .p-8',
+                '#games article',
+                '#diferenciais .grid > .p-8',
+                '#sobre figure',
+                '#contato .contact-email-card',
+                '#contato .contact-form-panel'
+            ].join(', ');
+            const revealContainers = Array.from(document.querySelectorAll(revealContainerSelector));
+            const revealTargets = new Set([
+                ...document.querySelectorAll(revealContentSelector),
+                ...document.querySelectorAll(revealContainerSelector)
+            ]);
+            const revealDelays = new Map();
+            const revealObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+
+                    entry.target.classList.add('is-revealed');
+                    revealObserver.unobserve(entry.target);
+                });
+            }, {
+                rootMargin: '0px 0px 120px 0px',
+                threshold: 0
+            });
+
+            revealTargets.forEach(target => {
+                if (
+                    target.closest('.network-marquee') ||
+                    revealContainers.some(container => container !== target && container.contains(target)) ||
+                    target.getBoundingClientRect().top <= window.innerHeight
+                ) {
+                    return;
+                }
+
+                const parent = target.parentElement;
+                const delayIndex = revealDelays.get(parent) || 0;
+                target.style.setProperty('--scroll-reveal-delay', `${Math.min(delayIndex * 100, 500)}ms`);
+                target.setAttribute('data-scroll-reveal', '');
+                revealDelays.set(parent, delayIndex + 1);
+                revealObserver.observe(target);
+            });
+
+            if (revealTargets.size > 0) {
+                document.documentElement.classList.add('scroll-reveal-ready');
+            }
+        }
     </script>
 </body>
 </html>

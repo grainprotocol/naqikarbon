@@ -1,0 +1,31 @@
+{
+  "published_posts_in_export": 32,
+  "migrated_articles": 32,
+  "body_image_tags": 65,
+  "unique_local_image_files": 64,
+  "source_image_urls_copied": 66,
+  "embedded_pdf_copied": "/assets/blog/files/naqikarbon-reports-sociologia-e-antropologia-do-meio-ambiente.pdf",
+  "unmapped_old_domain_links": [],
+  "article_text_chars": 208193,
+  "legacy_internal_links_mapped": 38,
+  "legacy_permalink_aliases": {
+    "mercado-de-carbono-da-necessidade-de-compensacao-a-transformacao-estrutural": "mercado-de-carbono-transformacao-estrutural",
+    "cop30-amazonia-extremos-termicos-refugios-que-nao-existem-mais": "cop30-amazonia-extremos-termicos-refugios-climaticos",
+    "de-paris-a-belem-10-anos-de-cops-e-o-futuro-da-descarbonizacao": "paris-belem-10-anos-cop-futuro-descarbonizacao",
+    "o-que-e-greenwashing-justica-climaticaacs": "o-que-e-greenwashing-justica-climatica",
+    "prometheus-e-a-importancia-da-interdisciplinaridade-cientifica-mal-aplicada": "prometheus-interdisciplinaridade",
+    "abnt-pr-2030-iso-14068-1-no-mercado-de-carbono-brasileiro": "abnt-pr-2030-nbr-iso-14068-1-no-mercado-de-carbono-brasileiro",
+    "pesquisa-naqikarbon-nova-certificacao-climatica-baseada-em-normas-nacionais": "certificacao-climatica-brasil",
+    "perspectivas-estrategicas-para-o-pos-cop30": "perspectivas-estrategicas-pos-cop30",
+    "governanca-climatica-no-brasil-ciencia-territorio-e-mercado-de-carbono": "governanca-climatica-no-brasil-ciencia-territorio-e-integracao-de-saberes"
+  },
+  "missing_image_files": [],
+  "titles_recovered_from_article_heading": {
+    "fertilizantes-como-infraestrutura": "Fertilizantes como infraestrutura: indústria, biotecnologia e soberania produtiva"
+  },
+  "attachment_alt_texts_restored": 1,
+  "source_images_without_alt_text": 17,
+  "local_image_bytes": 25437365,
+  "embedded_pdf_bytes": 693200,
+  "generated_cover_captions_removed": 11
+}
