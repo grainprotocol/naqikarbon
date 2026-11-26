@@ -17,6 +17,14 @@ publicar o site no domínio raiz.
 O workflow **Validate website** verifica os arquivos estáticos em cada push. A
 publicação é feita pela configuração do GitHub Pages, não por esse workflow.
 
+## Serviços técnicos
+
+O diretório de serviços fica em `servicos/`, com uma página central e páginas
+permanentes para consultoria em sustentabilidade, descarbonização, pesquisa e
+formação, inovação ambiental, editais e financiamento, e projetos colaborativos.
+As fontes consultadas, metadados e informações que exigem revisão institucional
+estão documentados em `CONTENT_AUDIT.md`.
+
 ## Expedição pelos Biomas do Brasil
 
 A apresentação e as duas versões do jogo ficam em

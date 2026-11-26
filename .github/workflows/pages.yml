@@ -24,6 +24,15 @@ jobs:
       - name: Check static site files
         run: |
           test -s index.html
+          test -s servicos/index.html
+          test -s servicos/servicos.css
+          test -s servicos/diagnostico-planejamento-sustentabilidade/index.html
+          test -s servicos/projetos-descarbonizacao/index.html
+          test -s servicos/pesquisa-palestras-treinamentos/index.html
+          test -s servicos/inovacao-ambiental/index.html
+          test -s servicos/editais-financiamento-inovacao/index.html
+          test -s servicos/projetos-colaborativos/index.html
+          test -s CONTENT_AUDIT.md
           test -s politica-de-privacidade.html
           test -f .nojekyll
           test -f CNAME

@@ -7,9 +7,19 @@ Idioma principal: português do Brasil. Site oficial: https://naqikarbon.com.br/
 ## Páginas institucionais
 
 - [Início](https://naqikarbon.com.br/): apresentação, atuação, serviços, redes, conhecimento e fundadores.
+- [Serviços](https://naqikarbon.com.br/servicos/): diretório de consultoria técnica em sustentabilidade e descarbonização, pesquisa aplicada, formação, inovação ambiental, fomento e projetos colaborativos.
 - [Blog](https://naqikarbon.com.br/blog/): acervo de artigos e análises sobre clima, sustentabilidade, biodiversidade, descarbonização e temas socioambientais.
 - [Expedição pelos Biomas do Brasil](https://naqikarbon.com.br/projetos/expedicao-pelos-biomas/): projeto educativo interativo sobre os biomas brasileiros.
 - [Política de privacidade](https://naqikarbon.com.br/politica-de-privacidade.html): tratamento de informações fornecidas pelos visitantes e uso de serviços externos.
+
+## Serviços técnicos
+
+- [Diagnóstico e planejamento de sustentabilidade](https://naqikarbon.com.br/servicos/diagnostico-planejamento-sustentabilidade/): consultoria técnica para pequenas e médias empresas.
+- [Projetos de descarbonização](https://naqikarbon.com.br/servicos/projetos-descarbonizacao/): mapeamento de oportunidades e estruturação de planos de redução, distinguindo diagnóstico preliminar de inventário de GEE.
+- [Pesquisa, palestras e treinamentos](https://naqikarbon.com.br/servicos/pesquisa-palestras-treinamentos/): pesquisa aplicada e propostas de atividades formativas conforme tema e público.
+- [Inovação ambiental](https://naqikarbon.com.br/servicos/inovacao-ambiental/): concepção e estruturação de projetos ligados a desafios ambientais e produtivos.
+- [Editais, fomento e financiamento de projetos](https://naqikarbon.com.br/servicos/editais-financiamento-inovacao/): estruturação de propostas e panorama de FAPs, PIPE-FAPESP, Centelha, Finep, FNDCT e outros instrumentos, sem promessa de aprovação ou recursos.
+- [Projetos colaborativos](https://naqikarbon.com.br/servicos/projetos-colaborativos/): articulação e estruturação de iniciativas com organizações e instituições, sem presumir parcerias existentes.
 
 ## Pessoas
 
