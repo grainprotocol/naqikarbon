@@ -171,6 +171,18 @@
     .memory-tile:active {
       transform: scale(0.94);
     }
+
+    @media (max-width: 360px) {
+      .kids-header-inner { flex-wrap: wrap; }
+      .kids-header-controls {
+        width: 100%;
+        justify-content: flex-end;
+      }
+      #animal-modal-body .species-facts-grid,
+      #animal-modal-body .species-modal-actions {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
   </style>
 </head>
 <body class="min-h-[100dvh] flex flex-col justify-between">
@@ -179,7 +191,7 @@
   <!-- BARRA SUPERIOR FIXA E AMIGÁVEL AO TOQUE (MOBILE FIRST)                -->
   <!-- ===================================================================== -->
   <header class="sticky top-0 z-40 bg-naqi-forest text-white px-3 sm:px-6 pb-2.5 safe-top shadow-md border-b-4 border-naqi-terracotta">
-    <div class="max-w-4xl mx-auto flex items-center justify-between gap-2">
+    <div class="kids-header-inner max-w-4xl mx-auto flex items-center justify-between gap-2">
       <!-- Botão Início -->
       <button onclick="app.goScreen('home')" class="flex items-center gap-2 bg-white/15 active:bg-white/25 px-3 py-2.5 rounded-2xl min-h-[54px]" aria-label="Início">
         <span class="text-2xl">🏠</span>
@@ -198,7 +210,7 @@
       </div>
 
       <!-- Controles de Voz: Seletor de Voz + Ligar/Desligar Som -->
-      <div class="flex items-center gap-1.5">
+      <div class="kids-header-controls flex items-center gap-1.5">
         <button onclick="app.openVoiceSettings()" class="bg-white/15 active:bg-white/25 w-12 h-[54px] rounded-2xl flex items-center justify-center text-xl" title="Escolher voz" aria-label="Escolher voz">
           🗣️
         </button>
@@ -257,7 +269,7 @@
   <!-- MODAL DO BICHINHO (CARTÃO FALANTE PARA CRIANÇAS)                      -->
   <!-- ===================================================================== -->
   <div id="animal-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-naqi-forestDark/80 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto">
-    <div id="animal-modal-body" class="bg-naqi-paper border-4 border-naqi-forest rounded-[34px] max-w-lg w-full p-5 sm:p-7 shadow-2xl relative my-auto">
+    <div id="animal-modal-body" class="bg-naqi-paper border-2 border-naqi-forest/20 rounded-[30px] max-w-lg w-full min-w-0 p-5 sm:p-7 shadow-2xl relative my-auto">
       <!-- Conteúdo dinâmico -->
     </div>
   </div>
@@ -1359,24 +1371,24 @@
 
             <h2 class="text-2xl sm:text-4xl font-bold text-naqi-forest">${animal.name}</h2>
 
-            <div class="grid grid-cols-2 gap-2.5 text-left">
-              <div class="p-3 rounded-2xl bg-white border-2 border-naqi-forest/15 flex items-center gap-2.5">
+            <div class="species-facts-grid grid grid-cols-2 gap-2.5 text-left">
+              <div class="min-w-0 p-3 rounded-2xl bg-white border-2 border-naqi-forest/15 flex items-center gap-2.5">
                 <span class="text-3xl">${animal.homeIcon}</span>
-                <div>
+                <div class="min-w-0">
                   <div class="text-[10px] font-bold text-naqi-terracotta uppercase">CASINHA</div>
-                  <div class="text-xs sm:text-sm font-bold text-naqi-forest">${animal.homeLabel}</div>
+                  <div class="break-words text-xs sm:text-sm font-bold text-naqi-forest">${animal.homeLabel}</div>
                 </div>
               </div>
-              <div class="p-3 rounded-2xl bg-white border-2 border-naqi-forest/15 flex items-center gap-2.5">
+              <div class="min-w-0 p-3 rounded-2xl bg-white border-2 border-naqi-forest/15 flex items-center gap-2.5">
                 <span class="text-3xl">${animal.foodIcon}</span>
-                <div>
+                <div class="min-w-0">
                   <div class="text-[10px] font-bold text-naqi-terracotta uppercase">LANCHINHO</div>
-                  <div class="text-xs sm:text-sm font-bold text-naqi-forest">${animal.foodLabel}</div>
+                  <div class="break-words text-xs sm:text-sm font-bold text-naqi-forest">${animal.foodLabel}</div>
                 </div>
               </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3 pt-1">
+            <div class="species-modal-actions grid grid-cols-2 gap-3 pt-1">
               <button onclick="app.repeatVoice()" class="touch-card bg-amber-400 text-naqi-forest font-bold text-base sm:text-lg flex items-center justify-center gap-2 shadow">
                 <span class="text-2xl anim-speaker">🔊</span>
                 <span>OUVIR DE NOVO</span>
