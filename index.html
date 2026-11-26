@@ -111,7 +111,8 @@
     }
     </script>
     <title>Instituto NaqīKarbon | Sustentabilidade, Descarbonização e Inovação</title>
-    <link rel="icon" href="assets/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/assets/blog/images/naqikarboncircular-63b7988077.png" sizes="247x247">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" sizes="16x16 32x32 64x64">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -609,6 +610,145 @@
                 width: calc(100% - 2rem);
             }
         }
+
+        @media (max-width: 767px) {
+            #header > div {
+                height: auto;
+                min-height: 5rem;
+                padding-right: 1rem;
+                padding-left: 1rem;
+            }
+
+            .site-brand {
+                min-width: 0;
+                gap: 0.6rem;
+            }
+
+            .site-brand-logo {
+                width: 2.5rem;
+                height: 2.5rem;
+                flex: 0 0 2.5rem;
+            }
+
+            .site-brand-title {
+                font-size: clamp(1.05rem, 5vw, 1.25rem);
+                line-height: 1.1;
+            }
+
+            .site-brand-tagline {
+                font-size: 0.44rem;
+                letter-spacing: 0.07em;
+                line-height: 1.35;
+            }
+
+            #mobile-menu-btn {
+                display: inline-flex;
+                width: 2.75rem;
+                height: 2.75rem;
+                flex: 0 0 2.75rem;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #inicio {
+                padding-top: 8.5rem;
+                padding-bottom: 3rem;
+            }
+
+            #inicio > .max-w-7xl {
+                grid-template-columns: minmax(0, 1fr);
+                grid-template-areas:
+                    "eyebrow"
+                    "title"
+                    "copy"
+                    "actions"
+                    "dimensions"
+                    "visual";
+                gap: 0;
+                min-width: 0;
+            }
+
+            .hero-content {
+                display: contents;
+            }
+
+            .hero-eyebrow {
+                grid-area: eyebrow;
+                max-width: 100%;
+                margin-bottom: 1.25rem;
+                font-size: 0.62rem;
+                line-height: 1.5;
+            }
+
+            .hero-title {
+                grid-area: title;
+                margin-bottom: 1rem;
+                font-size: clamp(2.35rem, 9.5vw, 3rem);
+                line-height: 1.04;
+                overflow-wrap: anywhere;
+            }
+
+            .hero-copy {
+                grid-area: copy;
+                max-width: 38rem;
+                margin-bottom: 1.5rem;
+                font-size: 1rem;
+                line-height: 1.75;
+            }
+
+            .hero-actions {
+                grid-area: actions;
+                width: 100%;
+                gap: 0.75rem;
+            }
+
+            .hero-actions > a {
+                min-height: 3.25rem;
+                padding: 0.85rem 1rem;
+                line-height: 1.4;
+            }
+
+            .hero-dimensions {
+                grid-area: dimensions;
+                gap: 0.5rem;
+                margin-top: 1.75rem;
+                padding-top: 1.25rem;
+            }
+
+            .hero-dimensions > div {
+                min-width: 0;
+            }
+
+            .hero-dimension-title {
+                font-size: clamp(1.05rem, 4.5vw, 1.35rem);
+                line-height: 1.1;
+                overflow-wrap: anywhere;
+            }
+
+            .hero-dimensions span:last-child {
+                display: block;
+                font-size: 0.6rem;
+                letter-spacing: 0.04em;
+                line-height: 1.45;
+                overflow-wrap: anywhere;
+            }
+
+            .hero-visual {
+                grid-area: visual;
+                min-width: 0;
+                margin: 1.5rem 0.25rem 0.25rem;
+            }
+
+            .hero-visual-frame {
+                aspect-ratio: 4 / 3;
+            }
+
+            .hero-caption {
+                right: 1.25rem;
+                bottom: 1.25rem;
+                left: 1.25rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-warm text-darktext antialiased selection:bg-terracota selection:text-white">
@@ -618,8 +758,8 @@
     <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-warm/90 backdrop-blur-md border-b border-deep/10 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-12 h-24 flex items-center justify-between">
             <!-- Logotipo com a imagem do LinkedIn -->
-            <a href="#inicio" aria-label="Voltar ao início — Instituto NaqīKarbon" class="flex items-center gap-3.5 group">
-                <div class="w-12 h-12 rounded-full overflow-hidden border border-terracota/50 shadow-sm bg-deep flex items-center justify-center">
+            <a href="#inicio" aria-label="Voltar ao início — Instituto NaqīKarbon" class="site-brand flex items-center gap-3.5 group">
+                <div class="site-brand-logo w-12 h-12 rounded-full overflow-hidden border border-terracota/50 shadow-sm bg-deep flex items-center justify-center">
                     <img src="https://media.licdn.com/dms/image/v2/D4D0BAQHofOBrFPC-VQ/company-logo_200_200/B4DZb0I5vlGkAI-/0/1747852697866/naqikarbon_logo?e=1796256000&v=beta&t=e_oYh92fA9fQeiKIt37ExJPtts0TJOU8WV6yVBt_KyI"
                          alt="Logo Instituto NaqīKarbon"
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -627,8 +767,8 @@
                     <span style="display:none;" class="text-offwhite font-serif text-lg font-bold tracking-widest">NK</span>
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-serif text-2xl font-bold tracking-wide text-deep">Instituto NaqīKarbon</span>
-                    <span class="text-[10px] tracking-widest uppercase text-terracota font-semibold">Ciência · Inovação · Compromisso Socioambiental</span>
+                    <span class="site-brand-title font-serif text-2xl font-bold tracking-wide text-deep">Instituto NaqīKarbon</span>
+                    <span class="site-brand-tagline text-[10px] tracking-widest uppercase text-terracota font-semibold">Ciência · Inovação · Compromisso Socioambiental</span>
                 </div>
             </a>
 
@@ -692,17 +832,17 @@
         <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-8 items-center">
 
             <!-- Conteúdo Hero (Esquerda) -->
-            <div class="md:col-span-7 flex flex-col items-start z-10">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold tracking-wider uppercase mb-6 border border-secondary/20">
+            <div class="hero-content md:col-span-7 flex flex-col items-start z-10">
+                <div class="hero-eyebrow inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold tracking-wider uppercase mb-6 border border-secondary/20">
                     <span class="w-2 h-2 rounded-full bg-terracota"></span> Ciência · Inovação · Compromisso Socioambiental
                 </div>
-                <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-deep leading-[1.08] mb-6">
+                <h1 class="hero-title font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-deep leading-[1.08] mb-6">
                     Ciência para compreender. <span class="italic text-terracota">Conhecimento para transformar.</span>
                 </h1>
-                <p class="text-lg text-darktext/80 font-normal leading-relaxed mb-8 max-w-2xl">
+                <p class="hero-copy text-lg text-darktext/80 font-normal leading-relaxed mb-8 max-w-2xl">
                     O Instituto NaqīKarbon conecta ciência, inovação e ação para promover uma transição socioambiental ética, inclusiva e fundamentada em conhecimento. Apoiamos pequenas e médias empresas na construção de estratégias de sustentabilidade, na estruturação de projetos de descarbonização e na identificação de oportunidades de financiamento, aproximando pesquisa, organizações e soluções aplicáveis aos desafios ambientais e produtivos.
                 </p>
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
+                <div class="hero-actions flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
                     <a href="#contato" class="px-8 py-4 bg-deep text-offwhite font-medium rounded-full hover:bg-terracota transition-all duration-300 text-center shadow-md">
                         Converse sobre uma iniciativa
                     </a>
@@ -712,34 +852,34 @@
                 </div>
 
                 <!-- Indicadores de Credibilidade -->
-                <div class="grid grid-cols-3 gap-6 mt-14 pt-8 border-t border-deep/10 w-full">
+                <div class="hero-dimensions grid grid-cols-3 gap-6 mt-14 pt-8 border-t border-deep/10 w-full">
                     <div>
-                        <span class="block font-serif text-2xl sm:text-3xl font-bold text-deep">Carbono &</span>
+                        <span class="hero-dimension-title block font-serif text-2xl sm:text-3xl font-bold text-deep">Carbono &</span>
                         <span class="text-xs text-darktext/70 uppercase tracking-wider">Ciência</span>
                     </div>
                     <div>
-                        <span class="block font-serif text-2xl sm:text-3xl font-bold text-deep">Projetos &</span>
+                        <span class="hero-dimension-title block font-serif text-2xl sm:text-3xl font-bold text-deep">Projetos &</span>
                         <span class="text-xs text-darktext/70 uppercase tracking-wider">Colaboração</span>
                     </div>
                     <div>
-                        <span class="block font-serif text-2xl sm:text-3xl font-bold text-deep">ESG &</span>
+                        <span class="hero-dimension-title block font-serif text-2xl sm:text-3xl font-bold text-deep">ESG &</span>
                         <span class="text-xs text-darktext/70 uppercase tracking-wider">Prático e viável</span>
                     </div>
                 </div>
             </div>
 
             <!-- Composição Visual Editorial (Lateral Direita) -->
-            <div class="md:col-span-5 relative">
+            <div class="hero-visual md:col-span-5 relative">
                 <div class="relative mx-auto max-w-md md:max-w-none">
                     <!-- Frame decorativo geométrico -->
                     <div class="absolute -inset-3 sm:-inset-4 border border-terracota/35 rounded-2xl transform rotate-2 pointer-events-none"></div>
-                    <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-deep aspect-[4/5] founder-portrait-frame">
+                    <div class="hero-visual-frame relative rounded-2xl overflow-hidden shadow-2xl bg-deep aspect-[4/5] founder-portrait-frame">
                         <img src="https://plus.unsplash.com/premium_photo-1713401917613-158b9316061d?q=80&w=761&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
                              alt="Arquitetura urbana sustentável e moderna"
                              class="w-full h-full object-cover mix-blend-overlay opacity-85 hover:scale-105 transition-transform duration-700"
                              onerror="this.src='https://placehold.co/800x1000/173B32/FFFEFA?text=Instituto+Naq%C4%ABKarbon'">
                         <div class="absolute inset-0 bg-gradient-to-t from-deep via-deep/30 to-transparent"></div>
-                        <div class="absolute bottom-8 left-8 right-8 text-warm">
+                        <div class="hero-caption absolute bottom-8 left-8 right-8 text-warm">
                             <span class="text-xs font-mono uppercase tracking-widest text-terracota mb-2 block">Infraestrutura & Transição</span>
                             <h2 class="font-serif text-2xl font-medium leading-snug">Alinhando desempenho econômico, ciência e responsabilidade socioambiental.</h2>
                         </div>
