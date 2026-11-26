@@ -4,6 +4,11 @@ Site institucional estático do Instituto NaqīKarbon.
 
 ## Publicação
 
+Antes de publicar qualquer alteração visual, editorial, técnica ou de
+responsividade, implementar primeiro localmente e aguardar confirmação explícita
+do usuário. Não criar commits, realizar push, alterar a branch `main` ou
+acionar o GitHub Pages sem essa autorização.
+
 Para publicar o site, configure o GitHub Pages em **Settings → Pages** para
 publicar a raiz (`/`) da branch `main`. O arquivo `CNAME` na raiz do repositório
 deve conter `naqikarbon.com.br`; esse arquivo configura o domínio no GitHub

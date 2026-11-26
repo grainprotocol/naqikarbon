@@ -3,13 +3,34 @@
 **Data de consulta das fontes:** 26 de novembro de 2026
 **Escopo:** páginas de serviço estáticas em `/servicos/`, seus metadados, navegação e referências. Nenhuma página foi publicada nesta etapa.
 
+## Revisão técnica aplicada nesta etapa
+
+Em 26 de novembro de 2026, foram aprofundadas as dimensões de atuação e entregas nas seis páginas, sem reformular integralmente o conteúdo existente:
+
+- Sustentabilidade: adicionada avaliação operacional por dimensões — energia, água, transporte, refrigeração, materiais, embalagens, resíduos, compras e ESG — e entregas técnicas como diagnóstico documentado, matriz de riscos e lacunas, recomendações e plano de ação.
+- Descarbonização: ampliado o mapeamento de fontes, adicionadas entregas de dados, matriz de redução e plano de ação, preservadas as diferenças entre mapeamento, inventário de GEE e verificação.
+- Pesquisa e formação: adicionadas entregas de proposta técnica, plano formativo, materiais didáticos e pesquisa aplicada, sem prometer certificados ou carga horária padrão.
+- Inovação ambiental: adicionadas entregas de caracterização, concepção, plano de trabalho e direcionamento preliminar de fomento, distinguindo estruturação de execução técnica.
+- Editais e financiamento: adicionados mapa de oportunidades, análise preliminar de aderência, concepção da proposta, planejamento orçamentário, revisão técnica e roteiro de próximos passos.
+- Projetos colaborativos: adicionados mapa de competências, concepção colaborativa, plano de trabalho e roteiro de articulação, preservando limites sobre adesão e formalização.
+
+A assinatura institucional foi atualizada nas páginas revisadas e na página inicial para **“Ciência · Inovação · Sustentabilidade”**. Referências próprias da NaqīKarbon foram retiradas das listas de fontes técnicas externas.
+
+## Correção de escopo aplicada às duas páginas prioritárias
+
+- **Descarbonização:** o posicionamento foi corrigido para apresentar a consultoria como responsável pelo levantamento de dados de atividade, delimitação da pegada de carbono, classificação das fontes, elaboração de inventários de GEE, cálculo por fatores de emissão e desenvolvimento de planos de descarbonização. Foram incluídas as cinco etapas do trabalho, entregas técnicas identificadas e perguntas sobre inventários, dados e medição física. O limite de medição instrumental ficou restrito a campanhas próprias de campo com equipamentos específicos.
+- **Sustentabilidade:** foi incluída uma seção própria sobre relatórios de sustentabilidade e documentação técnica. A página apresenta diagnóstico ambiental empresarial, indicadores ESG, matriz de aspectos e riscos, plano de ação e entregas técnicas de relatório. Foram adicionadas respostas sobre elaboração do relatório, uso de GRI e ausência de indicadores organizados.
+- Limites sobre verificação independente, asseguração e certificação foram mantidos nas seções técnicas ou nas perguntas frequentes, sem reduzir o posicionamento principal da consultoria.
+
+Metadados das duas páginas foram revisados para incorporar naturalmente termos como inventário de GEE, pegada de carbono, Escopos 1, 2 e 3, relatório de sustentabilidade e indicadores ESG.
+
 ## Páginas, intenção de busca e metadados
 
 | Página | URL canônica | Título SEO | Intenção e temas principais |
 |---|---|---|---|
 | Diretório de serviços | `https://naqikarbon.com.br/servicos/` | Consultoria e Serviços Técnicos \| Instituto NaqīKarbon | Consultoria técnica, sustentabilidade, descarbonização, inovação e serviços institucionais |
-| Diagnóstico e planejamento | `https://naqikarbon.com.br/servicos/diagnostico-planejamento-sustentabilidade/` | Consultoria em Sustentabilidade para Empresas \| NaqīKarbon | Consultoria em sustentabilidade empresarial, diagnóstico, planejamento, ESG para PMEs, riscos e oportunidades ambientais |
-| Descarbonização | `https://naqikarbon.com.br/servicos/projetos-descarbonizacao/` | Consultoria em Descarbonização \| Instituto NaqīKarbon | Consultoria em descarbonização, fontes de emissão, redução de GEE, projetos e planejamento de ações |
+| Diagnóstico e planejamento | `https://naqikarbon.com.br/servicos/diagnostico-planejamento-sustentabilidade/` | Diagnóstico, Indicadores ESG e Relatório de Sustentabilidade \| NaqīKarbon | Consultoria em sustentabilidade empresarial, diagnóstico ambiental, planejamento ESG, indicadores e relatório de sustentabilidade |
+| Descarbonização | `https://naqikarbon.com.br/servicos/projetos-descarbonizacao/` | Inventário de GEE e Consultoria em Descarbonização \| Instituto NaqīKarbon | Inventário de GEE, pegada de carbono, fontes de emissão, quantificação, Escopos 1, 2 e 3 e plano de descarbonização |
 | Pesquisa e formação | `https://naqikarbon.com.br/servicos/pesquisa-palestras-treinamentos/` | Pesquisa, Palestras e Treinamentos \| NaqīKarbon | Pesquisa aplicada, palestras sobre sustentabilidade, treinamentos ESG e capacitação em inovação |
 | Inovação ambiental | `https://naqikarbon.com.br/servicos/inovacao-ambiental/` | Projetos de Inovação Ambiental \| Instituto NaqīKarbon | Projetos de inovação ambiental, sustentabilidade, economia circular, tecnologias limpas e estruturação de projetos |
 | Editais e financiamento | `https://naqikarbon.com.br/servicos/editais-financiamento-inovacao/` | Consultoria para Editais e Financiamento de Inovação \| NaqīKarbon | Consultoria para editais, fomento à inovação, FAPs, PIPE-FAPESP, Centelha, Finep/FNDCT e financiamento ambiental |
@@ -31,8 +52,8 @@ As meta descriptions exclusivas e atuais estão no `<head>` de cada arquivo HTML
 
 ### Projetos de descarbonização
 
-- [World Resources Institute — Greenhouse Gas Protocol](https://www.wri.org/initiatives/greenhouse-gas-protocol). Fonte introdutória sobre padrões de contabilização e relato de emissões. A página específica do GHG Protocol retornou erro 403 durante a consulta; por isso, o conteúdo não atribui ao Instituto inventários, verificação ou certificação.
-- [Escopo institucional de serviços do Instituto](https://naqikarbon.com.br/#servicos).
+- [GHG Protocol — Corporate Standard](https://ghgprotocol.org/corporate-standard). Referência para limites organizacionais, categorias de emissão e contabilização corporativa.
+- [GHG Protocol — Corporate Value Chain (Scope 3) Standard](https://ghgprotocol.org/corporate-value-chain-scope-3-standard). Referência para categorias indiretas da cadeia de valor.
 
 ### Pesquisa, palestras e treinamentos
 
